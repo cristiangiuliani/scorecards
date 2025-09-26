@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "cristian-giuliani"
+  },
+  "targets": {
+    "cristian-giuliani": {
+      "hosting": {
+        "scorecards": [
+          "cristian-giuliani-scorecards"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

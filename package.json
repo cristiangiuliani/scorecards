@@ -1,0 +1,51 @@
+{
+  "name": "Scorecards",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "homepage": "/scorecards",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "deploy": "yarn dlx firebase-tools deploy"
+  },
+  "dependencies": {
+    "firebase": "^12.3.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@types/eslint-plugin-jsx-a11y": "^6",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
+    "@vitejs/plugin-react": "^5.0.2",
+    "eslint": "^9.36.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "firebase-tools": "^14.17.0",
+    "globals": "^16.4.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.43.0",
+    "vite": "^7.1.6",
+    "vite-plugin-eslint": "^1.8.1"
+  },
+  "dependenciesMeta": {
+    "vite@7.1.6": {
+      "unplugged": true
+    }
+  },
+  "packageManager": "yarn@4.9.4"
+}

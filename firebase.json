@@ -1,0 +1,20 @@
+{
+  "hosting": [
+    {
+      "target": "homepage",
+      "public": "dist-homepage",   // cartella build della homepage
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        { "source": "**", "destination": "/index.html" }
+      ]
+    },
+    {
+      "target": "scorecards",
+      "public": "dist", // cartella build delle scorecards   
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        { "source": "/scorecards/**", "destination": "/index.html" }
+      ]
+    }
+  ]
+}
