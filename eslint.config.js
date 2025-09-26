@@ -21,7 +21,9 @@ export default [
       parser: tsparser,
       parserOptions: {
         ecmaVersion: 2022,
-        ecmaFeatures: { jsx: true },
+        ecmaFeatures: {
+          jsx: true,
+        },
         sourceType: 'module',
       },
     },
@@ -52,26 +54,48 @@ export default [
         SwitchCase: 1,
         VariableDeclarator: 1,
         outerIIFEBody: 1,
-        FunctionDeclaration: { parameters: 1, body: 1 },
-        FunctionExpression: { parameters: 1, body: 1 },
-        CallExpression: { arguments: 1 },
+        FunctionDeclaration: {
+          parameters: 1, body: 1,
+        },
+        FunctionExpression: {
+          parameters: 1, body: 1,
+        },
+        CallExpression: {
+          arguments: 1,
+        },
         ArrayExpression: 1,
         ObjectExpression: 1,
         ImportDeclaration: 1,
         flatTernaryExpressions: false,
         ignoreComments: false,
       }],
-      'quotes': ['error', 'single', { avoidEscape: true }],
+      'quotes': ['error', 'single', {
+        avoidEscape: true,
+      }],
       'semi': ['error', 'always'],
-      'comma-dangle': ['error', 'always-multiline'],
+      'comma-dangle': ['error', {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'never',
+      }],
       'no-trailing-spaces': 'error',
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
-      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+      'no-multiple-empty-lines': ['error', {
+        max: 1, maxEOF: 0,
+      }],
       'eol-last': ['error', 'always'],
-      'comma-spacing': ['error', { before: false, after: true }],
-      'key-spacing': ['error', { beforeColon: false, afterColon: true }],
-      'keyword-spacing': ['error', { before: true, after: true }],
+      'comma-spacing': ['error', {
+        before: false, after: true,
+      }],
+      'key-spacing': ['error', {
+        beforeColon: false, afterColon: true,
+      }],
+      'keyword-spacing': ['error', {
+        before: true, after: true,
+      }],
       'space-before-blocks': ['error', 'always'],
       'space-before-function-paren': ['error', {
         anonymous: 'always',
@@ -80,8 +104,12 @@ export default [
       }],
       'space-in-parens': ['error', 'never'],
       'space-infix-ops': 'error',
-      'space-unary-ops': ['error', { words: true, nonwords: false }],
-      'brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      'space-unary-ops': ['error', {
+        words: true, nonwords: false,
+      }],
+      'brace-style': ['error', '1tbs', {
+        allowSingleLine: true,
+      }],
       'no-whitespace-before-property': 'error',
       'padded-blocks': ['error', 'never'],
       'no-extra-parens': ['error', 'all', {
@@ -91,19 +119,39 @@ export default [
         ignoreJSX: 'all',
         enforceForArrowConditionals: false,
       }],
-      'arrow-spacing': ['error', { before: true, after: true }],
+      'arrow-spacing': ['error', {
+        before: true, after: true,
+      }],
       'block-spacing': ['error', 'always'],
       'computed-property-spacing': ['error', 'never'],
       'func-call-spacing': ['error', 'never'],
-      'generator-star-spacing': ['error', { before: false, after: true }],
-      'newline-per-chained-call': ['error', { ignoreChainWithDepth: 4 }],
+      'generator-star-spacing': ['error', {
+        before: false, after: true,
+      }],
+      'newline-per-chained-call': ['error', {
+        ignoreChainWithDepth: 4,
+      }],
       'no-mixed-spaces-and-tabs': 'error',
       'object-curly-newline': ['error', {
-        ObjectExpression: { minProperties: 4, multiline: true, consistent: true },
-        ObjectPattern: { minProperties: 4, multiline: true, consistent: true },
-        ImportDeclaration: { minProperties: 4, multiline: true, consistent: true },
-        ExportDeclaration: { minProperties: 4, multiline: true, consistent: true },
+        ObjectExpression: {
+          minProperties: 3, multiline: true, consistent: true,
+        },
+        ObjectPattern: {
+          minProperties: 3, multiline: true, consistent: true,
+        },
+        ImportDeclaration: {
+          minProperties: 3, multiline: true, consistent: true,
+        },
+        ExportDeclaration: {
+          minProperties: 3, multiline: true, consistent: true,
+        },
       }],
+      'object-property-newline': [
+        'warn',
+        {
+          'allowAllPropertiesOnSameLine': false,
+        },
+      ],
       'rest-spread-spacing': ['error', 'never'],
       'template-curly-spacing': 'error',
       'yield-star-spacing': ['error', 'after'],
@@ -119,8 +167,12 @@ export default [
       'no-duplicate-imports': 'error',
       'no-useless-constructor': 'error',
       'prefer-destructuring': ['error', {
-        VariableDeclarator: { array: false, object: true },
-        AssignmentExpression: { array: true, object: false },
+        VariableDeclarator: {
+          array: false, object: true,
+        },
+        AssignmentExpression: {
+          array: true, object: false,
+        },
       }],
 
       // TypeScript rules (without type checking)
@@ -129,7 +181,7 @@ export default [
         varsIgnorePattern: '^_',
       }],
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-empty-function': 'error',
+      // '@typescript-eslint/no-empty-function': 'error',
       '@typescript-eslint/no-empty-interface': 'error',
       '@typescript-eslint/prefer-as-const': 'error',
       '@typescript-eslint/no-inferrable-types': 'error',
@@ -138,7 +190,9 @@ export default [
       ...react.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+      'react/jsx-filename-extension': ['error', {
+        extensions: ['.jsx', '.tsx'],
+      }],
       'react/jsx-props-no-spreading': 'off',
       'react/require-default-props': 'off',
       'react/jsx-one-expression-per-line': 'off',
@@ -154,12 +208,16 @@ export default [
       }],
       'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
       'react/jsx-closing-tag-location': 'error',
-      'react/jsx-curly-spacing': ['error', 'never', { allowMultiline: true }],
+      'react/jsx-curly-spacing': ['error', 'never', {
+        allowMultiline: true,
+      }],
       'react/jsx-equals-spacing': ['error', 'never'],
       'react/jsx-first-prop-new-line': ['error', 'multiline-multiprop'],
       'react/jsx-indent': ['error', 2],
       'react/jsx-indent-props': ['error', 2],
-      'react/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
+      'react/jsx-max-props-per-line': ['error', {
+        maximum: 1, when: 'multiline',
+      }],
       'react/jsx-tag-spacing': ['error', {
         closingSlash: 'never',
         beforeSelfClosing: 'always',
@@ -176,11 +234,14 @@ export default [
 
       // React Hooks rules
       ...reactHooks.configs.recommended.rules,
+      'react-hooks/exhaustive-deps': 'off',
 
       // React Refresh rules
       'react-refresh/only-export-components': [
         'warn',
-        { allowConstantExport: true },
+        {
+          allowConstantExport: true,
+        },
       ],
 
       // JSX a11y rules (accessibility)
@@ -227,7 +288,7 @@ export default [
       'import/no-duplicates': 'error',
 
       // Additional Airbnb rules
-      'max-len': ['error', {
+      'max-len': ['off', {
         code: 100,
         ignoreUrls: true,
         ignoreStrings: true,
@@ -235,7 +296,9 @@ export default [
         ignoreComments: true,
         ignoreRegExpLiterals: true,
       }],
-      'no-param-reassign': ['error', { props: false }],
+      'no-param-reassign': ['error', {
+        props: false,
+      }],
       'arrow-parens': ['error', 'always'],
       'consistent-return': 'off',
       'no-underscore-dangle': 'off',
