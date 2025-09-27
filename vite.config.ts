@@ -20,5 +20,12 @@ export default defineConfig({
     hmr: {
       overlay: true,
     },
+    proxy: {
+      '/functions': {
+        target: 'http://localhost:5001/cristian-giuliani/europe-west1',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/functions/, ''),
+      },
+    },
   },
 });

@@ -2,7 +2,8 @@
   "name": "Scorecards",
   "author": {
     "name": "Cristian Giuliani",
-    "email": "info@cristiangiuliani.com"},
+    "email": "info@cristiangiuliani.com"
+  },
   "private": true,
   "version": "0.1.0",
   "type": "module",
