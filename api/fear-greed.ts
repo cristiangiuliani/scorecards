@@ -3,8 +3,8 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const today = new Date();
-    today.setDate(today.getDate() - 1); // fallback a ieri
-    const dateStr = today.toISOString().slice(0, 10); // YYYY-MM-DD
+    today.setDate(today.getDate() - 1);
+    const dateStr = today.toISOString().slice(0, 10);
 
     const url = `https://production.dataviz.cnn.io/index/fearandgreed/graphdata/${dateStr}`;
 
@@ -17,7 +17,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const data = await response.json();
     res.status(200).json(data);
   } catch (err: any) {
-    console.error(err);
     res.status(500).json({ error: err.message });
   }
 }
