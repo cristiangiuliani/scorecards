@@ -8,7 +8,7 @@ import type { IDashboardContext } from '../interfaces/dashboard';
 import DashboardLayout from '../layouts/dashboard.layout';
 // import type { TCryptoData, TStocksData } from '../types/data.type';
 
-const BASE_URL = 'api'; //import.meta.env.FUNCTIONS_BASE_URL;
+const BASE_URL = '/scorecards/api'; //import.meta.env.FUNCTIONS_BASE_URL;
 
 const DashboardContainer: React.FC = () => {
   const {

@@ -1,5 +1,4 @@
 import react from '@vitejs/plugin-react';
-
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 
@@ -16,15 +15,19 @@ export default defineConfig({
       emitError: true,
     }),
   ],
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+  },
   server: {
     hmr: {
       overlay: true,
     },
     proxy: {
-      '/functions': {
-        target: 'http://localhost:5001/cristian-giuliani/europe-west1',
+      '/scorecards/api': {
+        target: 'http://localhost:8888/.netlify/functions',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/functions/, ''),
+        rewrite: (path) => path.replace(/^\/scorecards\/api/, ''),
       },
     },
   },
