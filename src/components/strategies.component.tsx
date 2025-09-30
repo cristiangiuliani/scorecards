@@ -26,6 +26,8 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
 
   if (!cryptoData) return;
 
+  const { btcDominance = 0 } = cryptoData;
+
   const StocksStrategyList = [
     {
       title: '💼 Portfolio Strategy',
@@ -84,8 +86,8 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
       items: [
         {
           label: 'Current Balance',
-          value: cryptoData.btcDominance > 60 ? 'Focus Bitcoin (quality)' :
-            cryptoData.btcDominance < 45 ? 'Active altseason' :
+          value: btcDominance > 60 ? 'Focus Bitcoin (quality)' :
+            btcDominance < 45 ? 'Active altseason' :
               'BTC/Alt balance',
         },
       ],

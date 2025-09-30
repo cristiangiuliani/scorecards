@@ -9,7 +9,7 @@ import React from 'react';
 
 interface TIndicatorCardLayoutProps {
     label: string;
-    value: number | string;
+    value: number | string | undefined;
     score: number;
     weight: string;
     suffix?: string;

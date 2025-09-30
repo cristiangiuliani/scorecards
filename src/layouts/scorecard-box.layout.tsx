@@ -10,7 +10,7 @@ import type { TInterpretation } from '../types/data.type';
 type TScoreCardBoxLayoutProps = {
   score: number;
   interpretation: TInterpretation;
-  lastUpdated: string;
+  lastUpdated: string | undefined;
 };
 
 const ScoreCardBoxLayout: React.FC<TScoreCardBoxLayoutProps> = ({
@@ -43,7 +43,7 @@ const ScoreCardBoxLayout: React.FC<TScoreCardBoxLayoutProps> = ({
     />
 
     <Typography variant="body2" color="text.secondary">
-      Last updated: {new Date(lastUpdated).toLocaleTimeString('en-US')}
+      Last updated: {lastUpdated && new Date(lastUpdated).toLocaleTimeString('en-US')}
     </Typography>
   </Paper>
 );
