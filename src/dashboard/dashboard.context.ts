@@ -8,8 +8,8 @@ import type {
 
 const DashboardContext = createContext<IDashboardContext>({
   isLoading: false,
-  stocksData: null,
-  cryptoData: null,
+  stocksData: undefined,
+  cryptoData: undefined,
   activeTab: 0,
   refetchMarketData: () => {},
   updateDashboard: () => {},

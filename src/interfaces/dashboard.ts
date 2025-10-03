@@ -1,6 +1,6 @@
-import type {
-  TCryptoData, TStocksData,
-} from '../types/data.type';
+import type { TCryptoData } from '../types/data.type';
+
+import type { TStocksData } from './market-stocks';
 
 export type IDashboardContext = IDashboardProvider & {
     updateDashboard: (newState: IDashboardProvider) => void;
@@ -8,9 +8,8 @@ export type IDashboardContext = IDashboardProvider & {
 
 export interface IDashboardProvider {
     isLoading?: boolean;
-    stocksData?: TStocksData | null;
-    cryptoData?: TCryptoData | null;
-    refetchMarketData?: () => void;
-
+    stocksData?: TStocksData
+    cryptoData?: TCryptoData
     activeTab?: number;
+    refetchMarketData?: ()=>void
 }

@@ -1,0 +1,13 @@
+{
+    "Realtime Currency Exchange Rate": {
+        "1. From_Currency Code": "EUR",
+        "2. From_Currency Name": "Euro",
+        "3. To_Currency Code": "USD",
+        "4. To_Currency Name": "United States Dollar",
+        "5. Exchange Rate": "1.17730000",
+        "6. Last Refreshed": "2025-10-01 06:47:47",
+        "7. Time Zone": "UTC",
+        "8. Bid Price": "1.17724000",
+        "9. Ask Price": "1.17735000"
+    }
+}

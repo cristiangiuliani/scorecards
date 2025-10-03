@@ -17,13 +17,14 @@ import {
 import {
   createTheme, ThemeProvider,
 } from '@mui/material/styles';
-import React from 'react';
+import React, { useContext } from 'react';
 
-import DashboardComponent from '../components/dashboard.component';
-import DashboardContext from '../context/dashboard.context';
 import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
+import MarketStocks from '../market-stocks/market-stocks';
+
+import DashboardContext from './dashboard.context';
 
 const theme = createTheme({
   palette: {
@@ -44,14 +45,13 @@ const theme = createTheme({
     },
   },
 });
-
 const DashboardLayout: React.FC = () => {
   const {
     isLoading,
     activeTab = 0,
-    refetchMarketData,
+    refetchMarketData = () => {},
     updateDashboard,
-  } = React.useContext<IDashboardContext>(DashboardContext);
+  } = useContext<IDashboardContext>(DashboardContext);
   return (
     <ThemeProvider theme={theme}>
       <Container
@@ -120,8 +120,8 @@ const DashboardLayout: React.FC = () => {
           </Box>
         </Paper>
 
-        {/* Content based on active tab */}
-        <DashboardComponent />
+        {activeTab === 0 && <MarketStocks />}
+        {/* {activeTab === 1 && <CryptoPanel />} */}
       </Container>
     </ThemeProvider>
   );

@@ -1,5 +1,6 @@
+import type { TStocksData } from '../interfaces/market-stocks';
 import type {
-  TCryptoData, TInterpretation, TStocksData,
+  TCryptoData, TInterpretation,
 } from '../types/data.type';
 
 export const calculateVixScore = (value = 0):number => {
