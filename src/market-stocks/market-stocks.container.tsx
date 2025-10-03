@@ -6,12 +6,12 @@ import eurUsdMock from '../_mocks/eurUsd.json';
 import fearGreedMock from '../_mocks/fearGreed.json';
 import rsiSP500Mock from '../_mocks/rsiSp500.json';
 import vixMock from '../_mocks/vix.json';
+import { Urls } from '../enums/global';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 
 import MarketStocksComponent from './market-stocks.component';
 import MarketStocksContext from './market-stocks.context';
 
-const BASE_URL = '/scorecards/api'; //import.meta.env.FUNCTIONS_BASE_URL;
 const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA  === 'true';
 console.log('USE_MOCK_DATA', import.meta.env.VITE_USE_MOCK_DATA);
 const MarketStocksContainer: React.FC = () => {
@@ -26,7 +26,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${BASE_URL}/fetchVix`);
+        const res = await fetch(`${Urls.ApiBaseUrl}/fetchVix`);
         data = await res.json();
       } else {
         data = vixMock;
@@ -43,7 +43,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${BASE_URL}/fetchRsiSP500`);
+        const res = await fetch(`${Urls.ApiBaseUrl}/fetchRsiSP500`);
         data = await res.json();
       } else {
         data = rsiSP500Mock;
@@ -62,7 +62,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${BASE_URL}/fetchEurUsd`);
+        const res = await fetch(`${Urls.ApiBaseUrl}/fetchEurUsd`);
         data = await res.json();
       } else {
         data = eurUsdMock;
@@ -80,7 +80,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${BASE_URL}/fetchFearGreed`);
+        const res = await fetch(`${Urls.ApiBaseUrl}/fetchFearGreed`);
         data = await res.json();
       } else {
         data = fearGreedMock;

@@ -10,7 +10,7 @@ const DashboardContext = createContext<IDashboardContext>({
   isLoading: false,
   stocksData: undefined,
   cryptoData: undefined,
-  activeTab: 0,
+  activeTab: 1,
   refetchMarketData: () => {},
   updateDashboard: () => {},
 });

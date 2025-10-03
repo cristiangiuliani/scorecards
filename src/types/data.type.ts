@@ -1,11 +1,3 @@
-export type TCryptoData = {
-  btcFearGreed?: number;
-  btcRsi?: number;
-  btcDominance?: number;
-  altSeasonIndex?: number;
-  lastUpdated?: string;
-}
-
 export type TInterpretation = {
   text: string;
   color: 'success' | 'warning' | 'error' | 'info' | 'default';

@@ -1,0 +1,159 @@
+{
+    "name": "Fear and Greed Index",
+    "data": [
+        {
+            "value": "63",
+            "value_classification": "Greed",
+            "timestamp": "1759449600",
+            "time_until_update": "36783"
+        },
+        {
+            "value": "64",
+            "value_classification": "Greed",
+            "timestamp": "1759363200"
+        },
+        {
+            "value": "49",
+            "value_classification": "Neutral",
+            "timestamp": "1759276800"
+        },
+        {
+            "value": "50",
+            "value_classification": "Neutral",
+            "timestamp": "1759190400"
+        },
+        {
+            "value": "50",
+            "value_classification": "Neutral",
+            "timestamp": "1759104000"
+        },
+        {
+            "value": "37",
+            "value_classification": "Fear",
+            "timestamp": "1759017600"
+        },
+        {
+            "value": "33",
+            "value_classification": "Fear",
+            "timestamp": "1758931200"
+        },
+        {
+            "value": "28",
+            "value_classification": "Fear",
+            "timestamp": "1758844800"
+        },
+        {
+            "value": "44",
+            "value_classification": "Fear",
+            "timestamp": "1758758400"
+        },
+        {
+            "value": "44",
+            "value_classification": "Fear",
+            "timestamp": "1758672000"
+        },
+        {
+            "value": "43",
+            "value_classification": "Fear",
+            "timestamp": "1758585600"
+        },
+        {
+            "value": "45",
+            "value_classification": "Fear",
+            "timestamp": "1758499200"
+        },
+        {
+            "value": "49",
+            "value_classification": "Neutral",
+            "timestamp": "1758412800"
+        },
+        {
+            "value": "48",
+            "value_classification": "Neutral",
+            "timestamp": "1758326400"
+        },
+        {
+            "value": "53",
+            "value_classification": "Neutral",
+            "timestamp": "1758240000"
+        },
+        {
+            "value": "52",
+            "value_classification": "Neutral",
+            "timestamp": "1758153600"
+        },
+        {
+            "value": "53",
+            "value_classification": "Neutral",
+            "timestamp": "1758067200"
+        },
+        {
+            "value": "52",
+            "value_classification": "Neutral",
+            "timestamp": "1757980800"
+        },
+        {
+            "value": "53",
+            "value_classification": "Neutral",
+            "timestamp": "1757894400"
+        },
+        {
+            "value": "55",
+            "value_classification": "Greed",
+            "timestamp": "1757808000"
+        },
+        {
+            "value": "52",
+            "value_classification": "Neutral",
+            "timestamp": "1757721600"
+        },
+        {
+            "value": "57",
+            "value_classification": "Greed",
+            "timestamp": "1757635200"
+        },
+        {
+            "value": "54",
+            "value_classification": "Neutral",
+            "timestamp": "1757548800"
+        },
+        {
+            "value": "49",
+            "value_classification": "Neutral",
+            "timestamp": "1757462400"
+        },
+        {
+            "value": "48",
+            "value_classification": "Neutral",
+            "timestamp": "1757376000"
+        },
+        {
+            "value": "51",
+            "value_classification": "Neutral",
+            "timestamp": "1757289600"
+        },
+        {
+            "value": "44",
+            "value_classification": "Fear",
+            "timestamp": "1757203200"
+        },
+        {
+            "value": "48",
+            "value_classification": "Neutral",
+            "timestamp": "1757116800"
+        },
+        {
+            "value": "48",
+            "value_classification": "Neutral",
+            "timestamp": "1757030400"
+        },
+        {
+            "value": "51",
+            "value_classification": "Neutral",
+            "timestamp": "1756944000"
+        }
+    ],
+    "metadata": {
+        "error": null
+    }
+}

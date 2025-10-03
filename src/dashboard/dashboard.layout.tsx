@@ -22,6 +22,7 @@ import React, { useContext } from 'react';
 import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
+import MarketCrypto from '../market-crypto/market-crypto';
 import MarketStocks from '../market-stocks/market-stocks';
 
 import DashboardContext from './dashboard.context';
@@ -48,7 +49,7 @@ const theme = createTheme({
 const DashboardLayout: React.FC = () => {
   const {
     isLoading,
-    activeTab = 0,
+    activeTab = 1,
     refetchMarketData = () => {},
     updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);
@@ -121,7 +122,7 @@ const DashboardLayout: React.FC = () => {
         </Paper>
 
         {activeTab === 0 && <MarketStocks />}
-        {/* {activeTab === 1 && <CryptoPanel />} */}
+        {activeTab === 1 && <MarketCrypto />}
       </Container>
     </ThemeProvider>
   );

@@ -14,7 +14,7 @@ import type {
 } from '../types/data.type';
 import {
   calculateEurUsdScore, calculateFearGreedScore, calculateRsiScore, calculateStocksScore, calculateVixScore, getStockInterpretation,
-} from '../utils/formula';
+} from '../utils/stocks-formulas';
 
 import MarketStocksContext from './market-stocks.context';
 
@@ -22,8 +22,6 @@ const MarketStocksComponent: React.FC = () => {
   const {
     vix, rsiSP500, eurUsd, fearGreed, lastUpdated,
   } = useContext<IMarketStocksContext>(MarketStocksContext);
-
-  // if (!vix || !rsiSP500 || !eurUsd || !fearGreed || !lastUpdated) return null;
 
   const stocksScore = calculateStocksScore({
     vix,

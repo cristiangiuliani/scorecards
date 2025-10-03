@@ -1,5 +1,5 @@
-import type { TCryptoData } from '../types/data.type';
 
+import type { TCryptoData } from './market-crypto';
 import type { TStocksData } from './market-stocks';
 
 export type IDashboardContext = IDashboardProvider & {

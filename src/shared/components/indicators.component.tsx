@@ -15,8 +15,6 @@ type TIndicatorsComponentProps = {
 const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
   indexList = [],
 }) => {
-  console.log('indexList', indexList);
-
   return (
     <>
       <Grid container spacing={3} mb={4}>
