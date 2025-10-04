@@ -14,8 +14,17 @@ export type TIndicatorsListItem = {
 export type TStrategiesListItem = {
   title?: string
   color?: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning'
-  items: [{
+  items: {
     label: string
     value: string
-  }]
+  }[]
+}
+
+export type TCryptoMetrics = {
+  cryptoScore: number;
+  btcDominance: number;
+  btcRsi: number;
+  btcFearGreed: number;
+  athDistance: number; // Percentuale (es. 98 = 98% dell'ATH)
+  momentum7d: number;
 }

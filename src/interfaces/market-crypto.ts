@@ -4,9 +4,7 @@ export type IMarketCryptoContext = IMarketCryptoProvider  & {
 
 export type TCryptoData = {
   btcFearGreed?: number;
-  btcRsi?: number;
   btcDominance?: number;
-  altcoinSeasonIndex?: number;
   currentPrice?: number;
   ath?: number;
   prices?: number[];

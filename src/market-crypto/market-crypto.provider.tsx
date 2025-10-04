@@ -12,9 +12,7 @@ export const MarketCryptoProvider = ({
   const marketCryptoProviderValue = {
     isLoadingCrypto: false,
     btcFearGreed: undefined,
-    btcRsi: undefined,
     btcDominance: undefined,
-    altcoinSeasonIndex: undefined,
     currentPrice: undefined,
     ath: undefined,
     prices: undefined,

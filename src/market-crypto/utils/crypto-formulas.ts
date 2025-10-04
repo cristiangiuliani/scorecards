@@ -1,7 +1,4 @@
-import type { TCryptoData } from '../interfaces/market-crypto';
-import type {
-  TInterpretation,
-} from '../types/data.type';
+import type { TCryptoData } from '../../interfaces/market-crypto';
 
 export const calculateBtcFearGreedScore = (value = 0):number => {
   if (value < 10) return 4;
@@ -117,12 +114,27 @@ export const calculateVolumeScore = (volumes: number[]): number => {
   return 0;
 };
 
-export const calculateCryptoScore = (data:TCryptoData):number => {
+export const calculateAthDistance = (currentPrice:number | undefined, ath:number | undefined) => {
+  return currentPrice && ath ? (currentPrice / ath) * 100 : 0;
+};
+export const calculateMomentum7d = (prices: number[] | undefined = []) => {
+  return prices.length >= 8 ?
+    ((prices[prices.length - 1] - prices[prices.length - 8]) / prices[prices.length - 8]) * 100
+    : 0;
+};
+
+export const calculateAltcoinSeasonIndex = (btcDominance:number | undefined = 0) => {
+  return Math.max(0, Math.min(100,
+    ((70 - btcDominance) / 30) * 100
+  ));
+};
+
+export const calculateCryptoScore = (data:TCryptoData, btcRsi:number, altcoinSeasonIndex:number):number => {
   if (!data) return 0;
   const btcFearScore = data?.btcFearGreed ? calculateBtcFearGreedScore(data.btcFearGreed) : 0;
-  const btcRsiScore = data?.btcRsi ? calculateBtcRsiScore(data.btcRsi) : 0;
+  const btcRsiScore = btcRsi ? calculateBtcRsiScore(btcRsi) : 0;
   const btcDomScore = data?.btcDominance ? calculateBtcDominanceScore(data.btcDominance) : 0;
-  const altSeasonScore = data?.altcoinSeasonIndex ? calculateAltSeasonScore(data.altcoinSeasonIndex) : 0;
+  const altSeasonScore = altcoinSeasonIndex ? calculateAltSeasonScore(altcoinSeasonIndex) : 0;
 
   const athDistanceScore = data?.currentPrice && data?.ath
     ? calculateAthDistanceScore(data.currentPrice, data.ath) : 0;
@@ -143,32 +155,4 @@ export const calculateCryptoScore = (data:TCryptoData):number => {
     (maScore * 1.2) +           // NUOVO
     (volumeScore * 0.9);
   return weightedScore * 0.5;
-};
-
-export const getCryptoInterpretation = (score:number):TInterpretation => {
-  if (score > 5) return {
-    text: '🚀 STRONG BULL RUN',
-    color: 'success',
-    severity: 'success',
-  };
-  if (score > 2) return {
-    text: '🟢 CRYPTO BULLISH',
-    color: 'success',
-    severity: 'info',
-  };
-  if (score > -2) return {
-    text: '⚪ CRAB MARKET',
-    color: 'default',
-    severity: 'info',
-  };
-  if (score > -5) return {
-    text: '🔻 CRYPTO BEARISH',
-    color: 'warning',
-    severity: 'warning',
-  };
-  return {
-    text: '💀 CRYPTO WINTER',
-    color: 'error',
-    severity: 'error',
-  };
 };

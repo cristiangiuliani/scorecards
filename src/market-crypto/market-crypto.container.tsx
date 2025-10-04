@@ -1,7 +1,6 @@
 import React, {
   useContext, useEffect, useRef,
 } from 'react';
-import { RSI } from 'technicalindicators';
 
 import btcMock from '../_mocks/btc.json';
 import btcDominanceMock from '../_mocks/btcDominance.json';
@@ -49,13 +48,9 @@ const MarketCryptoContainer: React.FC = () => {
       } else {
         data = btcDominanceMock;
       }
-      const btcDominanceValue = parseFloat(data?.data?.market_cap_percentage?.btc?.toFixed(2));
-      const altcoinSeasonIndexValue = Math.max(0, Math.min(100,
-        ((70 - btcDominanceValue) / 30) * 100
-      ));
+
       updateMarketCrypto({
-        btcDominance: btcDominanceValue,
-        altcoinSeasonIndex: altcoinSeasonIndexValue,
+        btcDominance: parseFloat(data?.data?.market_cap_percentage?.btc?.toFixed(2)),
       });
     } catch (err) {
       console.error('Error fetching Btc dominance:', err);
@@ -71,16 +66,9 @@ const MarketCryptoContainer: React.FC = () => {
       } else {
         data = btcRsiMock;
       }
-      const pricesValues = data?.prices.map(([_, price]:number[]) => price);
-
-      const rsiValues = RSI.calculate({
-        values: pricesValues,
-        period: 14,
-      });
 
       updateMarketCrypto({
-        btcRsi: rsiValues[rsiValues.length - 1],
-        prices: pricesValues,
+        prices: data?.prices.map(([_, price]:number[]) => price),
         volumes: data?.data?.total_volumes.map(([_, volume]:number[]) => volume),
       });
     } catch (err) {
