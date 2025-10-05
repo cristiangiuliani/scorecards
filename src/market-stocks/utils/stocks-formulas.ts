@@ -140,10 +140,6 @@ export const calculateTreasury10YScore = (yield10Y: number): number => {
   return 0;  // Normale (3.0-4.0)
 };
 
-// ============================================
-// CALCOLO SCORE COMPLETO (AGGIORNATO)
-// ============================================
-
 export const calculateStocksScore = (data: TStocksData): number => {
   if (!data) return 0;
 
@@ -153,7 +149,6 @@ export const calculateStocksScore = (data: TStocksData): number => {
   const eurUsdScore = data?.eurUsd ? calculateEurUsdScore(data.eurUsd) : 0;
   const fearGreedScore = data?.fearGreed ? calculateFearGreedScore(data.fearGreed) : 0;
 
-  // Nuovi indicatori
   const athDistanceScore = data?.sp500Price && data?.sp500ATH
     ? calculateAthDistanceScore(data.sp500Price, data.sp500ATH) : 0;
   const momentumScore = data?.sp500Prices && data.sp500Prices.length >= 30
