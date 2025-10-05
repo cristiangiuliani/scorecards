@@ -37,9 +37,15 @@ jobs:
         run: yarn build
 
       - name: Deploy to Netlify
+        id: netlify-deploy
+        continue-on-error: true
         uses: netlify/actions/cli@master
         with:
-          args: deploy --dir=dist --prod --message "Deploy from GitHub Actions - ${{ github.sha }}"
+          args: deploy --dir=dist --prod --message="Deploy ${{ github.sha }}"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Check deployment status
+        if: steps.netlify-deploy.outcome != 'success'
+        run: exit 1
