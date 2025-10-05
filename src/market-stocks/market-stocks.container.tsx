@@ -8,13 +8,15 @@ import rsiSP500Mock from '../_mocks/rsiSp500.json';
 import sp500Mock from '../_mocks/sp500.json';
 import vixMock from '../_mocks/vix.json';
 import { GLOBALS, STOCKS_SCOPE } from '../constants/config';
+import DashboardContext from '../dashboard/dashboard.context';
+import type { IDashboardContext } from '../interfaces/dashboard';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 
 import MarketStocksComponent from './market-stocks.component';
 import MarketStocksContext from './market-stocks.context';
 
-const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA  === 'true';
 const MarketStocksContainer: React.FC = () => {
+  const { isDemo } = useContext<IDashboardContext>(DashboardContext);
   const {
     updateMarketStocks = () => {},
   } = useContext<IMarketStocksContext>(MarketStocksContext);
@@ -24,7 +26,7 @@ const MarketStocksContainer: React.FC = () => {
   const fetchSP500Data = async () => {
     try {
       let data;
-      if (!USE_MOCK_DATA) {
+      if (!isDemo) {
         const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchSP500?days=${STOCKS_SCOPE.lookbackDays}`);
         data = await res.json();
       } else {
@@ -47,7 +49,7 @@ const MarketStocksContainer: React.FC = () => {
   const fetchVixData = async () => {
     try {
       let data;
-      if (!USE_MOCK_DATA) {
+      if (!isDemo) {
         const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchVix`);
         data = await res.json();
       } else {
@@ -64,7 +66,7 @@ const MarketStocksContainer: React.FC = () => {
   const fetchRsiData = async () => {
     try {
       let data;
-      if (!USE_MOCK_DATA) {
+      if (!isDemo) {
         const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchRsiSP500`);
         data = await res.json();
       } else {
@@ -83,7 +85,7 @@ const MarketStocksContainer: React.FC = () => {
   const fetchUsdData = async () => {
     try {
       let data;
-      if (!USE_MOCK_DATA) {
+      if (!isDemo) {
         const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchEurUsd`);
         data = await res.json();
       } else {
@@ -101,7 +103,7 @@ const MarketStocksContainer: React.FC = () => {
   const fetchFearGreedData = async () => {
     try {
       let data;
-      if (!USE_MOCK_DATA) {
+      if (!isDemo) {
         const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchFearGreed`);
         data = await res.json();
       } else {

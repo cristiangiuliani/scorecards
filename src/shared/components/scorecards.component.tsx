@@ -28,10 +28,10 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                 sx={{
                   p: 4,
                   textAlign: 'center',
-                  background: interpretation.severity === 'success' ? 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)' :
-                    interpretation.severity === 'error' ? 'linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)' :
-                      interpretation.severity === 'warning' ? 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)' :
-                        'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)',
+                  // background: interpretation.severity === 'success' ? 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)' :
+                  //   interpretation.severity === 'error' ? 'linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)' :
+                  //     interpretation.severity === 'warning' ? 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)' :
+                  //       'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)',
                 }}
               >
                 <Typography variant="h2" component="div" fontWeight="bold" color="text.primary" mb={2}>

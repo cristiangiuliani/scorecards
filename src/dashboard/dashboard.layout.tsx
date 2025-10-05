@@ -14,6 +14,7 @@ import {
   CircularProgress,
   Container,
   Alert,
+  CssBaseline,
 } from '@mui/material';
 import {
   createTheme, ThemeProvider,
@@ -31,42 +32,44 @@ import DashboardContext from './dashboard.context';
 
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#ff9800',
-    },
-    success: {
-      main: '#4caf50',
-    },
-    error: {
-      main: '#f44336',
-    },
-    warning: {
-      main: '#ff9800',
-    },
+    mode: 'dark',
   },
+  // palette: {
+  //   primary: {
+  //     main: '#1976d2',
+  //   },
+  //   secondary: {
+  //     main: '#ff9800',
+  //   },
+  //   success: {
+  //     main: '#4caf50',
+  //   },
+  //   error: {
+  //     main: '#f44336',
+  //   },
+  //   warning: {
+  //     main: '#ff9800',
+  //   },
+  // },
 });
 const DashboardLayout: React.FC = () => {
   const {
     isLoading,
+    isDemo,
     activeTab = GLOBALS.defaultActiveTab,
     refetchMarketData = () => {},
     updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);
-  const isDemo = import.meta.env.VITE_IS_DEMO === 'true';
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Container
         maxWidth="xl"
         sx={{
           py: 4,
-          bgcolor: '#f5f5f5',
           minHeight: '100vh',
         }}
       >
-        { isDemo && <Alert severity="warning">DEMO MODE: Scorecards is using demo MOCK data.</Alert>}
         {/* Header */}
         <Box mb={4}>
           <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
@@ -76,6 +79,7 @@ const DashboardLayout: React.FC = () => {
             Automated market reversal analysis system
           </Typography>
         </Box>
+        { isDemo && <Alert severity="warning">DEMO MODE: Scorecards is using demo MOCK data.</Alert>}
 
         {/* Navigation */}
         <Paper

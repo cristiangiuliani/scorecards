@@ -4,6 +4,7 @@ export const GLOBALS = {
   maxDataPoints: 365, // Max data points to fetch for charts
   movingAveragePeriod: 50, // Period for moving average calculation
   ApiBaseUrl: '/scorecards/api',
+  useMockData: true,
 };
 
 export const CRYPTO_WEIGHTS = {
