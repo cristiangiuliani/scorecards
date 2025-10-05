@@ -6,7 +6,7 @@ import btcMock from '../_mocks/btc.json';
 import btcDominanceMock from '../_mocks/btcDominance.json';
 import btcFearGreedMock from '../_mocks/btcFearGreed.json';
 import btcRsiMock from '../_mocks/btcRsi.json';
-import { Urls } from '../enums/global';
+import { GLOBALS } from '../constants/config';
 import type { IMarketCryptoContext } from '../interfaces/market-crypto';
 
 import MarketCryptoComponent from './market-crypto.component';
@@ -25,14 +25,16 @@ const MarketCryptoContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchBtc`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchBtc`);
         data = await res.json();
       } else {
         data = btcMock;
       }
+      console.log(data?.market_data.current_price.usd);
+
       updateMarketCrypto({
-        currentPrice: data?.data?.market_data.current_price.usd,
-        ath: data?.data?.market_data.ath.usd,
+        currentPrice: data?.market_data.current_price.usd,
+        ath: data?.market_data.ath.usd,
       });
     } catch (err) {
       console.error('Error fetching Btc dominance:', err);
@@ -43,7 +45,7 @@ const MarketCryptoContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchBtcDominance`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchBtcDominance`);
         data = await res.json();
       } else {
         data = btcDominanceMock;
@@ -61,7 +63,7 @@ const MarketCryptoContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchBtcRsi`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchBtcRsi`);
         data = await res.json();
       } else {
         data = btcRsiMock;
@@ -80,7 +82,7 @@ const MarketCryptoContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchBtcFearGreed`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchBtcFearGreed`);
         data = await res.json();
       } else {
         data = btcFearGreedMock;

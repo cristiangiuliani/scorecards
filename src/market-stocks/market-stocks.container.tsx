@@ -5,8 +5,9 @@ import React, {
 import eurUsdMock from '../_mocks/eurUsd.json';
 import fearGreedMock from '../_mocks/fearGreed.json';
 import rsiSP500Mock from '../_mocks/rsiSp500.json';
+import sp500Mock from '../_mocks/sp500.json';
 import vixMock from '../_mocks/vix.json';
-import { Urls } from '../enums/global';
+import { GLOBALS } from '../constants/config';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 
 import MarketStocksComponent from './market-stocks.component';
@@ -17,16 +18,38 @@ console.log('USE_MOCK_DATA', import.meta.env.VITE_USE_MOCK_DATA);
 const MarketStocksContainer: React.FC = () => {
   const {
     updateMarketStocks = () => {},
-    // vix, rsiSP500, eurUsd, fearGreed, lastUpdated,
   } = useContext<IMarketStocksContext>(MarketStocksContext);
 
   const skipStrictModeRerender = useRef(false);
+
+  const fetchSP500Data = async () => {
+    try {
+      let data;
+      if (!USE_MOCK_DATA) {
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchSP500`);
+        data = await res.json();
+      } else {
+        data = sp500Mock;
+      }
+      const sp500Quotes = data?.indicators?.quote || [];
+      updateMarketStocks({
+        sp500Price: parseFloat(data?.meta.regularMarketPrice),
+        sp500Prices: data?.indicators.quote[0].close,
+        sp500Volumes: data?.indicators.quote[0].volume,
+        sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
+        treasury10Y: data?.chart?.result[0]?.meta?.regularMarketPrice,
+
+      });
+    } catch (err) {
+      console.error('Error fetching VIX:', err);
+    }
+  };
 
   const fetchVixData = async () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchVix`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchVix`);
         data = await res.json();
       } else {
         data = vixMock;
@@ -43,7 +66,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchRsiSP500`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchRsiSP500`);
         data = await res.json();
       } else {
         data = rsiSP500Mock;
@@ -62,7 +85,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchEurUsd`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchEurUsd`);
         data = await res.json();
       } else {
         data = eurUsdMock;
@@ -80,7 +103,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${Urls.ApiBaseUrl}/fetchFearGreed`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchFearGreed`);
         data = await res.json();
       } else {
         data = fearGreedMock;
@@ -98,6 +121,7 @@ const MarketStocksContainer: React.FC = () => {
     // Avoid dev double call in Strict Mode to not double fetch real data (limited free plan 25 calls per day)
     if (skipStrictModeRerender.current) return;
     skipStrictModeRerender.current = true;
+    fetchSP500Data();
     fetchVixData();
     fetchRsiData();
     fetchUsdData();

@@ -1,3 +1,4 @@
+import { CRYPTO_WEIGHTS } from '../../constants/config';
 import type { TCryptoData } from '../../interfaces/market-crypto';
 
 export const calculateBtcFearGreedScore = (value = 0):number => {
@@ -35,7 +36,7 @@ export const calculateAltSeasonScore = (value = 0):number => {
   return 0;
 };
 
-export const calculateAthDistanceScore = (current: number, ath: number): number => {
+export const calculateAthDistanceScore = (current: number | undefined, ath: number | undefined): number => {
   if (!current || !ath) return 0;
 
   const distance = (current / ath) * 100;
@@ -146,13 +147,13 @@ export const calculateCryptoScore = (data:TCryptoData, btcRsi:number, altcoinSea
     ? calculateVolumeScore(data.volumes) : 0;
 
   const weightedScore =
-    (btcFearScore * 1.2) +      // Ridotto da 1.5
-    (btcRsiScore * 1.0) +       // Ridotto da 1.3
-    (btcDomScore * 0.8) +       // Ridotto da 1.0
-    (altSeasonScore * 0.6) +    // Ridotto da 0.8
-    (athDistanceScore * 1.8) +  // NUOVO - peso alto!
-    (momentumScore * 1.5) +     // NUOVO - peso alto!
-    (maScore * 1.2) +           // NUOVO
-    (volumeScore * 0.9);
-  return weightedScore * 0.5;
+    (btcFearScore * CRYPTO_WEIGHTS.fearGreed) +
+    (btcRsiScore * CRYPTO_WEIGHTS.rsi) +
+    (btcDomScore * CRYPTO_WEIGHTS.dominance) +
+    (altSeasonScore * CRYPTO_WEIGHTS.altcoinSeason) +
+    (athDistanceScore * CRYPTO_WEIGHTS.athDistance) +
+    (momentumScore * CRYPTO_WEIGHTS.momentum) +
+    (maScore * CRYPTO_WEIGHTS.ma) +
+    (volumeScore * CRYPTO_WEIGHTS.volume);
+  return weightedScore * CRYPTO_WEIGHTS.score;
 };

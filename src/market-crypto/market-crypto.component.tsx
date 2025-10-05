@@ -4,7 +4,8 @@ import React, {
 } from 'react';
 import { RSI } from 'technicalindicators';
 
-import { MarketIndexLabels } from '../enums/market-indexes';
+import { CRYPTO_WEIGHTS } from '../constants/config';
+import { CRYPTO_LABELS } from '../constants/labels';
 import type { IMarketCryptoContext } from '../interfaces/market-crypto';
 import IndicatorsComponent from '../shared/components/indicators.component';
 import ScoreCardsComponent from '../shared/components/scorecards.component';
@@ -20,11 +21,13 @@ import {
   calculateAltcoinSeasonIndex,
   calculateAltSeasonScore,
   calculateAthDistance,
+  calculateAthDistanceScore,
   calculateBtcDominanceScore,
   calculateBtcFearGreedScore,
   calculateBtcRsiScore,
   calculateCryptoScore,
   calculateMomentum7d,
+  calculateMomentumScore,
 } from './utils/crypto-formulas';
 import {
   getActionableTips, getBtcAltBalance, getCryptoInterpretation, getMarketPhase, getRiskLevel, getTimeHorizon,
@@ -65,30 +68,41 @@ const MarketCryptoComponent: React.FC = () => {
 
   const CryptoIndexList:TIndicatorsListItem[] = [
     {
-      label: MarketIndexLabels.BtcDominance,
-      weight: 1.3,
+      label: CRYPTO_LABELS.BtcDominance,
+      weight: CRYPTO_WEIGHTS.dominance,
       value: btcDominance,
       score: calculateBtcDominanceScore(btcDominance),
     },
     {
-      label: MarketIndexLabels.BtcRsi,
-      weight: 1.2,
+      label: CRYPTO_LABELS.BtcRsi,
+      weight: CRYPTO_WEIGHTS.rsi,
       value: btcRsi,
       score: calculateBtcRsiScore(btcRsi),
     },
     {
-      label: MarketIndexLabels.AltSeasonIndex,
-      weight: 0.8,
+      label: CRYPTO_LABELS.AltSeasonIndex,
+      weight: CRYPTO_WEIGHTS.altcoinSeason,
       value: altcoinSeasonIndex,
       score: calculateAltSeasonScore(altcoinSeasonIndex),
     },
     {
-      label: MarketIndexLabels.BtcFearGreed,
-      weight: 1.2,
+      label: CRYPTO_LABELS.BtcFearGreed,
+      weight: CRYPTO_WEIGHTS.fearGreed,
       value: btcFearGreed,
       score: calculateBtcFearGreedScore(btcFearGreed),
     },
-
+    {
+      label: CRYPTO_LABELS.AthDistance,
+      weight: CRYPTO_WEIGHTS.athDistance,
+      value: athDistance,
+      score: calculateAthDistanceScore(currentPrice, ath),
+    },
+    {
+      label: CRYPTO_LABELS.Momentum7D,
+      weight: CRYPTO_WEIGHTS.momentum,
+      value: momentum7d,
+      score: calculateMomentumScore(prices),
+    },
   ];
 
   const getCryptoStrategies = (metrics: TCryptoMetrics): TStrategiesListItem[] => {
@@ -103,43 +117,43 @@ const MarketCryptoComponent: React.FC = () => {
 
     return [
       {
-        title: '₿ Crypto Strategy',
+        title: CRYPTO_LABELS.Strategy,
         color: 'secondary',
         items: [
           {
-            label: 'Market Phase',
+            label: CRYPTO_LABELS.MarketPhase,
             value: getMarketPhase(cryptoScore, athDistance),
           },
           {
-            label: 'Time Horizon',
+            label: CRYPTO_LABELS.TimeHorizon,
             value: getTimeHorizon(cryptoScore, momentum7d),
           },
         ],
       },
       {
-        title: '⚖️ BTC vs Altcoins',
+        title: CRYPTO_LABELS.BtcAltcoin,
         color: 'info',
         items: [
           {
-            label: 'Portfolio Balance',
+            label: CRYPTO_LABELS.PortfolioBalance,
             value: getBtcAltBalance(btcDominance),
           },
           {
-            label: 'BTC Dominance',
+            label: CRYPTO_LABELS.BtcDominance,
             value: `${btcDominance.toFixed(1)}%`,
           },
         ],
       },
       {
-        title: '🚨 Risk Management',
+        title: CRYPTO_LABELS.RiskManagement,
         color: 'error',
         items: [
           {
-            label: 'Risk Level',
+            label: CRYPTO_LABELS.RiskLevel,
             value: getRiskLevel(cryptoScore, btcRsi, btcFearGreed, athDistance),
           },
           {
-            label: 'Key Metric',
+            label: CRYPTO_LABELS.KeyMetric,
             value: athDistance > 95
               ? `${athDistance.toFixed(1)}% of ATH`
               : `RSI: ${btcRsi.toFixed(0)}`,
@@ -147,7 +161,7 @@ const MarketCryptoComponent: React.FC = () => {
         ],
       },
       {
-        title: '💡 Action Items',
+        title: CRYPTO_LABELS.ActionItems,
         color: 'warning',
         items: getActionableTips(
           cryptoScore,

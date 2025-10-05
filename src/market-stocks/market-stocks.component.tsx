@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box';
-import React, {
-  useContext,
-} from 'react';
+import React, { useContext } from 'react';
 
-import { MarketIndexLabels } from '../enums/market-indexes';
+import { STOCKS_LABELS } from '../constants/labels';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 import IndicatorsComponent from '../shared/components/indicators.component';
 import ScoreCardsComponent from '../shared/components/scorecards.component';
@@ -12,61 +10,109 @@ import type {
   TIndicatorsListItem,
   TStrategiesListItem,
 } from '../types/data.type';
-import {
-  calculateEurUsdScore, calculateFearGreedScore, calculateRsiScore, calculateStocksScore, calculateVixScore, getStockInterpretation,
-} from '../utils/stocks-formulas';
 
 import MarketStocksContext from './market-stocks.context';
+import {
+  calculateEurUsdScore,
+  calculateFearGreedScore,
+  calculateRsiScore,
+  calculateStocksScore,
+  calculateVixScore,
+} from './utils/stocks-formulas';
+import {
+  getActionableTips, getMarketPhase, getPortfolioAllocation, getRiskLevel, getSectorFocus, getStockInterpretation, getTimeHorizon,
+} from './utils/stocks-interpretation';
 
 const MarketStocksComponent: React.FC = () => {
   const {
-    vix, rsiSP500, eurUsd, fearGreed, lastUpdated,
+    vix = 0,
+    rsiSP500 = 0,
+    eurUsd = 0,
+    fearGreed = 0,
+    sp500Price = 0,
+    sp500ATH = 0,
+    sp500Prices = [],
+    sp500Volumes = [],
+    lastUpdated,
   } = useContext<IMarketStocksContext>(MarketStocksContext);
+
+  // ============================================
+  // CALCOLA VALORI DERIVATI
+  // ============================================
+
+  // Distance from ATH (percentuale)
+  const athDistance = sp500Price && sp500ATH
+    ? (sp500Price / sp500ATH) * 100
+    : 0;
+
+  // Momentum 7 giorni (percentuale variazione)
+  const momentum7d = sp500Prices && sp500Prices.length >= 8
+    ? ((sp500Prices[sp500Prices.length - 1] - sp500Prices[sp500Prices.length - 8])
+       / sp500Prices[sp500Prices.length - 8]) * 100
+    : 0;
+
+  // ============================================
+  // CALCOLA STOCKS SCORE
+  // ============================================
 
   const stocksScore = calculateStocksScore({
     vix,
     rsiSP500,
     eurUsd,
     fearGreed,
+    sp500Price,
+    sp500ATH,
+    sp500Prices,
+    sp500Volumes,
   });
 
-  const StocksIndexList:TIndicatorsListItem[] = [
+  const StocksIndexList: TIndicatorsListItem[] = [
     {
-      label: MarketIndexLabels.Vix,
+      label: STOCKS_LABELS.Vix,
       weight: 1.3,
       value: vix,
       score: calculateVixScore(vix),
     },
     {
-      label: MarketIndexLabels.RsiSP500,
+      label: STOCKS_LABELS.RsiSP500,
       weight: 1.2,
       value: rsiSP500,
       score: calculateRsiScore(rsiSP500),
     },
     {
-      label: MarketIndexLabels.EurUsd,
+      label: STOCKS_LABELS.EurUsd,
       weight: 0.8,
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
     },
     {
-      label: MarketIndexLabels.FearGreed,
+      label: STOCKS_LABELS.FearGreed,
       weight: 1.2,
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
     },
   ];
 
-  const StocksStrategyList:TStrategiesListItem[] = [
+  // ============================================
+  // STRATEGIE (usando funzioni importate)
+  // ============================================
+
+  const StocksStrategyList: TStrategiesListItem[] = [
     {
       title: '💼 Portfolio Strategy',
       color: 'primary',
       items: [
         {
-          label: 'Current Allocation',
-          value: stocksScore > 3 ? 'Increase equity exposure' :
-            stocksScore < -3 ? 'Increase bonds and defensives' :
-              'Maintain balanced allocation',
+          label: 'Market Phase',
+          value: getMarketPhase(stocksScore, athDistance, vix),
+        },
+        {
+          label: 'Time Horizon',
+          value: getTimeHorizon(stocksScore, momentum7d),
+        },
+        {
+          label: 'Allocation',
+          value: getPortfolioAllocation(stocksScore, vix),
         },
       ],
     },
@@ -76,9 +122,13 @@ const MarketStocksComponent: React.FC = () => {
       items: [
         {
           label: 'Recommended Sectors',
-          value: stocksScore > 3 ? 'Tech, Growth, Small Cap' :
-            stocksScore < -3 ? 'Defense, Staples, REITs' :
-              'Current diversification OK',
+          value: getSectorFocus(stocksScore, rsiSP500, vix),
+        },
+        {
+          label: 'Key Metric',
+          value: athDistance > 95
+            ? `S&P500: ${athDistance.toFixed(1)}% of ATH`
+            : `VIX: ${vix?.toFixed(1)}`,
         },
       ],
     },
@@ -88,54 +138,25 @@ const MarketStocksComponent: React.FC = () => {
       items: [
         {
           label: 'Risk Level',
-          value: Math.abs(stocksScore) > 6 ? 'Caution: extreme signal' :
-            Math.abs(stocksScore) > 3 ? 'Active monitoring' :
-              'Controlled risk',
+          value: getRiskLevel(stocksScore, vix, rsiSP500, fearGreed, athDistance),
         },
       ],
     },
+    {
+      title: '💡 Action Items',
+      color: 'error',
+      items: getActionableTips(
+        stocksScore,
+        vix,
+        rsiSP500,
+        fearGreed,
+        athDistance
+      ).map((tip, index) => ({
+        label: `Tip ${index + 1}`,
+        value: tip,
+      })),
+    },
   ];
-
-  // const { btcDominance = 0 } = cryptoData;
-
-  // const CryptoStrategyList = [
-  //   {
-  //     title: '₿ Crypto Strategy',
-  //     color: 'secondary',
-  //     items: [
-  //       {
-  //         label: 'Market Phase',
-  //         value: cryptoScore > 2 ? 'Active bull market' :
-  //           cryptoScore < -2 ? 'Bear market / Winter' :
-  //             'Crab market / Accumulation',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: '⚖️ BTC vs Altcoins',
-  //     color: 'info',
-  //     items: [
-  //       {
-  //         label: 'Current Balance',
-  //         value: btcDominance > 60 ? 'Focus Bitcoin (quality)' :
-  //           btcDominance < 45 ? 'Active altseason' :
-  //             'BTC/Alt balance',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: '🚨 Risk Level',
-  //     color: 'error',
-  //     items: [
-  //       {
-  //         label: 'Current Risk',
-  //         value: Math.abs(cryptoScore) > 4 ? 'Extreme - Prepare exit/entry' :
-  //           Math.abs(cryptoScore) > 2 ? 'Moderate - Active trend' :
-  //             'Low - Patience/DCA',
-  //       },
-  //     ],
-  //   },
-  // ];
 
   return (
     <>
@@ -148,9 +169,7 @@ const MarketStocksComponent: React.FC = () => {
 
         <IndicatorsComponent indexList={StocksIndexList} />
 
-        <StrategiesComponent
-          strategiesList={StocksStrategyList}
-        />
+        <StrategiesComponent strategiesList={StocksStrategyList} />
       </Box>
     </>
   );

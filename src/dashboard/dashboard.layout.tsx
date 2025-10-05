@@ -19,6 +19,7 @@ import {
 } from '@mui/material/styles';
 import React, { useContext } from 'react';
 
+import { GLOBALS } from '../constants/config';
 import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
@@ -49,7 +50,7 @@ const theme = createTheme({
 const DashboardLayout: React.FC = () => {
   const {
     isLoading,
-    activeTab = 1,
+    activeTab = GLOBALS.defaultActiveTab,
     refetchMarketData = () => {},
     updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);

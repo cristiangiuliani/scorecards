@@ -10,6 +10,13 @@ const MarketStocksContext = createContext<IMarketStocksContext>({
   rsiSP500: undefined,
   eurUsd: undefined,
   fearGreed: undefined,
+  sp500Price: undefined,
+  sp500ATH: undefined,
+  sp500Prices: undefined,
+  sp500Volumes: undefined,
+  putCallRatio: undefined,
+  treasury10Y: undefined,
+  lastUpdated: undefined,
   refetchMarketStocksData: () => {},
   updateMarketStocks: () => {},
 });
