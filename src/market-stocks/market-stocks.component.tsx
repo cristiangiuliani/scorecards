@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import React, { useContext } from 'react';
 
+import { STOCKS_WEIGHTS } from '../constants/config';
 import { STOCKS_LABELS } from '../constants/labels';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 import IndicatorsComponent from '../shared/components/indicators.component';
@@ -69,25 +70,25 @@ const MarketStocksComponent: React.FC = () => {
   const StocksIndexList: TIndicatorsListItem[] = [
     {
       label: STOCKS_LABELS.Vix,
-      weight: 1.3,
+      weight: STOCKS_WEIGHTS.vix,
       value: vix,
       score: calculateVixScore(vix),
     },
     {
       label: STOCKS_LABELS.RsiSP500,
-      weight: 1.2,
+      weight: STOCKS_WEIGHTS.rsi,
       value: rsiSP500,
       score: calculateRsiScore(rsiSP500),
     },
     {
       label: STOCKS_LABELS.EurUsd,
-      weight: 0.8,
+      weight: STOCKS_WEIGHTS.eurUsd,
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
     },
     {
       label: STOCKS_LABELS.FearGreed,
-      weight: 1.2,
+      weight: STOCKS_WEIGHTS.fearGreed,
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
     },

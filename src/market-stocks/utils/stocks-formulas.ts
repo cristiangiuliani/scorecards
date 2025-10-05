@@ -1,3 +1,4 @@
+import { STOCKS_WEIGHTS } from '../../constants/config';
 import type { TStocksData } from '../../interfaces/market-stocks';
 
 export const calculateVixScore = (value = 0): number => {
@@ -164,17 +165,16 @@ export const calculateStocksScore = (data: TStocksData): number => {
   const treasury10YScore = data?.treasury10Y
     ? calculateTreasury10YScore(data.treasury10Y) : 0;
 
-  // Weighted score (ribilanciato)
   const weightedScore =
-    (vixScore * 1.3) +           // VIX importante
-    (rsiScore * 1.0) +           // Ridotto da 1.2
-    (eurUsdScore * 0.5) +        // Ridotto da 0.8 (meno rilevante)
-    (fearGreedScore * 1.2) +     // Mantenuto
-    (athDistanceScore * 1.8) +   // NUOVO - peso alto!
-    (momentumScore * 1.5) +      // NUOVO - peso alto!
-    (maScore * 1.2) +            // NUOVO
-    (putCallScore * 0.8) +       // NUOVO - sentiment
-    (treasury10YScore * 1.0);    // NUOVO - macro context
+    (vixScore * STOCKS_WEIGHTS.vix) +           // VIX importante
+    (rsiScore * STOCKS_WEIGHTS.rsi) +           // Ridotto da 1.2
+    (eurUsdScore * STOCKS_WEIGHTS.eurUsd) +        // Ridotto da 0.8 (meno rilevante)
+    (fearGreedScore * STOCKS_WEIGHTS.fearGreed) +     // Mantenuto
+    (athDistanceScore * STOCKS_WEIGHTS.athDistance) +   // NUOVO - peso alto!
+    (momentumScore * STOCKS_WEIGHTS.momentum) +      // NUOVO - peso alto!
+    (maScore * STOCKS_WEIGHTS.ma) +            // NUOVO
+    (putCallScore * STOCKS_WEIGHTS.putCall) +       // NUOVO - sentiment
+    (treasury10YScore * STOCKS_WEIGHTS.treasury10Y);    // NUOVO - macro context
 
-  return weightedScore * 0.5;    // Ridotto da 0.6
+  return weightedScore * STOCKS_WEIGHTS.score;    // Ridotto da 0.6
 };

@@ -14,7 +14,6 @@ import MarketStocksComponent from './market-stocks.component';
 import MarketStocksContext from './market-stocks.context';
 
 const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA  === 'true';
-console.log('USE_MOCK_DATA', import.meta.env.VITE_USE_MOCK_DATA);
 const MarketStocksContainer: React.FC = () => {
   const {
     updateMarketStocks = () => {},
@@ -31,11 +30,11 @@ const MarketStocksContainer: React.FC = () => {
       } else {
         data = sp500Mock;
       }
-      const sp500Quotes = data?.indicators?.quote || [];
+      const sp500Quotes = data?.chart?.result[0]?.indicators?.quote || [];
       updateMarketStocks({
-        sp500Price: parseFloat(data?.meta.regularMarketPrice),
-        sp500Prices: data?.indicators.quote[0].close,
-        sp500Volumes: data?.indicators.quote[0].volume,
+        sp500Price: parseFloat(data?.chart?.result[0]?.meta.regularMarketPrice),
+        sp500Prices: data?.chart?.result[0]?.indicators.quote[0].close,
+        sp500Volumes: data?.chart?.result[0]?.indicators.quote[0].volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
         treasury10Y: data?.chart?.result[0]?.meta?.regularMarketPrice,
 

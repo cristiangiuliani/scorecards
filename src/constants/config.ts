@@ -5,6 +5,7 @@ export const GLOBALS = {
   movingAveragePeriod: 50, // Period for moving average calculation
   ApiBaseUrl: '/scorecards/api',
 };
+
 export const CRYPTO_WEIGHTS = {
   fearGreed: 1.2,
   rsi: 1.0,
@@ -14,5 +15,18 @@ export const CRYPTO_WEIGHTS = {
   momentum: 1.5,
   ma: 1.2,
   volume: 0.9,
+  score: 0.5,
+};
+
+export const STOCKS_WEIGHTS = {
+  vix: 1.3,
+  rsi: 1.0,
+  eurUsd: 0.5,
+  fearGreed: 1.2,
+  athDistance: 1.8,
+  momentum: 1.5,
+  ma: 1.2,
+  putCall: 0.8,
+  treasury10Y: 1.0,
   score: 0.5,
 };

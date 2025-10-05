@@ -13,6 +13,7 @@ import {
   Paper,
   CircularProgress,
   Container,
+  Alert,
 } from '@mui/material';
 import {
   createTheme, ThemeProvider,
@@ -54,6 +55,7 @@ const DashboardLayout: React.FC = () => {
     refetchMarketData = () => {},
     updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);
+  const isDemo = import.meta.env.VITE_IS_DEMO === 'true';
   return (
     <ThemeProvider theme={theme}>
       <Container
@@ -64,6 +66,7 @@ const DashboardLayout: React.FC = () => {
           minHeight: '100vh',
         }}
       >
+        { isDemo && <Alert severity="warning">DEMO MODE: Scorecards is using demo MOCK data.</Alert>}
         {/* Header */}
         <Box mb={4}>
           <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
