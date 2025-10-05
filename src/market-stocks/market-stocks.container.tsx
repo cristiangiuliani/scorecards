@@ -7,7 +7,7 @@ import fearGreedMock from '../_mocks/fearGreed.json';
 import rsiSP500Mock from '../_mocks/rsiSp500.json';
 import sp500Mock from '../_mocks/sp500.json';
 import vixMock from '../_mocks/vix.json';
-import { GLOBALS } from '../constants/config';
+import { GLOBALS, STOCKS_SCOPE } from '../constants/config';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 
 import MarketStocksComponent from './market-stocks.component';
@@ -25,7 +25,7 @@ const MarketStocksContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchSP500`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchSP500?days=${STOCKS_SCOPE.lookbackDays}`);
         data = await res.json();
       } else {
         data = sp500Mock;

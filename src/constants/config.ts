@@ -30,3 +30,11 @@ export const STOCKS_WEIGHTS = {
   treasury10Y: 1.0,
   score: 0.5,
 };
+
+export const STOCKS_SCOPE = {
+  lookbackDays: 200,
+};
+
+export const CRYPTO_SCOPES = {
+  lookbackDays: 120,
+};

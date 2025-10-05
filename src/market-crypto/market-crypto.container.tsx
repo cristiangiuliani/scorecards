@@ -6,7 +6,7 @@ import btcMock from '../_mocks/btc.json';
 import btcDominanceMock from '../_mocks/btcDominance.json';
 import btcFearGreedMock from '../_mocks/btcFearGreed.json';
 import btcRsiMock from '../_mocks/btcRsi.json';
-import { GLOBALS } from '../constants/config';
+import { CRYPTO_SCOPES, GLOBALS } from '../constants/config';
 import type { IMarketCryptoContext } from '../interfaces/market-crypto';
 
 import MarketCryptoComponent from './market-crypto.component';
@@ -63,7 +63,7 @@ const MarketCryptoContainer: React.FC = () => {
     try {
       let data;
       if (!USE_MOCK_DATA) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchBtcRsi`);
+        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchBtcRsi?days=${CRYPTO_SCOPES.lookbackDays}`);
         data = await res.json();
       } else {
         data = btcRsiMock;

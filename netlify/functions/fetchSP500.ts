@@ -17,7 +17,8 @@ export const handler: Handler = async (event: HandlerEvent, context: HandlerCont
   }
 
   try {
-    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/^GSPC?interval=1d&range=200d';
+    const days = event.queryStringParameters?.days || '200';
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/^GSPC?interval=1d&range=${days}d`;
 
     const response = await fetch(url, {
       headers: {
