@@ -1,8 +1,5 @@
 export const GLOBALS = {
   defaultActiveTab: 0,
-  dataRefreshInterval: 15 * 60 * 1000, // 15 minutes
-  maxDataPoints: 365, // Max data points to fetch for charts
-  movingAveragePeriod: 50, // Period for moving average calculation
   ApiBaseUrl: '/scorecards/api',
   useMockData: true,
 };

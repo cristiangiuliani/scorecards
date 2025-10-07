@@ -1,132 +1,116 @@
 import React, {
-  useContext, useEffect, useRef,
+  useContext, useEffect,
 } from 'react';
 
-import eurUsdMock from '../_mocks/eurUsd.json';
-import fearGreedMock from '../_mocks/fearGreed.json';
-import rsiSP500Mock from '../_mocks/rsiSp500.json';
-import sp500Mock from '../_mocks/sp500.json';
-import vixMock from '../_mocks/vix.json';
-import { GLOBALS, STOCKS_SCOPE } from '../constants/config';
-import DashboardContext from '../dashboard/dashboard.context';
-import type { IDashboardContext } from '../interfaces/dashboard';
+import { API } from '../constants/api';
+import { STOCKS_SCOPE } from '../constants/config';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
+import { useNetlifyApi } from '../shared/hooks/use-netlify-api';
 
 import MarketStocksComponent from './market-stocks.component';
 import MarketStocksContext from './market-stocks.context';
 
 const MarketStocksContainer: React.FC = () => {
-  const { isDemo } = useContext<IDashboardContext>(DashboardContext);
   const {
     updateMarketStocks = () => {},
   } = useContext<IMarketStocksContext>(MarketStocksContext);
 
-  const skipStrictModeRerender = useRef(false);
+  const sp500Data = useNetlifyApi({
+    apiFunction: API.sp500,
+    options: {
+      autoFetch: true,
+      params: {
+        days: STOCKS_SCOPE.lookbackDays.toString(),
+      },
+    },
+  });
 
-  const fetchSP500Data = async () => {
-    try {
-      let data;
-      if (!isDemo) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchSP500?days=${STOCKS_SCOPE.lookbackDays}`);
-        data = await res.json();
-      } else {
-        data = sp500Mock;
-      }
-      const sp500Quotes = data?.chart?.result[0]?.indicators?.quote || [];
+  useEffect(() => {
+    const { data } = sp500Data;
+
+    if (data) {
+      const sp500Quotes = data.chart?.result[0]?.indicators?.quote || [];
       updateMarketStocks({
-        sp500Price: parseFloat(data?.chart?.result[0]?.meta.regularMarketPrice),
-        sp500Prices: data?.chart?.result[0]?.indicators.quote[0].close,
-        sp500Volumes: data?.chart?.result[0]?.indicators.quote[0].volume,
+        sp500Price: parseFloat(data.chart?.result[0]?.meta.regularMarketPrice),
+        sp500Prices: data.chart.result[0]?.indicators.quote[0].close,
+        sp500Volumes: data.chart?.result[0]?.indicators.quote[0].volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
-        treasury10Y: data?.chart?.result[0]?.meta?.regularMarketPrice,
-
+        treasury10Y: data.chart?.result[0]?.meta?.regularMarketPrice,
       });
-    } catch (err) {
-      console.error('Error fetching VIX:', err);
     }
-  };
+  }, [sp500Data.data]);
 
-  const fetchVixData = async () => {
-    try {
-      let data;
-      if (!isDemo) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchVix`);
-        data = await res.json();
-      } else {
-        data = vixMock;
-      }
+  const vixData = useNetlifyApi({
+    apiFunction: API.vix,
+    options: {
+      autoFetch: true,
+    },
+  });
+
+  useEffect(() => {
+    const { data } = vixData;
+
+    if (data) {
       updateMarketStocks({
         vix: parseFloat(data?.chart?.result[0]?.meta?.regularMarketPrice),
       });
-    } catch (err) {
-      console.error('Error fetching VIX:', err);
     }
-  };
+  }, [vixData.data]);
 
-  const fetchRsiData = async () => {
-    try {
-      let data;
-      if (!isDemo) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchRsiSP500`);
-        data = await res.json();
-      } else {
-        data = rsiSP500Mock;
-      }
+  const rsiData = useNetlifyApi({
+    apiFunction: API.rsiSP500,
+    options: {
+      autoFetch: true,
+    },
+  });
+
+  useEffect(() => {
+    const { data } = rsiData;
+
+    if (data) {
       const lastUpdate = data['Meta Data']['3: Last Refreshed'];
       const lastRsi = data['Technical Analysis: RSI'][lastUpdate]['RSI'];
       updateMarketStocks({
         rsiSP500: parseFloat(lastRsi),
       });
-    } catch (err) {
-      console.error('Error fetching RSI S&P 500:', err);
     }
-  };
+  }, [rsiData.data]);
 
-  const fetchUsdData = async () => {
-    try {
-      let data;
-      if (!isDemo) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchEurUsd`);
-        data = await res.json();
-      } else {
-        data = eurUsdMock;
-      }
+  const eurUsdData = useNetlifyApi({
+    apiFunction: API.eurUsd,
+    options: {
+      autoFetch: true,
+    },
+  });
 
+  useEffect(() => {
+    const { data } = eurUsdData;
+
+    if (data) {
       updateMarketStocks({
         eurUsd: parseFloat(data['Realtime Currency Exchange Rate']['5. Exchange Rate']),
       });
-    } catch (err) {
-      console.error('Error fetching USD:', err);
     }
-  };
+  }, [eurUsdData.data]);
 
-  const fetchFearGreedData = async () => {
-    try {
-      let data;
-      if (!isDemo) {
-        const res = await fetch(`${GLOBALS.ApiBaseUrl}/fetchFearGreed`);
-        data = await res.json();
-      } else {
-        data = fearGreedMock;
-      }
+  const fearGreedData = useNetlifyApi({
+    apiFunction: API.fearGreed,
+    options: {
+      autoFetch: true,
+    },
+  });
 
+  useEffect(() => {
+    const { data } = fearGreedData;
+
+    if (data) {
       updateMarketStocks({
         fearGreed: parseFloat(data.fear_and_greed.score),
       });
-    } catch (err) {
-      console.error('Error fetching USD:', err);
     }
-  };
+  }, [fearGreedData.data]);
 
   useEffect(() => {
-    // Avoid dev double call in Strict Mode to not double fetch real data (limited free plan 25 calls per day)
-    if (skipStrictModeRerender.current) return;
-    skipStrictModeRerender.current = true;
-    fetchSP500Data();
-    fetchVixData();
-    fetchRsiData();
-    fetchUsdData();
-    fetchFearGreedData();
     updateMarketStocks({ lastUpdated: new Date().toISOString() });
   }, []);
 

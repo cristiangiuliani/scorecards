@@ -1,5 +1,5 @@
-import { createProxyHandler } from './utils/apiProxy';
+import { createCachedProxyHandler } from './utils/cachedProxy';
 
-export const handler = createProxyHandler(() => {
-  return 'https://api.alternative.me/fng/?limit=30';
-});
+export const handler = createCachedProxyHandler(
+  () => 'https://api.alternative.me/fng/?limit=30'
+);

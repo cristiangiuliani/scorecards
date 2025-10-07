@@ -1,5 +1,5 @@
-import { createProxyHandler } from './utils/apiProxy';
+import { createCachedProxyHandler } from './utils/cachedProxy';
 
-export const handler = createProxyHandler(() => {
-  return 'https://api.coingecko.com/api/v3/global';
-});
+export const handler = createCachedProxyHandler(
+  () => 'https://api.coingecko.com/api/v3/global'
+);
