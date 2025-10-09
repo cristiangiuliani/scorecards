@@ -25,4 +25,6 @@ export const STOCKS_LABELS = {
   RsiSP500: 'RSI S&P 500',
   EurUsd: 'EUR/USD',
   FearGreed: 'Fear & Greed',
+  AthDistance: 'ATH Distance',
+  Momentum7D: 'Momentum 7D',
 };

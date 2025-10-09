@@ -14,8 +14,10 @@ import type {
 
 import MarketStocksContext from './market-stocks.context';
 import {
+  calculateAthDistanceScore,
   calculateEurUsdScore,
   calculateFearGreedScore,
+  calculateMomentumScore,
   calculateRsiScore,
   calculateStocksScore,
   calculateVixScore,
@@ -92,11 +94,19 @@ const MarketStocksComponent: React.FC = () => {
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
     },
+    {
+      label: STOCKS_LABELS.AthDistance,
+      weight: STOCKS_WEIGHTS.athDistance,
+      value: athDistance,
+      score: calculateAthDistanceScore(sp500Price, sp500ATH),
+    },
+    {
+      label: STOCKS_LABELS.Momentum7D,
+      weight: STOCKS_WEIGHTS.momentum,
+      value: momentum7d,
+      score: calculateMomentumScore(sp500Prices),
+    },
   ];
-
-  // ============================================
-  // STRATEGIE (usando funzioni importate)
-  // ============================================
 
   const StocksStrategyList: TStrategiesListItem[] = [
     {
