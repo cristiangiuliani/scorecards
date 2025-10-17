@@ -81,7 +81,7 @@ export const useNetlifyApi = ({
       //       ? '🔄 Cache refreshata'
       //       : '🌐 Da API esterna'
       // );
-    } catch (err: any) {
+    } catch (err: unknown) {
       errorHandler.handleError(err, 'API');
     } finally {
       setLoading(false);

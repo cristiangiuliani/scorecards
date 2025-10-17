@@ -1,6 +1,5 @@
 
 import {
-  Refresh,
   ShowChart,
   CurrencyBitcoin,
 } from '@mui/icons-material';
@@ -9,9 +8,7 @@ import {
   Typography,
   Tabs,
   Tab,
-  Button,
   Paper,
-  CircularProgress,
   Container,
   Alert,
   CssBaseline,
@@ -55,10 +52,8 @@ const theme = createTheme({
 });
 const DashboardLayout: React.FC = () => {
   const {
-    isLoading,
     isDemo,
     activeTab = GLOBALS.defaultActiveTab,
-    refetchMarketData = () => {},
     updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);
   return (
@@ -117,7 +112,7 @@ const DashboardLayout: React.FC = () => {
               />
             </Tabs>
 
-            <Button
+            {/* <Button
               variant="contained"
               startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : <Refresh />}
               onClick={refetchMarketData}
@@ -127,12 +122,10 @@ const DashboardLayout: React.FC = () => {
               }}
             >
               Update
-            </Button>
+            </Button> */}
           </Box>
         </Paper>
-
-        {activeTab === 0 && <MarketStocks />}
-        {activeTab === 1 && <MarketCrypto />}
+        {activeTab === 1 ? <MarketCrypto /> : <MarketStocks />}
       </Container>
     </ThemeProvider>
   );
