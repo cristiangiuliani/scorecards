@@ -26,16 +26,16 @@ const MarketStocksContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data: { chart } = {} } = sp500Data;
+    const result = sp500Data?.data?.chart?.result || [];
 
-    if (chart) {
-      const sp500Quotes = chart?.result[0]?.indicators?.quote || [];
+    if (result.length > 0) {
+      const sp500Quotes = result[0]?.indicators?.quote || [];
       updateMarketStocks({
-        sp500Price: parseFloat(chart?.result[0]?.meta.regularMarketPrice),
-        sp500Prices: chart?.result[0]?.indicators.quote[0].close,
-        sp500Volumes: chart?.result[0]?.indicators.quote[0].volume,
+        sp500Price: parseFloat(result[0]?.meta.regularMarketPrice),
+        sp500Prices: result[0]?.indicators.quote[0].close,
+        sp500Volumes: result[0]?.indicators.quote[0].volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
-        treasury10Y: chart?.result[0]?.meta?.regularMarketPrice,
+        treasury10Y: result[0]?.meta?.regularMarketPrice,
       });
     }
   }, [sp500Data.data]);
