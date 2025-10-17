@@ -29,7 +29,7 @@ export const createCachedProxyHandler = (
     disableCache = false,
   } = options;
 
-  return async (event: HandlerEvent, context: HandlerContext) => {
+  return async (event: HandlerEvent, _context: HandlerContext) => {
     if (event.httpMethod === 'OPTIONS') {
       return {
         statusCode: 200,
@@ -42,16 +42,12 @@ export const createCachedProxyHandler = (
       const url = await urlBuilder(event);
       const cacheKey = `api_${url}`;
 
-      // ✅ NUOVO: Controlla se l'utente vuole forzare il refresh
       const forceRefresh = event.queryStringParameters?.refresh === 'true';
 
       if (forceRefresh) {
-        console.log(`🔄 Force refresh richiesto per: ${cacheKey}`);
-        // Elimina la cache esistente
         await CacheService.delete(cacheKey);
       }
 
-      // Prova a recuperare dalla cache (sarà null se abbiamo fatto delete)
       if (!disableCache && !forceRefresh) {
         const cachedData = await CacheService.get(cacheKey);
 
@@ -68,7 +64,6 @@ export const createCachedProxyHandler = (
         }
       }
 
-      // Fetch dall'API
       const response = await fetch(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
@@ -82,11 +77,10 @@ export const createCachedProxyHandler = (
 
       const data = await response.json();
 
-      // Salva in cache (anche se era force refresh)
       if (!disableCache) {
-        CacheService.set(cacheKey, data, cacheTTL).catch((err) =>
-          console.error('Errore salvataggio cache:', err)
-        );
+        CacheService.set(cacheKey, data, cacheTTL).catch((err) => {
+          throw new Error(`Save to Cache error:  ${err}`);
+        });
       }
 
       return {
@@ -101,7 +95,6 @@ export const createCachedProxyHandler = (
         body: JSON.stringify(data),
       };
     } catch (error: any) {
-      console.error('Errore proxy con cache:', error);
       return {
         statusCode: 500,
         headers: {

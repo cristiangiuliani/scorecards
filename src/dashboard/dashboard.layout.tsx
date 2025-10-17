@@ -27,6 +27,7 @@ import type {
 } from '../interfaces/dashboard';
 import MarketCrypto from '../market-crypto/market-crypto';
 import MarketStocks from '../market-stocks/market-stocks';
+import { ErrorDisplay } from '../shared/components/error-display';
 
 import DashboardContext from './dashboard.context';
 
@@ -63,6 +64,7 @@ const DashboardLayout: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ErrorDisplay />
       <Container
         maxWidth="xl"
         sx={{

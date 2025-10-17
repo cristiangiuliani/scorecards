@@ -8,11 +8,6 @@ interface CacheDocument {
 }
 
 export class CacheService {
-  /**
-   * Recupera dati dalla cache
-   * @param key - Chiave univoca per i dati
-   * @returns Dati se trovati e non scaduti, altrimenti null
-   */
   static async get<T = any>(key: string): Promise<T | null> {
     try {
       const { db } = await connectToDatabase();
@@ -31,7 +26,7 @@ export class CacheService {
       console.log(`❌ Cache MISS: ${key}`);
       return null;
     } catch (error) {
-      console.error('Errore cache get:', error);
+      console.error('Cache error get:', error);
       return null;
     }
   }

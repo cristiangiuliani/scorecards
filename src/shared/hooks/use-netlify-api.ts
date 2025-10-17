@@ -6,6 +6,7 @@ import {
 import type { IApiEndpoint } from '../../constants/api';
 import { GLOBALS } from '../../constants/config';
 import DashboardContext from '../../dashboard/dashboard.context';
+import { errorHandler } from '../../error-handler/error.service';
 import type { IDashboardContext } from '../../interfaces/dashboard';
 
 interface IUseApiOptions {
@@ -16,7 +17,6 @@ interface IUseApiOptions {
 interface IUseApiResult {
   data: any;
   loading: boolean;
-  error: string | null;
   cacheHit: boolean;
   refetch: () => Promise<void>;
   forceRefresh: () => Promise<void>;
@@ -33,19 +33,16 @@ export const useNetlifyApi = ({
 }:IUseNetlifyApiProps):IUseApiResult => {
   const [data, setData] = useState<unknown | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [cacheHit, setCacheHit] = useState(false);
   const { isDemo } = useContext<IDashboardContext>(DashboardContext);
 
   const { autoFetch = true, params = {} } = options || {};
-  console.log('apiFunction', apiFunction);
 
   const { functionName, mockData } = apiFunction;
 
   const fetchData = useCallback(async (forceRefresh = false) => {
     try {
       setLoading(true);
-      setError(null);
 
       if (isDemo) {
         setTimeout(() => {
@@ -77,16 +74,15 @@ export const useNetlifyApi = ({
       const cacheHeader = response.headers.get('X-Cache');
       setCacheHit(cacheHeader === 'HIT');
 
-      console.log(
-        cacheHeader === 'HIT'
-          ? '✅ Da cache MongoDB'
-          : cacheHeader === 'REFRESHED'
-            ? '🔄 Cache refreshata'
-            : '🌐 Da API esterna'
-      );
+      // console.log(
+      //   cacheHeader === 'HIT'
+      //     ? '✅ Da cache MongoDB'
+      //     : cacheHeader === 'REFRESHED'
+      //       ? '🔄 Cache refreshata'
+      //       : '🌐 Da API esterna'
+      // );
     } catch (err: any) {
-      setError(err.message);
-      console.error('Errore fetch:', err);
+      errorHandler.handleError(err, 'API');
     } finally {
       setLoading(false);
     }
@@ -104,7 +100,6 @@ export const useNetlifyApi = ({
   return {
     data,
     loading,
-    error,
     cacheHit,
     refetch,
     forceRefresh,
