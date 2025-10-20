@@ -2,6 +2,8 @@
 
 An automated market reversal analysis system that provides real-time scoring and analysis for both traditional markets (stocks) and cryptocurrency markets.
 
+**Live Demo:** https://scorecards.cristiangiuliani.com/
+
 ## Overview
 
 Scorecards is a React-based web application that analyzes market indicators and provides automated scoring to help identify potential market reversals. The system tracks multiple technical indicators including RSI, Fear & Greed indices, market dominance, and volatility metrics across different asset classes.

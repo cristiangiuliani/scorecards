@@ -22,6 +22,12 @@ export const MarketStocksProvider = ({
     putCallRatio: undefined,
     treasury10Y: undefined,
     lastUpdated: undefined,
+    isSp500Loading: false,
+    isRsiLoading: false,
+    isVixLoading: false,
+    isEurUsdLoading: false,
+    isFearGreedLoading: false,
+    isPutCallRatioLoading: false,
     refetchMarketStocksData: () => {},
   };
   const [marketStocks, setMarketStocks] = useState<IMarketStocksProvider>(marketStocksProviderValue);

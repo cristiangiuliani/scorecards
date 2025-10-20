@@ -37,26 +37,21 @@ const MarketStocksComponent: React.FC = () => {
     sp500Prices = [],
     sp500Volumes = [],
     lastUpdated,
+    isEurUsdLoading = false,
+    isFearGreedLoading = false,
+    isRsiLoading = false,
+    isSp500Loading = false,
+    isVixLoading = false,
   } = useContext<IMarketStocksContext>(MarketStocksContext);
 
-  // ============================================
-  // CALCOLA VALORI DERIVATI
-  // ============================================
-
-  // Distance from ATH (percentuale)
   const athDistance = sp500Price && sp500ATH
     ? (sp500Price / sp500ATH) * 100
     : 0;
 
-  // Momentum 7 giorni (percentuale variazione)
   const momentum7d = sp500Prices && sp500Prices.length >= 8
     ? ((sp500Prices[sp500Prices.length - 1] - sp500Prices[sp500Prices.length - 8])
        / sp500Prices[sp500Prices.length - 8]) * 100
     : 0;
-
-  // ============================================
-  // CALCOLA STOCKS SCORE
-  // ============================================
 
   const stocksScore = calculateStocksScore({
     vix,
@@ -75,36 +70,42 @@ const MarketStocksComponent: React.FC = () => {
       weight: STOCKS_WEIGHTS.vix,
       value: vix,
       score: calculateVixScore(vix),
+      isLoading: isVixLoading,
     },
     {
       label: STOCKS_LABELS.RsiSP500,
       weight: STOCKS_WEIGHTS.rsi,
       value: rsiSP500,
       score: calculateRsiScore(rsiSP500),
+      isLoading: isRsiLoading,
     },
     {
       label: STOCKS_LABELS.EurUsd,
       weight: STOCKS_WEIGHTS.eurUsd,
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
+      isLoading: isEurUsdLoading,
     },
     {
       label: STOCKS_LABELS.FearGreed,
       weight: STOCKS_WEIGHTS.fearGreed,
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
+      isLoading: isFearGreedLoading,
     },
     {
       label: STOCKS_LABELS.AthDistance,
       weight: STOCKS_WEIGHTS.athDistance,
       value: athDistance,
       score: calculateAthDistanceScore(sp500Price, sp500ATH),
+      isLoading: isSp500Loading,
     },
     {
       label: STOCKS_LABELS.Momentum7D,
       weight: STOCKS_WEIGHTS.momentum,
       value: momentum7d,
       score: calculateMomentumScore(sp500Prices),
+      isLoading: isSp500Loading,
     },
   ];
 
@@ -112,6 +113,7 @@ const MarketStocksComponent: React.FC = () => {
     {
       title: '💼 Portfolio Strategy',
       color: 'primary',
+      isLoading: isSp500Loading || isRsiLoading || isVixLoading || isFearGreedLoading,
       items: [
         {
           label: 'Market Phase',
@@ -130,6 +132,7 @@ const MarketStocksComponent: React.FC = () => {
     {
       title: '🎯 Sector Focus',
       color: 'success',
+      isLoading: isRsiLoading || isVixLoading || isFearGreedLoading,
       items: [
         {
           label: 'Recommended Sectors',
@@ -146,6 +149,7 @@ const MarketStocksComponent: React.FC = () => {
     {
       title: '⚠️ Risk Management',
       color: 'warning',
+      isLoading: isVixLoading || isRsiLoading || isFearGreedLoading,
       items: [
         {
           label: 'Risk Level',
@@ -156,6 +160,7 @@ const MarketStocksComponent: React.FC = () => {
     {
       title: '💡 Action Items',
       color: 'error',
+      isLoading: isVixLoading || isRsiLoading || isFearGreedLoading,
       items: getActionableTips(
         stocksScore,
         vix,
@@ -176,9 +181,12 @@ const MarketStocksComponent: React.FC = () => {
           score={stocksScore}
           interpretation={getStockInterpretation(stocksScore)}
           lastUpdated={lastUpdated}
+          isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
         />
 
-        <IndicatorsComponent indexList={StocksIndexList} />
+        <IndicatorsComponent
+          indexList={StocksIndexList}
+        />
 
         <StrategiesComponent strategiesList={StocksStrategyList} />
       </Box>

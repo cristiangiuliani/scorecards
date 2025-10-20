@@ -1,5 +1,6 @@
 import {
-  Box, Divider, Paper, Typography,
+  Alert,
+  Box, Divider, Paper, Skeleton, Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React from 'react';
@@ -34,23 +35,36 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
                 borderTopColor: `${item.color}.main`,
               }}
             >
-              <Typography variant="h6" gutterBottom fontWeight="bold">
-                {item.title}
-              </Typography>
-              <Divider sx={{
-                mb: 2,
-              }}
-              />
-              {item.items.map((item) => (
-                <Box key={item.label} mb={2}>
-                  <Typography variant="subtitle2" color="text.primary" fontWeight="medium" gutterBottom>
-                    {item.label}
+              { item.isLoading ? (
+                <>
+                  <Skeleton height={50}  />
+                  <Skeleton height={65}  />
+                  <Skeleton height={65}  />
+                  <Skeleton height={65}  />
+                </>
+              )  :  item?.items?.length > 0 ? (
+                <>
+                  <Typography variant="h6" gutterBottom fontWeight="bold">
+                    {item.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {item.value}
-                  </Typography>
-                </Box>
-              ))}
+                  <Divider sx={{
+                    mb: 2,
+                  }}
+                  />
+                  {item.items.map((item) => (
+                    <Box key={item.label} mb={2}>
+                      <Typography variant="subtitle2" color="text.primary" fontWeight="medium" gutterBottom>
+                        {item.label}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.value}
+                      </Typography>
+                    </Box>
+                  ))}
+                </>
+              ) : (
+                <Alert severity="warning">Component cannot retrieve strategies data. Try later.</Alert>
+              )}
             </Paper>
           </Grid>
         ))}

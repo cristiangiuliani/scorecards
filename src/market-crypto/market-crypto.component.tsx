@@ -42,6 +42,10 @@ const MarketCryptoComponent: React.FC = () => {
     prices = [],
     volumes = [],
     lastUpdated,
+    isBtcDominanceLoading,
+    isBtcFearGreedLoading,
+    isBtcRsiLoading,
+    isBtcLoading,
   } = useContext<IMarketCryptoContext>(MarketCryptoContext);
 
   const btcRsiValues = RSI.calculate({
@@ -72,36 +76,42 @@ const MarketCryptoComponent: React.FC = () => {
       weight: CRYPTO_WEIGHTS.dominance,
       value: btcDominance,
       score: calculateBtcDominanceScore(btcDominance),
+      isLoading: isBtcDominanceLoading,
     },
     {
       label: CRYPTO_LABELS.BtcRsi,
       weight: CRYPTO_WEIGHTS.rsi,
       value: btcRsi,
       score: calculateBtcRsiScore(btcRsi),
+      isLoading: isBtcRsiLoading,
     },
     {
       label: CRYPTO_LABELS.AltSeasonIndex,
       weight: CRYPTO_WEIGHTS.altcoinSeason,
       value: altcoinSeasonIndex,
       score: calculateAltSeasonScore(altcoinSeasonIndex),
+      isLoading: isBtcDominanceLoading,
     },
     {
       label: CRYPTO_LABELS.BtcFearGreed,
       weight: CRYPTO_WEIGHTS.fearGreed,
       value: btcFearGreed,
       score: calculateBtcFearGreedScore(btcFearGreed),
+      isLoading: isBtcFearGreedLoading,
     },
     {
       label: CRYPTO_LABELS.AthDistance,
       weight: CRYPTO_WEIGHTS.athDistance,
       value: athDistance,
       score: calculateAthDistanceScore(currentPrice, ath),
+      isLoading: isBtcLoading,
     },
     {
       label: CRYPTO_LABELS.Momentum7D,
       weight: CRYPTO_WEIGHTS.momentum,
       value: momentum7d,
       score: calculateMomentumScore(prices),
+      isLoading: isBtcRsiLoading,
     },
   ];
 
@@ -119,6 +129,7 @@ const MarketCryptoComponent: React.FC = () => {
       {
         title: CRYPTO_LABELS.Strategy,
         color: 'secondary',
+        isLoading: isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading,
         items: [
           {
             label: CRYPTO_LABELS.MarketPhase,
@@ -133,6 +144,7 @@ const MarketCryptoComponent: React.FC = () => {
       {
         title: CRYPTO_LABELS.BtcAltcoin,
         color: 'info',
+        isLoading: isBtcDominanceLoading,
         items: [
           {
             label: CRYPTO_LABELS.PortfolioBalance,
@@ -147,6 +159,7 @@ const MarketCryptoComponent: React.FC = () => {
       {
         title: CRYPTO_LABELS.RiskManagement,
         color: 'error',
+        isLoading: isBtcRsiLoading || isBtcFearGreedLoading,
         items: [
           {
             label: CRYPTO_LABELS.RiskLevel,
@@ -163,6 +176,7 @@ const MarketCryptoComponent: React.FC = () => {
       {
         title: CRYPTO_LABELS.ActionItems,
         color: 'warning',
+        isLoading: isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading,
         items: getActionableTips(
           cryptoScore,
           btcRsi,
@@ -184,6 +198,7 @@ const MarketCryptoComponent: React.FC = () => {
           score={cryptoScore}
           interpretation={getCryptoInterpretation(cryptoScore)}
           lastUpdated={lastUpdated}
+          isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
         />
 
         <IndicatorsComponent indexList={CryptoIndexList} />

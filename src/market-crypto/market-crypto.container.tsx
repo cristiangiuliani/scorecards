@@ -23,7 +23,8 @@ const MarketCryptoContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = btcData;
+    const { data, loading } = btcData;
+    updateMarketCrypto({ isBtcLoading: loading });
 
     if (data) {
       updateMarketCrypto({
@@ -41,7 +42,8 @@ const MarketCryptoContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = btcDominanceData;
+    const { data, loading } = btcDominanceData;
+    updateMarketCrypto({ isBtcDominanceLoading: loading });
 
     if (data) {
       updateMarketCrypto({
@@ -61,7 +63,8 @@ const MarketCryptoContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = btcRsiData;
+    const { data, loading } = btcRsiData;
+    updateMarketCrypto({ isBtcRsiLoading: loading });
 
     if (data) {
       updateMarketCrypto({
@@ -79,7 +82,8 @@ const MarketCryptoContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = btcFearGreedData;
+    const { data, loading } = btcFearGreedData;
+    updateMarketCrypto({ isBtcFearGreedLoading: loading });
 
     if (data) {
       updateMarketCrypto({

@@ -1,5 +1,6 @@
 import {
-  Box, Card, CardContent, Chip, Icon, Typography,
+  Alert,
+  Box, Card, CardContent, Chip, Icon, Skeleton, Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React, {
@@ -34,7 +35,13 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                 }}
               >
                 <CardContent>
-                  { item?.value !== undefined && item?.score !== undefined ? (
+                  {item.isLoading ?  (
+                    <>
+                      <Skeleton height={25} />
+                      <Skeleton height={50} width={50} />
+                      <Skeleton height={20} width={50} />
+                    </>
+                  ) : item?.value !== undefined && item?.score !== undefined ? (
                     <>
                       <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
                         <Box display="flex" alignItems="center" gap={1}>
@@ -60,9 +67,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       </Typography>
                     </>
                   ) : (
-                    <Typography variant="body2" color="text.secondary" fontWeight="medium">
-                      no data
-                    </Typography>
+                    <Alert severity="warning">Component cannot retrieve indicators data. Try later.</Alert>
                   )}
                 </CardContent>
               </Card>

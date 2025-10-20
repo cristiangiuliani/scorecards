@@ -17,6 +17,12 @@ const MarketStocksContext = createContext<IMarketStocksContext>({
   putCallRatio: undefined,
   treasury10Y: undefined,
   lastUpdated: undefined,
+  isSp500Loading: false,
+  isRsiLoading: false,
+  isVixLoading: false,
+  isEurUsdLoading: false,
+  isFearGreedLoading: false,
+  isPutCallRatioLoading: false,
   refetchMarketStocksData: () => {},
   updateMarketStocks: () => {},
 });

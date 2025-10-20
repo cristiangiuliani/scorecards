@@ -48,7 +48,7 @@ export const useNetlifyApi = ({
         setTimeout(() => {
           setData(mockData);
           setLoading(false);
-        }, 1000); // API delay simulation
+        }, Math.floor(Math.random() * 2001) + 3000); // API delay simulation
         return;
       }
 

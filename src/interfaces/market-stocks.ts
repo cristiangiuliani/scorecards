@@ -16,13 +16,22 @@ export interface TStocksData {
   lastUpdated?: string;
 }
 
+export interface TStocksDataStatus extends TStocksData {
+  isSp500Loading?: boolean;
+  isRsiLoading?: boolean;
+  isVixLoading?: boolean;
+  isEurUsdLoading?: boolean;
+  isFearGreedLoading?: boolean;
+  isPutCallRatioLoading?: boolean;
+}
+
+export interface IMarketStocksProvider extends TStocksDataStatus {
+  isLoadingStocks?: boolean;
+  refetchMarketStocksData?: () => void;
+}
+
 export interface TStocksMetrics extends TStocksData {
   stocksScore: number;
   athDistance: number;
   momentum7d: number;
-}
-
-export interface IMarketStocksProvider extends TStocksData {
-  isLoadingStocks?: boolean;
-  refetchMarketStocksData?: () => void;
 }

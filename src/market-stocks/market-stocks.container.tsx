@@ -26,7 +26,9 @@ const MarketStocksContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const result = sp500Data?.data?.chart?.result || [];
+    const { data, loading } = sp500Data || {};
+    const result = data?.chart?.result || [];
+    updateMarketStocks({ isSp500Loading: loading });
 
     if (result.length > 0) {
       const sp500Quotes = result[0]?.indicators?.quote || [];
@@ -48,8 +50,8 @@ const MarketStocksContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = vixData;
-
+    const { data, loading } = vixData;
+    updateMarketStocks({ isVixLoading: loading });
     if (data) {
       updateMarketStocks({
         vix: parseFloat(data?.chart?.result[0]?.meta?.regularMarketPrice),
@@ -65,8 +67,8 @@ const MarketStocksContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = rsiData;
-
+    const { data, loading } = rsiData;
+    updateMarketStocks({ isRsiLoading: loading });
     if (data) {
       const lastUpdate = data['Meta Data']['3: Last Refreshed'];
       const lastRsi = data['Technical Analysis: RSI'][lastUpdate]['RSI'];
@@ -84,8 +86,8 @@ const MarketStocksContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = eurUsdData;
-
+    const { data, loading } = eurUsdData;
+    updateMarketStocks({ isEurUsdLoading: loading });
     if (data) {
       updateMarketStocks({
         eurUsd: parseFloat(data['Realtime Currency Exchange Rate']['5. Exchange Rate']),
@@ -101,8 +103,8 @@ const MarketStocksContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data } = fearGreedData;
-
+    const { data, loading } = fearGreedData;
+    updateMarketStocks({ isFearGreedLoading: loading });
     if (data) {
       updateMarketStocks({
         fearGreed: parseFloat(data.fear_and_greed.score),

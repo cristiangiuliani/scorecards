@@ -9,11 +9,13 @@ export type TIndicatorsListItem = {
   weight?: number;
   value?: number;
   score?: number;
+  isLoading?: boolean;
 };
 
 export type TStrategiesListItem = {
   title?: string
   color?: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning'
+  isLoading?: boolean
   items: {
     label: string
     value: string
