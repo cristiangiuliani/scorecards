@@ -36,7 +36,8 @@ const MarketStocksComponent: React.FC = () => {
     sp500ATH = 0,
     sp500Prices = [],
     sp500Volumes = [],
-    lastUpdated,
+    cacheCreatedAt,
+    cacheExpiresAt,
     isEurUsdLoading = false,
     isFearGreedLoading = false,
     isRsiLoading = false,
@@ -180,7 +181,8 @@ const MarketStocksComponent: React.FC = () => {
         <ScoreCardsComponent
           score={stocksScore}
           interpretation={getStockInterpretation(stocksScore)}
-          lastUpdated={lastUpdated}
+          cacheCreatedAt={cacheCreatedAt}
+          cacheExpiresAt={cacheExpiresAt}
           isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
         />
 

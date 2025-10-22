@@ -41,7 +41,8 @@ const MarketCryptoComponent: React.FC = () => {
     ath,
     prices = [],
     volumes = [],
-    lastUpdated,
+    cacheCreatedAt,
+    cacheExpiresAt,
     isBtcDominanceLoading,
     isBtcFearGreedLoading,
     isBtcRsiLoading,
@@ -197,7 +198,8 @@ const MarketCryptoComponent: React.FC = () => {
         <ScoreCardsComponent
           score={cryptoScore}
           interpretation={getCryptoInterpretation(cryptoScore)}
-          lastUpdated={lastUpdated}
+          cacheCreatedAt={cacheCreatedAt}
+          cacheExpiresAt={cacheExpiresAt}
           isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
         />
 

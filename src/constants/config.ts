@@ -1,7 +1,7 @@
 export const GLOBALS = {
   defaultActiveTab: 0,
   ApiBaseUrl: '/scorecards/api',
-  useMockData: true,
+  useMockData: false,
 };
 
 export const CRYPTO_WEIGHTS = {

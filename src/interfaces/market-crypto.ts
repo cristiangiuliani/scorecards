@@ -9,7 +9,8 @@ export interface TCryptoData {
   ath?: number;
   prices?: number[];
   volumes?: number[];
-  lastUpdated?: string;
+  cacheCreatedAt?: string | null;
+  cacheExpiresAt?: string | null;
 }
 
 export interface TCryptoDataStatus extends TCryptoData {

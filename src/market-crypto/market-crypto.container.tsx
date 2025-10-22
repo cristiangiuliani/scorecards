@@ -23,16 +23,20 @@ const MarketCryptoContainer: React.FC = () => {
   });
 
   useEffect(() => {
-    const { data, loading } = btcData;
+    const {
+      data, loading, cacheExpiresAt, cacheCreatedAt,
+    } = btcData;
     updateMarketCrypto({ isBtcLoading: loading });
 
     if (data) {
       updateMarketCrypto({
         currentPrice: data?.market_data.current_price.usd,
         ath: data?.market_data.ath.usd,
+        cacheExpiresAt,
+        cacheCreatedAt,
       });
     }
-  }, [btcData.data]);
+  }, [btcData.data, btcData.cacheExpiresAt, btcData.cacheCreatedAt]);
 
   const btcDominanceData = useNetlifyApi({
     apiFunction: API.btcDominance,
@@ -91,10 +95,6 @@ const MarketCryptoContainer: React.FC = () => {
       });
     }
   }, [btcFearGreedData.data]);
-
-  useEffect(() => {
-    updateMarketCrypto({ lastUpdated: new Date().toISOString() });
-  }, []);
 
   return (
     <MarketCryptoComponent />

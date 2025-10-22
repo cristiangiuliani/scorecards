@@ -8,7 +8,7 @@ interface CacheDocument {
 }
 
 export class CacheService {
-  static async get<T = any>(key: string): Promise<T | null> {
+  static async get(key: string): Promise<CacheDocument | null> {
     try {
       const { db } = await connectToDatabase();
       const collection = db.collection<CacheDocument>('cache');
@@ -20,7 +20,7 @@ export class CacheService {
 
       if (cached) {
         console.log(`✅ Cache HIT: ${key}`);
-        return cached.data as T;
+        return cached;
       }
 
       console.log(`❌ Cache MISS: ${key}`);

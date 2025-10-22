@@ -13,7 +13,8 @@ export interface TStocksData {
   sp500Volumes?: number[];
   putCallRatio?: number;
   treasury10Y?: number;
-  lastUpdated?: string;
+  cacheCreatedAt?: string | null;
+  cacheExpiresAt?: string | null;
 }
 
 export interface TStocksDataStatus extends TStocksData {

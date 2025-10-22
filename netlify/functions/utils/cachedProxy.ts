@@ -56,10 +56,14 @@ export const createCachedProxyHandler = (
             statusCode: 200,
             headers: {
               'Content-Type': 'application/json',
-              ...includeCacheHeader && { 'X-Cache': 'HIT' },
+              ...includeCacheHeader && {
+                'X-Cache': 'HIT',
+                'X-Cache-Expires-At': cachedData.expiresAt.toISOString(),
+                'X-Cache-Created-At': cachedData.createdAt.toISOString(),
+              },
               ...CORS_HEADERS,
             },
-            body: JSON.stringify(cachedData),
+            body: JSON.stringify(cachedData.data),
           };
         }
       }

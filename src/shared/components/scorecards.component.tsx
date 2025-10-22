@@ -3,23 +3,60 @@ import {
   Chip, Paper, Skeleton, Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import type { TInterpretation } from '../../types/data.type';
+
+const EXPIRES_INTERVAL = 60000; // 1 minute
 
 type TScoreCardsComponentProps = {
   score: number;
   interpretation: TInterpretation;
-  lastUpdated: string | undefined;
+  cacheCreatedAt?: string | null;
+  cacheExpiresAt?: string | null;
   isLoading?: boolean;
+};
+
+const formatTimeRemaining = (minutes: number): string => {
+  if (minutes < 1) return 'less than 1 min';
+
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+
+  if (hours > 0 && mins > 0) {
+    return `${hours} hour${hours > 1 ? 's' : ''} ${mins} min${mins > 1 ? 's' : ''}`;
+  } else if (hours > 0) {
+    return `${hours} hour${hours > 1 ? 's' : ''}`;
+  } else {
+    return `${mins} min${mins > 1 ? 's' : ''}`;
+  }
 };
 
 const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   score = undefined,
   interpretation = undefined,
-  lastUpdated = undefined,
+  cacheCreatedAt = null,
+  cacheExpiresAt = null,
   isLoading = false,
 }) => {
+  const [minutesRemaining, setMinutesRemaining] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateMinutesRemaining = () => {
+      if (cacheExpiresAt) {
+        const remaining = Math.round((new Date(cacheExpiresAt).getTime() - new Date().getTime()) / EXPIRES_INTERVAL);
+        setMinutesRemaining(remaining);
+      } else {
+        setMinutesRemaining(null);
+      }
+    };
+
+    updateMinutesRemaining();
+    const interval = setInterval(updateMinutesRemaining, EXPIRES_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [cacheExpiresAt]);
+
   return (
     <>
       <Box>
@@ -60,7 +97,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                 />
 
                 <Typography variant="body2" color="text.secondary">
-                  Last updated: {lastUpdated && new Date(lastUpdated).toLocaleTimeString('en-US')}
+                  Last updated: {cacheCreatedAt && new Date(cacheCreatedAt).toLocaleTimeString('nl-NL')} - expires in {minutesRemaining !== null ? ` ${formatTimeRemaining(minutesRemaining)}` : ' N/A'}
                 </Typography>
               </>
             ) : (

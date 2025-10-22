@@ -8,7 +8,6 @@ const MarketCryptoContext = createContext<IMarketCryptoContext>({
   isLoadingCrypto: false,
   btcFearGreed: undefined,
   btcDominance: undefined,
-  lastUpdated: undefined,
   refetchMarketCryptoData: () => {},
   updateMarketCrypto: () => {},
 });

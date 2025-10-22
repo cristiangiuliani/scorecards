@@ -18,6 +18,8 @@ interface IUseApiResult {
   data: any;
   loading: boolean;
   cacheHit: boolean;
+  cacheExpiresAt: string | null;
+  cacheCreatedAt: string | null;
   refetch: () => Promise<void>;
   forceRefresh: () => Promise<void>;
 }
@@ -34,6 +36,8 @@ export const useNetlifyApi = ({
   const [data, setData] = useState<unknown | null>(null);
   const [loading, setLoading] = useState(true);
   const [cacheHit, setCacheHit] = useState(false);
+  const [cacheExpiresAt, setCacheExpiresAt] = useState<string | null>(null);
+  const [cacheCreatedAt, setCacheCreatedAt] = useState<string | null>(null);
   const { isDemo } = useContext<IDashboardContext>(DashboardContext);
 
   const { autoFetch = true, params = {} } = options || {};
@@ -74,6 +78,11 @@ export const useNetlifyApi = ({
       const cacheHeader = response.headers.get('X-Cache');
       setCacheHit(cacheHeader === 'HIT');
 
+      const expiresAt = response.headers.get('X-Cache-Expires-At');
+      const createdAt = response.headers.get('X-Cache-Created-At');
+      setCacheExpiresAt(expiresAt);
+      setCacheCreatedAt(createdAt);
+
       // console.log(
       //   cacheHeader === 'HIT'
       //     ? '✅ Da cache MongoDB'
@@ -101,6 +110,8 @@ export const useNetlifyApi = ({
     data,
     loading,
     cacheHit,
+    cacheExpiresAt,
+    cacheCreatedAt,
     refetch,
     forceRefresh,
   };
