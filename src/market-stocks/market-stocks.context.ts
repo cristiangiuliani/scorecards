@@ -16,7 +16,6 @@ const MarketStocksContext = createContext<IMarketStocksContext>({
   sp500Volumes: undefined,
   putCallRatio: undefined,
   treasury10Y: undefined,
-  lastUpdated: undefined,
   isSp500Loading: false,
   isRsiLoading: false,
   isVixLoading: false,
