@@ -1,5 +1,5 @@
 import { STOCKS_WEIGHTS } from '../../constants/config';
-import type { TStocksData } from '../../interfaces/market-stocks';
+import type { IStocksData } from '../../interfaces/market-stocks';
 
 export const calculateVixScore = (value = 0): number => {
   // VIX = "fear index" - ALTO = bearish, BASSO = bullish
@@ -140,7 +140,7 @@ export const calculateTreasury10YScore = (yield10Y: number): number => {
   return 0;  // Normale (3.0-4.0)
 };
 
-export const calculateStocksScore = (data: TStocksData): number => {
+export const calculateStocksScore = (data: IStocksData): number => {
   if (!data) return 0;
 
   // Indicatori esistenti

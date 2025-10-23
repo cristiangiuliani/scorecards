@@ -14,8 +14,8 @@ interface IUseApiOptions {
   params?: Record<string, string>;
 }
 
-interface IUseApiResult {
-  data: any;
+interface IUseApiResult<T> {
+  data: T | null;
   loading: boolean;
   cacheHit: boolean;
   cacheExpiresAt: string | null;
@@ -29,11 +29,11 @@ interface IUseNetlifyApiProps {
   options?: IUseApiOptions;
 }
 
-export const useNetlifyApi = ({
+export const useNetlifyApi = <T = unknown>({
   apiFunction,
   options,
-}:IUseNetlifyApiProps):IUseApiResult => {
-  const [data, setData] = useState<unknown | null>(null);
+}:IUseNetlifyApiProps):IUseApiResult<T> => {
+  const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [cacheHit, setCacheHit] = useState(false);
   const [cacheExpiresAt, setCacheExpiresAt] = useState<string | null>(null);
@@ -50,7 +50,7 @@ export const useNetlifyApi = ({
 
       if (isDemo) {
         setTimeout(() => {
-          setData(mockData);
+          setData(mockData as T);
           setLoading(false);
         }, Math.floor(Math.random() * 2001) + 3000); // API delay simulation
         return;

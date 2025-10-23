@@ -2,7 +2,7 @@ export interface IMarketCryptoContext extends IMarketCryptoProvider  {
     updateMarketCrypto: (newState: IMarketCryptoProvider) => void;
 };
 
-export interface TCryptoData {
+export interface ICryptoData {
   btcFearGreed?: number;
   btcDominance?: number;
   currentPrice?: number;
@@ -13,14 +13,14 @@ export interface TCryptoData {
   cacheExpiresAt?: string | null;
 }
 
-export interface TCryptoDataStatus extends TCryptoData {
+export interface ICryptoDataStatus extends ICryptoData {
   isBtcLoading?: boolean;
   isBtcDominanceLoading?: boolean;
   isBtcRsiLoading?: boolean;
   isBtcFearGreedLoading?: boolean;
 }
 
-export interface IMarketCryptoProvider extends TCryptoDataStatus {
+export interface IMarketCryptoProvider extends ICryptoDataStatus {
   isLoadingCrypto?: boolean;
   refetchMarketCryptoData?: () => void;
 }

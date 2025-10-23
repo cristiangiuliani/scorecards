@@ -4,6 +4,12 @@ import React, {
 
 import { API } from '../constants/api';
 import { CRYPTO_SCOPES } from '../constants/config';
+import type {
+  IBitcoinDominanceResponse,
+  IBitcoinFearGreedResponse,
+  IBitcoinResponse,
+  IBitcoinRSIResponse,
+} from '../interfaces/api-responses';
 import type { IMarketCryptoContext } from '../interfaces/market-crypto';
 import { useNetlifyApi } from '../shared/hooks/use-netlify-api';
 
@@ -15,7 +21,7 @@ const MarketCryptoContainer: React.FC = () => {
     updateMarketCrypto = () => {},
   } = useContext<IMarketCryptoContext>(MarketCryptoContext);
 
-  const btcData = useNetlifyApi({
+  const btcData = useNetlifyApi<IBitcoinResponse>({
     apiFunction: API.btc,
     options: {
       autoFetch: true,
@@ -38,7 +44,7 @@ const MarketCryptoContainer: React.FC = () => {
     }
   }, [btcData.data, btcData.cacheExpiresAt, btcData.cacheCreatedAt]);
 
-  const btcDominanceData = useNetlifyApi({
+  const btcDominanceData = useNetlifyApi<IBitcoinDominanceResponse>({
     apiFunction: API.btcDominance,
     options: {
       autoFetch: true,
@@ -56,7 +62,7 @@ const MarketCryptoContainer: React.FC = () => {
     }
   }, [btcDominanceData.data]);
 
-  const btcRsiData = useNetlifyApi({
+  const btcRsiData = useNetlifyApi<IBitcoinRSIResponse>({
     apiFunction: API.btcRsi,
     options: {
       autoFetch: true,
@@ -78,7 +84,7 @@ const MarketCryptoContainer: React.FC = () => {
     }
   }, [btcRsiData.data]);
 
-  const btcFearGreedData = useNetlifyApi({
+  const btcFearGreedData = useNetlifyApi<IBitcoinFearGreedResponse>({
     apiFunction: API.btcFearGreed,
     options: {
       autoFetch: true,

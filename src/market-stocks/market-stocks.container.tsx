@@ -4,6 +4,12 @@ import React, {
 
 import { API } from '../constants/api';
 import { STOCKS_SCOPE } from '../constants/config';
+import type {
+  IAlphaVantageCurrencyResponse,
+  IAlphaVantageRSIResponse,
+  IFearGreedResponse,
+  IYahooFinanceResponse,
+} from '../interfaces/api-responses';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 import { useNetlifyApi } from '../shared/hooks/use-netlify-api';
 
@@ -15,7 +21,7 @@ const MarketStocksContainer: React.FC = () => {
     updateMarketStocks = () => {},
   } = useContext<IMarketStocksContext>(MarketStocksContext);
 
-  const sp500Data = useNetlifyApi({
+  const sp500Data = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.sp500,
     options: {
       autoFetch: true,
@@ -35,7 +41,7 @@ const MarketStocksContainer: React.FC = () => {
     if (result.length > 0) {
       const sp500Quotes = result[0]?.indicators?.quote || [];
       updateMarketStocks({
-        sp500Price: parseFloat(result[0]?.meta.regularMarketPrice),
+        sp500Price: parseFloat(result[0]?.meta.regularMarketPrice.toString()),
         sp500Prices: result[0]?.indicators.quote[0].close,
         sp500Volumes: result[0]?.indicators.quote[0].volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
@@ -46,7 +52,7 @@ const MarketStocksContainer: React.FC = () => {
     }
   }, [sp500Data.data, sp500Data.cacheExpiresAt, sp500Data.cacheCreatedAt]);
 
-  const vixData = useNetlifyApi({
+  const vixData = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.vix,
     options: {
       autoFetch: true,
@@ -58,12 +64,12 @@ const MarketStocksContainer: React.FC = () => {
     updateMarketStocks({ isVixLoading: loading });
     if (data) {
       updateMarketStocks({
-        vix: parseFloat(data?.chart?.result[0]?.meta?.regularMarketPrice),
+        vix: parseFloat(data?.chart?.result[0]?.meta?.regularMarketPrice.toString()),
       });
     }
   }, [vixData.data]);
 
-  const rsiData = useNetlifyApi({
+  const rsiData = useNetlifyApi<IAlphaVantageRSIResponse>({
     apiFunction: API.rsiSP500,
     options: {
       autoFetch: true,
@@ -82,7 +88,7 @@ const MarketStocksContainer: React.FC = () => {
     }
   }, [rsiData.data]);
 
-  const eurUsdData = useNetlifyApi({
+  const eurUsdData = useNetlifyApi<IAlphaVantageCurrencyResponse>({
     apiFunction: API.eurUsd,
     options: {
       autoFetch: true,
@@ -99,7 +105,7 @@ const MarketStocksContainer: React.FC = () => {
     }
   }, [eurUsdData.data]);
 
-  const fearGreedData = useNetlifyApi({
+  const fearGreedData = useNetlifyApi<IFearGreedResponse>({
     apiFunction: API.fearGreed,
     options: {
       autoFetch: true,
@@ -111,7 +117,7 @@ const MarketStocksContainer: React.FC = () => {
     updateMarketStocks({ isFearGreedLoading: loading });
     if (data) {
       updateMarketStocks({
-        fearGreed: parseFloat(data.fear_and_greed.score),
+        fearGreed: parseFloat(data.fear_and_greed.score.toString()),
       });
     }
   }, [fearGreedData.data]);

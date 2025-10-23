@@ -1,5 +1,5 @@
 import { CRYPTO_WEIGHTS } from '../../constants/config';
-import type { TCryptoData } from '../../interfaces/market-crypto';
+import type { ICryptoData } from '../../interfaces/market-crypto';
 
 export const calculateBtcFearGreedScore = (value = 0):number => {
   if (value < 10) return 4;
@@ -130,7 +130,7 @@ export const calculateAltcoinSeasonIndex = (btcDominance:number | undefined = 0)
   ));
 };
 
-export const calculateCryptoScore = (data:TCryptoData, btcRsi:number, altcoinSeasonIndex:number):number => {
+export const calculateCryptoScore = (data:ICryptoData, btcRsi:number, altcoinSeasonIndex:number):number => {
   if (!data) return 0;
   const btcFearScore = data?.btcFearGreed ? calculateBtcFearGreedScore(data.btcFearGreed) : 0;
   const btcRsiScore = btcRsi ? calculateBtcRsiScore(btcRsi) : 0;

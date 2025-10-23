@@ -2,7 +2,7 @@ export interface IMarketStocksContext extends IMarketStocksProvider  {
     updateMarketStocks: (newState: IMarketStocksProvider) => void;
 };
 
-export interface TStocksData {
+export interface IStocksData {
   vix?: number;
   rsiSP500?: number;
   eurUsd?: number;
@@ -17,7 +17,7 @@ export interface TStocksData {
   cacheExpiresAt?: string | null;
 }
 
-export interface TStocksDataStatus extends TStocksData {
+export interface IStocksDataStatus extends IStocksData {
   isSp500Loading?: boolean;
   isRsiLoading?: boolean;
   isVixLoading?: boolean;
@@ -26,12 +26,12 @@ export interface TStocksDataStatus extends TStocksData {
   isPutCallRatioLoading?: boolean;
 }
 
-export interface IMarketStocksProvider extends TStocksDataStatus {
+export interface IMarketStocksProvider extends IStocksDataStatus {
   isLoadingStocks?: boolean;
   refetchMarketStocksData?: () => void;
 }
 
-export interface TStocksMetrics extends TStocksData {
+export interface IStocksMetrics extends IStocksData {
   stocksScore: number;
   athDistance: number;
   momentum7d: number;
