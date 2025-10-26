@@ -31,12 +31,6 @@ export class CacheService {
     }
   }
 
-  /**
-   * Salva dati nella cache
-   * @param key - Chiave univoca
-   * @param data - Dati da salvare
-   * @param ttlSeconds - Time to live in secondi (default: 1 ora)
-   */
   static async set(key: string, data: any, ttlSeconds = 3600): Promise<boolean> {
     try {
       const { db } = await connectToDatabase();

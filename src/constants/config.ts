@@ -4,6 +4,13 @@ export const GLOBALS = {
   useMockData: false,
 };
 
+// no free api available for nasdaq pe ratio, hardcoding value
+export const NASDAQ_PE_RATIO = {
+  value: 38.93,
+  lastUpdated: '2025-10-24',
+  source: 'GuruFocus',
+};
+
 export const CRYPTO_WEIGHTS = {
   fearGreed: 1.2,
   rsi: 1.0,

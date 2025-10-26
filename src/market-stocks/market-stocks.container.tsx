@@ -122,6 +122,18 @@ const MarketStocksContainer: React.FC = () => {
     }
   }, [fearGreedData.data]);
 
+  useEffect(() => {
+    updateMarketStocks({
+      refetchMarketStocksData: () => {
+        vixData.forceRefresh();
+        rsiData.forceRefresh();
+        eurUsdData.forceRefresh();
+        fearGreedData.forceRefresh();
+        sp500Data.forceRefresh();
+      },
+    });
+  }, []);
+
   return (
     <MarketStocksComponent />
   );

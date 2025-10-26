@@ -43,6 +43,7 @@ const MarketStocksComponent: React.FC = () => {
     isRsiLoading = false,
     isSp500Loading = false,
     isVixLoading = false,
+    refetchMarketStocksData = () => {},
   } = useContext<IMarketStocksContext>(MarketStocksContext);
 
   const athDistance = sp500Price && sp500ATH
@@ -184,6 +185,7 @@ const MarketStocksComponent: React.FC = () => {
           cacheCreatedAt={cacheCreatedAt}
           cacheExpiresAt={cacheExpiresAt}
           isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
+          refetchAllData={refetchMarketStocksData}
         />
 
         <IndicatorsComponent

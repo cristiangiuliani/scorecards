@@ -76,3 +76,9 @@ export interface IBitcoinFearGreedResponse {
     value: string;
   }>;
 }
+
+// Financial Modeling Prep API Response Types
+export interface IFinancialModelingPrepResponse {
+  symbol: string;
+  priceToEarningsRatioTTM: number;
+}

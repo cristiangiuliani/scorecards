@@ -47,6 +47,7 @@ const MarketCryptoComponent: React.FC = () => {
     isBtcFearGreedLoading,
     isBtcRsiLoading,
     isBtcLoading,
+    refetchMarketCryptoData = () => {},
   } = useContext<IMarketCryptoContext>(MarketCryptoContext);
 
   const btcRsiValues = RSI.calculate({
@@ -201,6 +202,7 @@ const MarketCryptoComponent: React.FC = () => {
           cacheCreatedAt={cacheCreatedAt}
           cacheExpiresAt={cacheExpiresAt}
           isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
+          refetchAllData={refetchMarketCryptoData}
         />
 
         <IndicatorsComponent indexList={CryptoIndexList} />

@@ -10,6 +10,8 @@ export type TIndicatorsListItem = {
   value?: number;
   score?: number;
   isLoading?: boolean;
+  suffix?: string;
+  threshold?: string;
 };
 
 export type TStrategiesListItem = {

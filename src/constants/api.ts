@@ -50,4 +50,8 @@ export const API: Record<string, IApiEndpoint> = {
     functionName: 'fetchVix',
     mockData: vixMockData,
   },
+  peRatioNvda: {
+    functionName: 'fetchPeRatioNvda',
+    mockData: vixMockData,
+  },
 };

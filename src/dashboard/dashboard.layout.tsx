@@ -2,6 +2,7 @@
 import {
   ShowChart,
   CurrencyBitcoin,
+  BubbleChart,
 } from '@mui/icons-material';
 import {
   Box,
@@ -22,6 +23,7 @@ import { GLOBALS } from '../constants/config';
 import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
+import MarketBubble from '../market-bubble/market-bubble';
 import MarketCrypto from '../market-crypto/market-crypto';
 import MarketStocks from '../market-stocks/market-stocks';
 import { ErrorDisplay } from '../shared/components/error-display';
@@ -32,23 +34,6 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
   },
-  // palette: {
-  //   primary: {
-  //     main: '#1976d2',
-  //   },
-  //   secondary: {
-  //     main: '#ff9800',
-  //   },
-  //   success: {
-  //     main: '#4caf50',
-  //   },
-  //   error: {
-  //     main: '#f44336',
-  //   },
-  //   warning: {
-  //     main: '#ff9800',
-  //   },
-  // },
 });
 const DashboardLayout: React.FC = () => {
   const {
@@ -94,7 +79,7 @@ const DashboardLayout: React.FC = () => {
             >
               <Tab
                 icon={<ShowChart />}
-                label="Traditional Markets"
+                label="Stocks Market"
                 iconPosition="start"
                 sx={{
                   textTransform: 'none',
@@ -104,6 +89,15 @@ const DashboardLayout: React.FC = () => {
               <Tab
                 icon={<CurrencyBitcoin />}
                 label="Crypto"
+                iconPosition="start"
+                sx={{
+                  textTransform: 'none',
+                  fontWeight: 'medium',
+                }}
+              />
+              <Tab
+                icon={<BubbleChart />}
+                label="AI Bubble"
                 iconPosition="start"
                 sx={{
                   textTransform: 'none',
@@ -125,7 +119,13 @@ const DashboardLayout: React.FC = () => {
             </Button> */}
           </Box>
         </Paper>
-        {activeTab === 1 ? <MarketCrypto /> : <MarketStocks />}
+        { activeTab === 1 ? (
+          <MarketCrypto />
+        ) : activeTab === 2 ? (
+          <MarketBubble />
+        ) : (
+          <MarketStocks />
+        )}
       </Container>
     </ThemeProvider>
   );

@@ -28,3 +28,14 @@ export const STOCKS_LABELS = {
   AthDistance: 'ATH Distance',
   Momentum7D: 'Momentum 7D',
 };
+
+export const AI_BUBBLE_LABELS = {
+  title: 'AI Bubble Indicator',
+  subtitle: 'Early warning system for AI sector correction',
+  nvidiaPE: 'NVIDIA P/E Ratio',
+  nasdaqPE: 'NASDAQ 100 P/E',
+  vixPersistence: 'VIX Persistence',
+  riskLevel: 'Bubble Risk',
+  factors: 'Active Factors',
+  nvdaNasdaqRatio: 'NVDA/NASDAQ Ratio',
+};

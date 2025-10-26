@@ -15,6 +15,7 @@ type TScoreCardsComponentProps = {
   cacheCreatedAt?: string | null;
   cacheExpiresAt?: string | null;
   isLoading?: boolean;
+  refetchAllData?: () => void;
 };
 
 const formatTimeRemaining = (minutes: number): string => {
@@ -38,24 +39,40 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   cacheCreatedAt = null,
   cacheExpiresAt = null,
   isLoading = false,
+  refetchAllData = () => {},
 }) => {
   const [minutesRemaining, setMinutesRemaining] = useState<number | null>(null);
+  const lastUpdated = cacheCreatedAt && new Date(cacheCreatedAt).toLocaleTimeString('nl-NL', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+  const updateMinutesRemaining = () => {
+    if (cacheExpiresAt) {
+      const remaining = Math.round((new Date(cacheExpiresAt).getTime() - new Date().getTime()) / EXPIRES_INTERVAL);
+      setMinutesRemaining(remaining);
+    } else {
+      setMinutesRemaining(null);
+    }
+  };
+
+  const interval = setInterval(updateMinutesRemaining, EXPIRES_INTERVAL);
+
+  const refreshData = () => {
+    updateMinutesRemaining();
+    refetchAllData();
+  };
 
   useEffect(() => {
-    const updateMinutesRemaining = () => {
-      if (cacheExpiresAt) {
-        const remaining = Math.round((new Date(cacheExpiresAt).getTime() - new Date().getTime()) / EXPIRES_INTERVAL);
-        setMinutesRemaining(remaining);
-      } else {
-        setMinutesRemaining(null);
-      }
-    };
-
     updateMinutesRemaining();
-    const interval = setInterval(updateMinutesRemaining, EXPIRES_INTERVAL);
-
     return () => clearInterval(interval);
   }, [cacheExpiresAt]);
+
+  useEffect(() => {
+    if (minutesRemaining !== null && minutesRemaining <= 0) {
+      refreshData();
+    }
+  }, [minutesRemaining]);
 
   return (
     <>
@@ -67,10 +84,6 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
             sx={{
               p: 4,
               textAlign: 'center',
-              // background: interpretation.severity === 'success' ? 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)' :
-              //   interpretation.severity === 'error' ? 'linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)' :
-              //     interpretation.severity === 'warning' ? 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)' :
-              //       'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)',
             }}
           >
             { isLoading ? (
@@ -97,7 +110,8 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                 />
 
                 <Typography variant="body2" color="text.secondary">
-                  Last updated: {cacheCreatedAt && new Date(cacheCreatedAt).toLocaleTimeString('nl-NL')} - expires in {minutesRemaining !== null ? ` ${formatTimeRemaining(minutesRemaining)}` : ' N/A'}
+                  Last updated: {lastUpdated} - next update in {minutesRemaining !== null ? ` ${formatTimeRemaining(minutesRemaining)}` : ' N/A'}<br />
+                  {/* <div onClick={refreshData}>refresh now</div> */}
                 </Typography>
               </>
             ) : (

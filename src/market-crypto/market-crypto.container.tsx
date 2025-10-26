@@ -102,6 +102,17 @@ const MarketCryptoContainer: React.FC = () => {
     }
   }, [btcFearGreedData.data]);
 
+  useEffect(() => {
+    updateMarketCrypto({
+      refetchMarketCryptoData: () => {
+        btcData.forceRefresh();
+        btcDominanceData.forceRefresh();
+        btcRsiData.forceRefresh();
+        btcFearGreedData.forceRefresh();
+      },
+    });
+  }, []);
+
   return (
     <MarketCryptoComponent />
   );
