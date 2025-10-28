@@ -1,6 +1,5 @@
 import {
   Alert,
-  Button,
   Chip, Paper, Skeleton, Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -111,7 +110,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
 
                 <Typography variant="body2" color="text.secondary">
                   Last updated: {lastUpdated} - next update in {minutesRemaining !== null ? ` ${formatTimeRemaining(minutesRemaining)}` : ' N/A'}<br />
-                  <Button
+                  {/* <Button
                     variant="text"
                     size="small"
                     onClick={refreshData}
@@ -121,7 +120,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                     }}
                   >
                     Refresh now
-                  </Button>
+                  </Button> */}
                 </Typography>
               </>
             ) : (

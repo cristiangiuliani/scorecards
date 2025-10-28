@@ -14,8 +14,9 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - Traditional Markets (S&P 500, VIX, EUR/USD, RSI)
   - Cryptocurrency Markets (Bitcoin, BTC Dominance, Fear & Greed Index)
 
-- **Real-time Scoring System**
+- **Automated Scoring System**
   - Automated calculation of market reversal signals
+  - Updates every 2 hours (due to free API tier limitations)
   - Color-coded severity indicators (Success/Warning/Error)
   - Visual scorecards with interpretation labels
 
@@ -30,12 +31,22 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - MongoDB-based caching for API responses
   - Configurable TTL for different data sources
   - Manual refresh capability
+  - Real-time cache expiration tracking with countdown timers
+  - Visual expiration date display
+
+- **AI Bubble Indicators**
+  - AI market bubble detection and tracking
+  - Visual indicators for AI-driven market trends
+  - Integration with market analysis scorecards
+  - Updates synchronized with market data (every 2 hours)
 
 - **Modern UI**
   - Dark mode interface
   - Material-UI components
   - Responsive design
   - Tab-based navigation between market types
+  - Skeleton loaders for improved perceived performance
+  - Data freshness indicators with countdown timers
 
 ## Tech Stack
 
@@ -49,9 +60,10 @@ Scorecards is a React-based web application that analyzes market indicators and 
 
 ### Backend
 - **Netlify Functions** - Serverless API endpoints
-- **MongoDB** - Data caching
+- **MongoDB** - Data caching with TTL management
 - **CoinGecko API** - Cryptocurrency data
 - **Various Market Data APIs** - Stock and traditional market data
+- **TypeScript Types** - Strongly typed API responses
 
 ### Development Tools
 - **ESLint** - Code linting (Airbnb config)
@@ -192,8 +204,11 @@ Private project - Version 0.1.0
 
 ## Recent Updates
 
+- **Added AI bubble indicators** - Visual detection and tracking of AI-driven market trends
+- **Improved cache management** - Added expiration date display and countdown timers
+- **Enhanced type safety** - Added comprehensive API response types
+- **Better UX** - Skeleton loaders during data retrieval for improved perceived performance
 - Fixed chart undefined error handling
 - Updated error messaging with snackbar notifications
 - Integrated MongoDB for API response caching
 - Implemented Netlify API hooks for data fetching
-- Removed unused UI components
