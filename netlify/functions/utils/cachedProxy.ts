@@ -81,6 +81,9 @@ export const createCachedProxyHandler = (
 
       const data = await response.json();
 
+      const now = new Date();
+      const expiresAt = new Date(now.getTime() + cacheTTL);
+
       if (!disableCache) {
         CacheService.set(cacheKey, data, cacheTTL).catch((err) => {
           throw new Error(`Save to Cache error:  ${err}`);
@@ -93,6 +96,8 @@ export const createCachedProxyHandler = (
           'Content-Type': 'application/json',
           ...includeCacheHeader && {
             'X-Cache': forceRefresh ? 'REFRESHED' : 'MISS',
+            'X-Cache-Expires-At': expiresAt.toISOString(),
+            'X-Cache-Created-At': now.toISOString(),
           },
           ...CORS_HEADERS,
         },

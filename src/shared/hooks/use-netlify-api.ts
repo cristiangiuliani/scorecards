@@ -104,7 +104,8 @@ export const useNetlifyApi = <T = unknown>({
     if (autoFetch && functionName) {
       fetchData(false);
     }
-  }, [functionName, autoFetch, fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [functionName, autoFetch]);
 
   return {
     data,

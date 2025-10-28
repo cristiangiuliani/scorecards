@@ -1,5 +1,6 @@
 import {
   Alert,
+  Button,
   Chip, Paper, Skeleton, Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -56,8 +57,6 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
     }
   };
 
-  const interval = setInterval(updateMinutesRemaining, EXPIRES_INTERVAL);
-
   const refreshData = () => {
     updateMinutesRemaining();
     refetchAllData();
@@ -65,12 +64,13 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
 
   useEffect(() => {
     updateMinutesRemaining();
+    const interval = setInterval(updateMinutesRemaining, EXPIRES_INTERVAL);
     return () => clearInterval(interval);
   }, [cacheExpiresAt]);
 
   useEffect(() => {
     if (minutesRemaining !== null && minutesRemaining <= 0) {
-      refreshData();
+      refetchAllData();
     }
   }, [minutesRemaining]);
 
@@ -111,7 +111,17 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
 
                 <Typography variant="body2" color="text.secondary">
                   Last updated: {lastUpdated} - next update in {minutesRemaining !== null ? ` ${formatTimeRemaining(minutesRemaining)}` : ' N/A'}<br />
-                  {/* <div onClick={refreshData}>refresh now</div> */}
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={refreshData}
+                    sx={{
+                      textTransform: 'none',
+                      mt: 1,
+                    }}
+                  >
+                    Refresh now
+                  </Button>
                 </Typography>
               </>
             ) : (
