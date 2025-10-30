@@ -36,8 +36,8 @@ const MarketCryptoContainer: React.FC = () => {
 
     if (data) {
       updateMarketCrypto({
-        currentPrice: data?.market_data.current_price.usd,
-        ath: data?.market_data.ath.usd,
+        currentPrice: data?.market_data?.current_price?.usd,
+        ath: data?.market_data?.ath?.usd,
         cacheExpiresAt,
         cacheCreatedAt,
       });
@@ -78,8 +78,8 @@ const MarketCryptoContainer: React.FC = () => {
 
     if (data) {
       updateMarketCrypto({
-        prices: data?.prices.map(([_, price]:number[]) => price),
-        volumes: data?.data?.total_volumes.map(([_, volume]:number[]) => volume),
+        prices: data?.prices?.map(([_, price]:number[]) => price),
+        volumes: data?.data?.total_volumes?.map(([_, volume]:number[]) => volume),
       });
     }
   }, [btcRsiData.data]);

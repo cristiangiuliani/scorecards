@@ -2,30 +2,45 @@ import {
   useState, type ReactNode,
 } from 'react';
 
-import type { IErrorProvider } from './error';
+import type { IAppError, IErrorProvider } from './error';
 import { ErrorContext } from './error.context';
 
 export const ErrorProvider = ({
   children,
 }: { children: ReactNode }) => {
-  const errorProviderValue = {
-    errors: [],
-    addError: () => {},
-    clearError: () => {},
-    clearAllErrors: () => {},
-  };
-  const [error, setError] = useState<IErrorProvider>(errorProviderValue);
+  const [errors, setErrors] = useState<IAppError[]>([]);
 
-  const updateError = (newState: IErrorProvider = errorProviderValue) => {
-    setError((prevState: IErrorProvider) => ({
-      ...prevState,
-      ...newState,
-    }));
+  const addError = (error: IAppError) => {
+    setErrors((prevErrors) => {
+      // Check if an error with the same message already exists
+      const errorExists = prevErrors.some((existingError) => existingError.message === error.message);
+
+      if (errorExists) {
+        return prevErrors;
+      }
+
+      return [...prevErrors, { ...error, timestamp: new Date() }];
+    });
+  };
+
+  const clearError = (timestamp: Date) => {
+    setErrors((prevErrors) => prevErrors.filter((error) => error.timestamp !== timestamp));
+  };
+
+  const clearAllErrors = () => {
+    setErrors([]);
+  };
+
+  const updateError = (newState: IErrorProvider) => {
+    setErrors(newState.errors);
   };
 
   return (
     <ErrorContext.Provider value={{
-      ...error,
+      errors,
+      addError,
+      clearError,
+      clearAllErrors,
       updateError,
     }}
     >

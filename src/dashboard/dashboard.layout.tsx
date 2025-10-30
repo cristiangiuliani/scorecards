@@ -27,6 +27,7 @@ import MarketBubble from '../market-bubble/market-bubble';
 import MarketCrypto from '../market-crypto/market-crypto';
 import MarketStocks from '../market-stocks/market-stocks';
 import { ErrorDisplay } from '../shared/components/error-display';
+import { VersionComponent } from '../shared/components/version.component';
 
 import DashboardContext from './dashboard.context';
 
@@ -60,6 +61,8 @@ const DashboardLayout: React.FC = () => {
           <Typography variant="h6" color="text.secondary">
             Automated market reversal analysis system
           </Typography>
+          <VersionComponent />
+
         </Box>
         { isDemo && <Alert severity="warning">DEMO MODE: Scorecards is using demo MOCK data.</Alert>}
 

@@ -15,7 +15,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy:netlify": "netlify deploy --prod",
-    "setup:tssdk": "yarn dlx @yarnpkg/sdks vscode"
+    "setup:tssdk": "yarn dlx @yarnpkg/sdks vscode",
+    "version:patch": "yarn version patch && git push && git push --tags",
+    "version:minor": "yarn version minor && git push && git push --tags",
+    "version:major": "yarn version major && git push && git push --tags"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

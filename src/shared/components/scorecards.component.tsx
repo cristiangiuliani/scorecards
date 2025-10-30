@@ -1,5 +1,6 @@
 import {
   Alert,
+  Button,
   Chip, Paper, Skeleton, Typography,
 } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -67,12 +68,6 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
     return () => clearInterval(interval);
   }, [cacheExpiresAt]);
 
-  useEffect(() => {
-    if (minutesRemaining !== null && minutesRemaining <= 0) {
-      refetchAllData();
-    }
-  }, [minutesRemaining]);
-
   return (
     <>
       <Box>
@@ -107,21 +102,24 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                     mb: 2,
                   }}
                 />
-
-                <Typography variant="body2" color="text.secondary">
-                  Last updated: {lastUpdated} - next update in {minutesRemaining !== null ? ` ${formatTimeRemaining(minutesRemaining)}` : ' N/A'}<br />
-                  {/* <Button
-                    variant="text"
-                    size="small"
-                    onClick={refreshData}
-                    sx={{
-                      textTransform: 'none',
-                      mt: 1,
-                    }}
-                  >
-                    Refresh now
-                  </Button> */}
-                </Typography>
+                {minutesRemaining !== null && (
+                  <Typography variant="body2" color="text.secondary">
+                    Last updated: {lastUpdated} - next update in { minutesRemaining <= 0
+                      ? (
+                        <Button
+                          variant="text"
+                          size="small"
+                          onClick={refreshData}
+                          sx={{
+                            textTransform: 'none',
+                            mt: 1,
+                          }}
+                        >
+                          Refresh now
+                        </Button>
+                      ) : ` ${formatTimeRemaining(minutesRemaining)}` }
+                  </Typography>
+                )}
               </>
             ) : (
               <Alert severity="warning">Component cannot retrieve scorecards data. Try later.</Alert>

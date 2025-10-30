@@ -1,0 +1,128 @@
+name: Auto Version & Release
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    if: "!startsWith(github.event.head_commit.message, 'chore: bump version')"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@4.9.4 --activate
+          yarn --version
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Determine version bump
+        id: version
+        run: |
+          # Check if this is a tag push
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            echo "IS_TAG=true" >> $GITHUB_OUTPUT
+            echo "BUMP_TYPE=manual" >> $GITHUB_OUTPUT
+          else
+            # Auto-increment patch version for regular commits
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            echo "Current version: $CURRENT_VERSION"
+
+            # Increment patch version
+            IFS='.' read -r -a version_parts <<< "$CURRENT_VERSION"
+            MAJOR="${version_parts[0]}"
+            MINOR="${version_parts[1]}"
+            PATCH="${version_parts[2]}"
+            NEW_PATCH=$((PATCH + 1))
+            NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+
+            echo "VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
+            echo "IS_TAG=false" >> $GITHUB_OUTPUT
+            echo "BUMP_TYPE=patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update package.json version
+        if: steps.version.outputs.IS_TAG == 'false'
+        run: |
+          NEW_VERSION=${{ steps.version.outputs.VERSION }}
+          yarn version $NEW_VERSION --no-git-tag-version
+
+      - name: Commit version bump
+        if: steps.version.outputs.IS_TAG == 'false'
+        run: |
+          git add package.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.VERSION }}"
+          git push
+
+      - name: Create Git Tag
+        if: steps.version.outputs.IS_TAG == 'false'
+        run: |
+          git tag v${{ steps.version.outputs.VERSION }}
+          git push origin v${{ steps.version.outputs.VERSION }}
+
+      - name: Generate Changelog
+        id: changelog
+        run: |
+          # Get the previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+
+          if [ -z "$PREV_TAG" ]; then
+            # If no previous tag, get all commits
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            # Get commits since previous tag
+            CHANGELOG=$(git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+
+          # Save to file to handle multiline
+          echo "$CHANGELOG" > changelog.txt
+
+          # Also set for output (escape newlines)
+          CHANGELOG_ESCAPED=$(echo "$CHANGELOG" | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          release_name: Release v${{ steps.version.outputs.VERSION }}
+          body: |
+            ## Changes in this release
+
+            ${{ steps.changelog.outputs.CHANGELOG }}
+
+            **Version Type:** ${{ steps.version.outputs.BUMP_TYPE }}
+          draft: false
+          prerelease: false

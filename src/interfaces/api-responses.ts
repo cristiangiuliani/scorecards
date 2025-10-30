@@ -17,6 +17,7 @@ export interface IYahooFinanceResponse {
 
 // Alpha Vantage RSI Response
 export interface IAlphaVantageRSIResponse {
+  'Information': string;
   'Meta Data': {
     '3: Last Refreshed': string;
   };
@@ -29,6 +30,7 @@ export interface IAlphaVantageRSIResponse {
 
 // Alpha Vantage Currency Exchange Response
 export interface IAlphaVantageCurrencyResponse {
+  'Information': string;
   'Realtime Currency Exchange Rate': {
     '5. Exchange Rate': string;
   };

@@ -1,3 +1,4 @@
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
   Alert,
   Box, Card, CardContent, Chip, Icon, Skeleton, Typography,
@@ -59,7 +60,11 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       </Box>
 
                       <Typography variant="h5" component="div" fontWeight="bold" mb={1}>
-                        {typeof item.value === 'number' ? item.value.toFixed(2) : item.value}
+                        {typeof item.value === 'number' && !isNaN(item.value) ?
+                          item.value.toFixed(2)
+                          : (
+                            <ErrorOutlineIcon color="error" fontSize="large" />
+                          )}
                       </Typography>
 
                       <Typography variant="caption" color="text.secondary">

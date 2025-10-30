@@ -42,7 +42,7 @@ class ErrorHandler {
       message: String(error),
       originalError: error,
       timestamp: new Date(),
-      userMessage: 'Si è verificato un errore imprevisto',
+      userMessage: 'An unexpected error occurred',
     };
   }
 
@@ -63,11 +63,11 @@ class ErrorHandler {
     const errorType = type || this.detectErrorType(error);
 
     const messages = {
-      ['NETWORK']: 'Impossibile connettersi al server. Verifica la tua connessione.',
-      ['API']: 'Errore nel recupero dei dati. Riprova più tardi.',
-      ['DATABASE']: 'Errore nel caricamento dei dati dalla cache.',
-      ['VALIDATION']: 'I dati inseriti non sono validi.',
-      ['UNKNOWN']: 'Si è verificato un errore imprevisto.',
+      ['NETWORK']: 'Unable to connect to the server. Please check your connection.',
+      ['API']: 'Error retrieving data. Please try again later.',
+      ['DATABASE']: 'Error loading data from cache.',
+      ['VALIDATION']: 'The entered data is not valid.',
+      ['UNKNOWN']: 'An unexpected error occurred.',
     };
 
     return messages[errorType];

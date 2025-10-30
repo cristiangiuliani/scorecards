@@ -4,6 +4,9 @@ import React, {
 
 import { API } from '../constants/api';
 import { STOCKS_SCOPE } from '../constants/config';
+import type { IErrorContext } from '../error-handler/error';
+import { ALPHA_VANTAGE_RSI_ERROR } from '../error-handler/error-definitions';
+import { ErrorContext } from '../error-handler/error.context';
 import type {
   IAlphaVantageCurrencyResponse,
   IAlphaVantageRSIResponse,
@@ -20,6 +23,7 @@ const MarketStocksContainer: React.FC = () => {
   const {
     updateMarketStocks = () => {},
   } = useContext<IMarketStocksContext>(MarketStocksContext);
+  const { addError } = useContext<IErrorContext>(ErrorContext);
 
   const sp500Data = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.sp500,
@@ -41,9 +45,9 @@ const MarketStocksContainer: React.FC = () => {
     if (result.length > 0) {
       const sp500Quotes = result[0]?.indicators?.quote || [];
       updateMarketStocks({
-        sp500Price: parseFloat(result[0]?.meta.regularMarketPrice.toString()),
-        sp500Prices: result[0]?.indicators.quote[0].close,
-        sp500Volumes: result[0]?.indicators.quote[0].volume,
+        sp500Price: parseFloat(result[0]?.meta?.regularMarketPrice?.toString()),
+        sp500Prices: result[0]?.indicators?.quote[0]?.close,
+        sp500Volumes: result[0]?.indicators?.quote[0]?.volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
         treasury10Y: result[0]?.meta?.regularMarketPrice,
         cacheExpiresAt,
@@ -64,7 +68,7 @@ const MarketStocksContainer: React.FC = () => {
     updateMarketStocks({ isVixLoading: loading });
     if (data) {
       updateMarketStocks({
-        vix: parseFloat(data?.chart?.result[0]?.meta?.regularMarketPrice.toString()),
+        vix: parseFloat(data?.chart?.result[0]?.meta?.regularMarketPrice?.toString()),
       });
     }
   }, [vixData.data]);
@@ -80,8 +84,11 @@ const MarketStocksContainer: React.FC = () => {
     const { data, loading } = rsiData;
     updateMarketStocks({ isRsiLoading: loading });
     if (data) {
-      const lastUpdate = data['Meta Data']['3: Last Refreshed'];
-      const lastRsi = data['Technical Analysis: RSI'][lastUpdate]['RSI'];
+      if (data['Information']) {
+        addError(ALPHA_VANTAGE_RSI_ERROR);
+      }
+      const lastUpdate = data['Meta Data']?.['3: Last Refreshed'];
+      const lastRsi = data['Technical Analysis: RSI']?.[lastUpdate]?.['RSI'];
       updateMarketStocks({
         rsiSP500: parseFloat(lastRsi),
       });
@@ -99,8 +106,11 @@ const MarketStocksContainer: React.FC = () => {
     const { data, loading } = eurUsdData;
     updateMarketStocks({ isEurUsdLoading: loading });
     if (data) {
+      if (data['Information']) {
+        addError(ALPHA_VANTAGE_RSI_ERROR);
+      }
       updateMarketStocks({
-        eurUsd: parseFloat(data['Realtime Currency Exchange Rate']['5. Exchange Rate']),
+        eurUsd: parseFloat(data['Realtime Currency Exchange Rate']?.['5. Exchange Rate']),
       });
     }
   }, [eurUsdData.data]);
@@ -117,7 +127,7 @@ const MarketStocksContainer: React.FC = () => {
     updateMarketStocks({ isFearGreedLoading: loading });
     if (data) {
       updateMarketStocks({
-        fearGreed: parseFloat(data.fear_and_greed.score.toString()),
+        fearGreed: parseFloat(data.fear_and_greed?.score?.toString()),
       });
     }
   }, [fearGreedData.data]);
