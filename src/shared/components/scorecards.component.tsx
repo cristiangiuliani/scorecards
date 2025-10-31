@@ -1,9 +1,13 @@
+import { Update } from '@mui/icons-material';
 import {
   Alert,
   Button,
-  Chip, Paper, Skeleton, Typography,
+  Card,
+  CardContent,
+  Chip,
+  Skeleton, Typography,
+  useTheme,
 } from '@mui/material';
-import Box from '@mui/material/Box';
 import React, { useState, useEffect } from 'react';
 
 import type { TInterpretation } from '../../types/data.type';
@@ -42,11 +46,19 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   isLoading = false,
   refetchAllData = () => {},
 }) => {
+  const theme = useTheme();
   const [minutesRemaining, setMinutesRemaining] = useState<number | null>(null);
-  const lastUpdated = cacheCreatedAt && new Date(cacheCreatedAt).toLocaleTimeString('nl-NL', {
+  const userLocale = navigator.language || 'nl-NL';
+  const lastUpdated = cacheCreatedAt && new Date(cacheCreatedAt).toLocaleTimeString(userLocale, {
     hour: '2-digit',
     minute: '2-digit',
   });
+
+  const getBackgroundColor = () => {
+    if (!interpretation?.color) return undefined;
+    if (interpretation.color === 'default') return theme.palette.grey[700];
+    return theme.palette[interpretation.color].dark;
+  };
 
   const updateMinutesRemaining = () => {
     if (cacheExpiresAt) {
@@ -70,66 +82,81 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
 
   return (
     <>
-      <Box>
-        <Box mb={4}>
 
-          <Paper
-            elevation={4}
-            sx={{
-              p: 4,
-              textAlign: 'center',
-            }}
-          >
-            { isLoading ? (
-              <>
-                <Skeleton height={80} width={60} sx={{ margin: '0 auto' }} />
-                <Skeleton height={50} width={100} sx={{ margin: '0 auto' }} />
-                <Skeleton height={20} width={150} sx={{ margin: '0 auto' }} />
-              </>
-            ) : score !== undefined && interpretation !== undefined ? (
-              <>
-                <Typography variant="h2" component="div" fontWeight="bold" color="text.primary" mb={2}>
-                  {score.toFixed(1)}
+      <Card
+        sx={{
+          textAlign: 'center',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: getBackgroundColor(),
+        }}
+      >
+        <CardContent
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          { isLoading ? (
+            <>
+              <Skeleton height={80} width={60} sx={{ margin: '0 auto' }} />
+              <Skeleton height={50} width={100} sx={{ margin: '0 auto' }} />
+              <Skeleton height={20} width={150} sx={{ margin: '0 auto' }} />
+            </>
+          ) : score !== undefined && interpretation !== undefined ? (
+            <>
+              <Typography variant="h2" component="div" fontWeight="bold" color="text.primary" mb={2}>
+                {score.toFixed(1)}
+              </Typography>
+
+              <Chip
+                label={interpretation.text}
+                size='medium'
+                sx={{
+                  fontSize: '1.1rem',
+                  fontWeight: 'bold',
+                  mb: 2,
+                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                  color: getBackgroundColor(),
+                }}
+              />
+              {minutesRemaining !== null && (
+                <Typography variant="body2" color="text.secondary">
+                  Last updated: {lastUpdated}<br />Updates in { minutesRemaining <= 0
+                    ? (
+                      <Button
+                        variant="contained"
+                        size="small"
+                        onClick={refreshData}
+                        startIcon={<Update />}
+                        sx={{
+                          backgroundColor: '#fff',
+                          textTransform: 'none',
+
+                          opacity: 0.5,
+                          borderRadius: '4px',
+                          padding: '0px 8px',
+                          ':hover, :active, :focus, :link, :visited': {
+                            backgroundColor: '#fff',
+                            opacity: 0.6,
+                          },
+                        }}
+                      >
+                        Refresh now
+                      </Button>
+                    ) : ` ${formatTimeRemaining(minutesRemaining)}` }
                 </Typography>
-
-                <Chip
-                  label={interpretation.text}
-                  color={interpretation.color}
-                  size='medium'
-                  sx={{
-                    fontSize: '1.1rem',
-                    fontWeight: 'bold',
-                    mb: 2,
-                  }}
-                />
-                {minutesRemaining !== null && (
-                  <Typography variant="body2" color="text.secondary">
-                    Last updated: {lastUpdated} - next update in { minutesRemaining <= 0
-                      ? (
-                        <Button
-                          variant="text"
-                          size="small"
-                          onClick={refreshData}
-                          sx={{
-                            textTransform: 'none',
-                            mt: 1,
-                          }}
-                        >
-                          Refresh now
-                        </Button>
-                      ) : ` ${formatTimeRemaining(minutesRemaining)}` }
-                  </Typography>
-                )}
-              </>
-            ) : (
-              <Alert severity="warning">Component cannot retrieve scorecards data. Try later.</Alert>
-            )
-            }
-          </Paper>
-
-        </Box>
-
-      </Box>
+              )}
+            </>
+          ) : (
+            <Alert severity="warning">Component cannot retrieve scorecards data. Try later.</Alert>
+          )
+          }
+        </CardContent>
+      </Card>
 
     </>
   );

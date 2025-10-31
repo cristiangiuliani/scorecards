@@ -1,11 +1,11 @@
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import React, {
   useContext,
 } from 'react';
 import { RSI } from 'technicalindicators';
 
 import { CRYPTO_WEIGHTS } from '../constants/config';
-import { CRYPTO_LABELS } from '../constants/labels';
+import { COMMON_LABELS, CRYPTO_LABELS } from '../constants/labels';
 import type { IMarketCryptoContext } from '../interfaces/market-crypto';
 import IndicatorsComponent from '../shared/components/indicators.component';
 import ScoreCardsComponent from '../shared/components/scorecards.component';
@@ -117,6 +117,8 @@ const MarketCryptoComponent: React.FC = () => {
     },
   ];
 
+  const interpretation = getCryptoInterpretation(cryptoScore);
+
   const getCryptoStrategies = (metrics: TCryptoMetrics): TStrategiesListItem[] => {
     const {
       cryptoScore,
@@ -130,7 +132,7 @@ const MarketCryptoComponent: React.FC = () => {
     return [
       {
         title: CRYPTO_LABELS.Strategy,
-        color: 'secondary',
+        color: interpretation.color,
         isLoading: isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading,
         items: [
           {
@@ -145,7 +147,7 @@ const MarketCryptoComponent: React.FC = () => {
       },
       {
         title: CRYPTO_LABELS.BtcAltcoin,
-        color: 'info',
+        color: interpretation.color,
         isLoading: isBtcDominanceLoading,
         items: [
           {
@@ -160,11 +162,11 @@ const MarketCryptoComponent: React.FC = () => {
       },
       {
         title: CRYPTO_LABELS.RiskManagement,
-        color: 'error',
+        color: interpretation.color,
         isLoading: isBtcRsiLoading || isBtcFearGreedLoading,
         items: [
           {
-            label: CRYPTO_LABELS.RiskLevel,
+            label: COMMON_LABELS.RiskLevel,
             value: getRiskLevel(cryptoScore, btcRsi, btcFearGreed, athDistance),
           },
           {
@@ -177,7 +179,7 @@ const MarketCryptoComponent: React.FC = () => {
       },
       {
         title: CRYPTO_LABELS.ActionItems,
-        color: 'warning',
+        color: interpretation.color,
         isLoading: isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading,
         items: getActionableTips(
           cryptoScore,
@@ -195,29 +197,40 @@ const MarketCryptoComponent: React.FC = () => {
 
   return (
     <>
-      <Box>
-        <ScoreCardsComponent
-          score={cryptoScore}
-          interpretation={getCryptoInterpretation(cryptoScore)}
-          cacheCreatedAt={cacheCreatedAt}
-          cacheExpiresAt={cacheExpiresAt}
-          isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
-          refetchAllData={refetchMarketCryptoData}
-        />
+      <Grid
+        container
+        spacing={2}
+        mb={2}
+        sx={{
+          justifyContent: 'flex-start',
+          alignItems: 'stretch',
+        }}
+      >
+        <Grid size={4}>
+          <ScoreCardsComponent
+            score={cryptoScore}
+            interpretation={interpretation}
+            cacheCreatedAt={cacheCreatedAt}
+            cacheExpiresAt={cacheExpiresAt}
+            isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
+            refetchAllData={refetchMarketCryptoData}
+          />
+        </Grid>
+        <Grid size={8}>
+          <IndicatorsComponent indexList={CryptoIndexList} />
 
-        <IndicatorsComponent indexList={CryptoIndexList} />
-
-        <StrategiesComponent
-          strategiesList={getCryptoStrategies({
-            cryptoScore,
-            btcDominance,
-            btcRsi,
-            btcFearGreed,
-            athDistance,
-            momentum7d,
-          })}
-        />
-      </Box>
+        </Grid>
+      </Grid>
+      <StrategiesComponent
+        strategiesList={getCryptoStrategies({
+          cryptoScore,
+          btcDominance,
+          btcRsi,
+          btcFearGreed,
+          athDistance,
+          momentum7d,
+        })}
+      />
     </>
   );
 };

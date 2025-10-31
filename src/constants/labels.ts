@@ -1,5 +1,5 @@
-export const GLOBAL_LABELS = {
-
+export const COMMON_LABELS = {
+  RiskLevel: 'Risk Level',
 };
 
 export const CRYPTO_LABELS = {
@@ -15,7 +15,6 @@ export const CRYPTO_LABELS = {
   BtcAltcoin: '⚖️ BTC vs Altcoins',
   PortfolioBalance: 'Portfolio Balance',
   RiskManagement: '🚨 Risk Management',
-  RiskLevel: 'Risk Level',
   KeyMetric: 'Key Metric',
   ActionItems: '💡 Action Items',
 };
@@ -38,4 +37,11 @@ export const AI_BUBBLE_LABELS = {
   riskLevel: 'Bubble Risk',
   factors: 'Active Factors',
   nvdaNasdaqRatio: 'NVDA/NASDAQ Ratio',
+  portfolioAction: '💼 Portfolio Action',
+  sectorRotation: '🏢 Sector Rotation',
+  timingStrategy: '⏱️ Timing Strategy',
+  actionableTips: '💡 Actionable Tips',
+  recommendation: 'Recommendation',
+  recommendedSectors: 'Recommended Sectors',
+  action: 'Action',
 };

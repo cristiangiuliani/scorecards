@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 import React, { useContext } from 'react';
 
 import { STOCKS_WEIGHTS } from '../constants/config';
@@ -66,6 +66,8 @@ const MarketStocksComponent: React.FC = () => {
     sp500Volumes,
   });
 
+  const interpretation = getStockInterpretation(stocksScore);
+
   const StocksIndexList: TIndicatorsListItem[] = [
     {
       label: STOCKS_LABELS.Vix,
@@ -114,7 +116,7 @@ const MarketStocksComponent: React.FC = () => {
   const StocksStrategyList: TStrategiesListItem[] = [
     {
       title: '💼 Portfolio Strategy',
-      color: 'primary',
+      color: interpretation.color,
       isLoading: isSp500Loading || isRsiLoading || isVixLoading || isFearGreedLoading,
       items: [
         {
@@ -133,7 +135,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       title: '🎯 Sector Focus',
-      color: 'success',
+      color: interpretation.color,
       isLoading: isRsiLoading || isVixLoading || isFearGreedLoading,
       items: [
         {
@@ -150,7 +152,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       title: '⚠️ Risk Management',
-      color: 'warning',
+      color: interpretation.color,
       isLoading: isVixLoading || isRsiLoading || isFearGreedLoading,
       items: [
         {
@@ -161,7 +163,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       title: '💡 Action Items',
-      color: 'error',
+      color: interpretation.color,
       isLoading: isVixLoading || isRsiLoading || isFearGreedLoading,
       items: getActionableTips(
         stocksScore,
@@ -178,22 +180,32 @@ const MarketStocksComponent: React.FC = () => {
 
   return (
     <>
-      <Box>
-        <ScoreCardsComponent
-          score={stocksScore}
-          interpretation={getStockInterpretation(stocksScore)}
-          cacheCreatedAt={cacheCreatedAt}
-          cacheExpiresAt={cacheExpiresAt}
-          isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
-          refetchAllData={refetchMarketStocksData}
-        />
-
-        <IndicatorsComponent
-          indexList={StocksIndexList}
-        />
-
-        <StrategiesComponent strategiesList={StocksStrategyList} />
-      </Box>
+      <Grid
+        container
+        spacing={2}
+        mb={2}
+        sx={{
+          justifyContent: 'flex-start',
+          alignItems: 'stretch',
+        }}
+      >
+        <Grid size={4}>
+          <ScoreCardsComponent
+            score={stocksScore}
+            interpretation={interpretation}
+            cacheCreatedAt={cacheCreatedAt}
+            cacheExpiresAt={cacheExpiresAt}
+            isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
+            refetchAllData={refetchMarketStocksData}
+          />
+        </Grid>
+        <Grid size={8}>
+          <IndicatorsComponent
+            indexList={StocksIndexList}
+          />
+        </Grid>
+      </Grid>
+      <StrategiesComponent strategiesList={StocksStrategyList} />
     </>
   );
 };

@@ -17,19 +17,20 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
   return (
     <>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {strategiesList.map((item, index) => (
           <Grid
             key={`strategy-list-${index}`}
             size={{
               xs: 12,
-              sm: 4,
+              sm: 6,
+              md: 3,
             }}
           >
             <Paper
               elevation={1}
               sx={{
-                p: 3,
+                p: 2,
                 height: '100%',
                 borderTop: '4px solid',
                 borderTopColor: `${item.color}.main`,
@@ -44,7 +45,7 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
                 </>
               )  :  item?.items?.length > 0 ? (
                 <>
-                  <Typography variant="h6" gutterBottom fontWeight="bold">
+                  <Typography variant="subtitle1" gutterBottom fontWeight="bold">
                     {item.title}
                   </Typography>
                   <Divider sx={{
