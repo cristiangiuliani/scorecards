@@ -12,7 +12,13 @@ import type {
 } from '../types/data.type';
 
 import MarketBubbleContext from './market-bubble.context';
-import { calculateBubbleRisk, displayScoreRisk } from './utils/bubble-formulas';
+import {
+  calculateBubbleRisk,
+  calculateNasdaqPEScore,
+  calculateNvidiaPEScore,
+  calculateVixPersistenceScore,
+  displayScoreRisk,
+} from './utils/bubble-formulas';
 import {
   getBubbleInterpretation,
   getPortfolioRecommendation,
@@ -49,9 +55,9 @@ const MarketBubbleComponent: React.FC = () => {
   const displayScore = displayScoreRisk(bubbleIndicator);
 
   const nvdaNasdaqRatio = nvidiaPE && nasdaqPE ? nvidiaPE / nasdaqPE : 0;
-  const nvidiaScore = nvidiaPE > 65 ? 1 : nvidiaPE > 58.5 ? 0.5 : 0;
-  const nasdaqScore = nasdaqPE > 38 ? 1 : nasdaqPE > 34.2 ? 0.5 : 0;
-  const vixPersistScore = daysAbove30 >= 3 ? 1 : daysAbove30 >= 2 ? 0.5 : 0;
+  const nvidiaScore = calculateNvidiaPEScore(nvidiaPE);
+  const nasdaqScore = calculateNasdaqPEScore(nasdaqPE);
+  const vixPersistScore = calculateVixPersistenceScore(vixHistory);
 
   const BubbleIndexList: TIndicatorsListItem[] = [
     {
@@ -93,7 +99,7 @@ const MarketBubbleComponent: React.FC = () => {
       items: [
         {
           label: COMMON_LABELS.RiskLevel,
-          value: `${bubbleIndicator.risk} RISK (${bubbleIndicator.score.toFixed(1)}/3)`,
+          value: `${bubbleIndicator.risk} RISK (${Math.abs(bubbleIndicator.score).toFixed(1)}/10)`,
         },
         {
           label: AI_BUBBLE_LABELS.recommendation,
@@ -145,9 +151,16 @@ const MarketBubbleComponent: React.FC = () => {
           alignItems: 'stretch',
         }}
       >
-        <Grid size={6}>
+        <Grid size={{
+          xs: 12,
+          sm: 6,
+          md: 6,
+        }}
+        >
           <ScoreCardsComponent
             score={displayScore}
+            min={0}
+            max={10}
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
             cacheExpiresAt={cacheExpiresAt}
@@ -155,7 +168,12 @@ const MarketBubbleComponent: React.FC = () => {
             refetchAllData={refetchMarketBubbleData}
           />
         </Grid>
-        <Grid size={6}>
+        <Grid size={{
+          xs: 12,
+          sm: 6,
+          md: 6,
+        }}
+        >
           <IndicatorsComponent
             indexList={BubbleIndexList}
           />

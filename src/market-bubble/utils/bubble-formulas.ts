@@ -8,16 +8,16 @@ const VIX_PERSISTENCE_DAYS = 3;
 export function calculateNvidiaPEScore(nvidiaPE: number | undefined): number {
   if (!nvidiaPE) return 0;
 
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return 1;
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD * 0.9) return 0.5; // Warning zone (>58.5)
+  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return -3.3;
+  if (nvidiaPE > NVIDIA_PE_THRESHOLD * 0.9) return -1.7; // Warning zone (>58.5)
   return 0;
 }
 
 export function calculateNasdaqPEScore(nasdaqPE: number | undefined): number {
   if (!nasdaqPE) return 0;
 
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return 1;
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD * 0.9) return 0.5; // Warning zone (>34.2)
+  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return -3.3;
+  if (nasdaqPE > NASDAQ_PE_THRESHOLD * 0.9) return -1.7; // Warning zone (>34.2)
   return 0;
 }
 
@@ -25,10 +25,10 @@ export function calculateVixPersistenceScore(vixHistory: number[] | undefined): 
   if (!vixHistory || vixHistory.length < VIX_PERSISTENCE_DAYS) return 0;
 
   const isPersistent = isVixPersistent(vixHistory);
-  if (isPersistent) return 1;
+  if (isPersistent) return -3.4;
 
   const daysAboveThreshold = vixHistory.slice(-5).filter((v) => v > VIX_THRESHOLD).length;
-  if (daysAboveThreshold >= 2) return 0.5;
+  if (daysAboveThreshold >= 2) return -1.7;
 
   return 0;
 }
@@ -64,9 +64,9 @@ export function calculateBubbleRisk(data: IBubbleData): IBubbleIndicator {
   const vixPersistent = data.vixHistory ? isVixPersistent(data.vixHistory) : false;
 
   let risk: 'LOW' | 'MEDIUM' | 'HIGH';
-  if (totalScore >= 2.5) {
+  if (totalScore <= -7) {
     risk = 'HIGH';
-  } else if (totalScore >= 1) {
+  } else if (totalScore <= -3) {
     risk = 'MEDIUM';
   } else {
     risk = 'LOW';
@@ -84,9 +84,5 @@ export function calculateBubbleRisk(data: IBubbleData): IBubbleIndicator {
 }
 
 export const displayScoreRisk = (bubbleIndicator: IBubbleIndicator): number => {
-  return bubbleIndicator.risk === 'HIGH'
-    ? 8 + (bubbleIndicator.score - 2.5) * 4  // 8-10
-    : bubbleIndicator.risk === 'MEDIUM'
-      ? 3 + (bubbleIndicator.score - 1) * 3     // 3-7
-      : bubbleIndicator.score * 3;              // 0-3
+  return Math.abs(bubbleIndicator.score);
 };

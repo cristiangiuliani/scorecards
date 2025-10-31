@@ -12,14 +12,16 @@ export const ErrorProvider = ({
 
   const addError = (error: IAppError) => {
     setErrors((prevErrors) => {
-      // Check if an error with the same message already exists
       const errorExists = prevErrors.some((existingError) => existingError.message === error.message);
 
       if (errorExists) {
         return prevErrors;
       }
 
-      return [...prevErrors, { ...error, timestamp: new Date() }];
+      return [...prevErrors, {
+        ...error,
+        timestamp: new Date(),
+      }];
     });
   };
 

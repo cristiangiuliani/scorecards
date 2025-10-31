@@ -27,6 +27,6 @@ export type TCryptoMetrics = {
   btcDominance: number;
   btcRsi: number;
   btcFearGreed: number;
-  athDistance: number; // Percentuale (es. 98 = 98% dell'ATH)
+  athDistance: number;
   momentum7d: number;
 }

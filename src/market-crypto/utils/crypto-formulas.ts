@@ -87,15 +87,15 @@ export const calculateMaScore = (prices: number[]): number => {
 
   let score = 0;
 
-  if (current > ma50 * 1.1) score += 2;  // Molto sopra MA50
-  else if (current > ma50) score += 1;   // Sopra MA50
-  else if (current < ma50 * 0.9) score -= 2;  // Molto sotto MA50
-  else if (current < ma50) score -= 1;   // Sotto MA50
+  if (current > ma50 * 1.1) score += 2;
+  else if (current > ma50) score += 1;
+  else if (current < ma50 * 0.9) score -= 2;
+  else if (current < ma50) score -= 1;
 
-  if (ma50 > ma200 * 1.05) score += 2;   // Strong golden cross
-  else if (ma50 > ma200) score += 1;     // Golden cross
-  else if (ma50 < ma200 * 0.95) score -= 2;  // Strong death cross
-  else if (ma50 < ma200) score -= 1;     // Death cross
+  if (ma50 > ma200 * 1.05) score += 2;
+  else if (ma50 > ma200) score += 1;
+  else if (ma50 < ma200 * 0.95) score -= 2;
+  else if (ma50 < ma200) score -= 1;
 
   return score;
 };

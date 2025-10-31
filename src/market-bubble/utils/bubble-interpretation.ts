@@ -3,40 +3,44 @@ import type { TInterpretation } from '../../types/data.type';
 
 export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpretation {
   const {
-    risk, score, factors,
+    score,
   } = indicator;
 
-  if (risk === 'HIGH') {
-    if (score === 3) {
+  if (score <= -7) {
+    // STRONG BEARISH/HIGH RISK
+    if (score === -10) {
       return {
-        text: '🚨 CRITICAL: All 3 bubble indicators activated!',
+        text: '🚨 CRITICAL',
         color: 'error',
         severity: 'error',
       };
     }
     return {
-      text: '⚠️ HIGH RISK: Multiple bubble signals detected.',
+      text: '🔴 HIGH RISK',
       color: 'error',
       severity: 'error',
     };
   }
 
-  if (risk === 'MEDIUM') {
-    const activeFactors = [
-      factors.nvidiaOvervalued && 'NVIDIA overvalued',
-      factors.nasdaqOvervalued && 'NASDAQ overvalued',
-      factors.vixPersistent && 'VIX elevated',
-    ].filter(Boolean);
-
+  if (score <= -3) {
     return {
-      text: `⚡ MODERATE RISK: ${activeFactors.join(' + ')}.`,
-      color: 'warning',
+      text: '⚪ MODERATE RISK',
+      color: 'default',
       severity: 'warning',
     };
   }
 
+  if (score > -3) {
+    // NEUTRAL/LOW RISK
+    return {
+      text: '🟢 LOW RISK',
+      color: 'success',
+      severity: 'success',
+    };
+  }
+
   return {
-    text: '✅ LOW RISK: No significant bubble indicators detected.',
+    text: '✅ LOW RISK',
     color: 'success',
     severity: 'success',
   };
@@ -96,7 +100,6 @@ export function getActionableTips(indicator: IBubbleIndicator): string[] {
     tips.push('🎯 Opportunistic: Buy dips in strong names');
   }
 
-  // Aggiungi tips specifici per fattore
   if (factors.nvidiaOvervalued) {
     tips.push('⚠️ NVIDIA: Reduce exposure, P/E too extended');
   }

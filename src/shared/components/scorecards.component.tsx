@@ -12,10 +12,14 @@ import React, { useState, useEffect } from 'react';
 
 import type { TInterpretation } from '../../types/data.type';
 
+import { ScoreGauge } from './score-gauge.component';
+
 const EXPIRES_INTERVAL = 60000; // 1 minute
 
 type TScoreCardsComponentProps = {
   score: number;
+  min?: number;
+  max?: number;
   interpretation: TInterpretation;
   cacheCreatedAt?: string | null;
   cacheExpiresAt?: string | null;
@@ -40,6 +44,8 @@ const formatTimeRemaining = (minutes: number): string => {
 
 const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   score = undefined,
+  min = -10,
+  max = 10,
   interpretation = undefined,
   cacheCreatedAt = null,
   cacheExpiresAt = null,
@@ -108,9 +114,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
             </>
           ) : score !== undefined && interpretation !== undefined ? (
             <>
-              <Typography variant="h2" component="div" fontWeight="bold" color="text.primary" mb={2}>
-                {score.toFixed(1)}
-              </Typography>
+              <ScoreGauge value={score} width={180} height={160} min={min} max={max} />
 
               <Chip
                 label={interpretation.text}
@@ -121,6 +125,8 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                   mb: 2,
                   backgroundColor: 'rgba(255, 255, 255, 0.7)',
                   color: getBackgroundColor(),
+                  maxWidth: '200px',
+                  margin: '0.5rem auto',
                 }}
               />
               {minutesRemaining !== null && (

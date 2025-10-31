@@ -189,7 +189,12 @@ const MarketStocksComponent: React.FC = () => {
           alignItems: 'stretch',
         }}
       >
-        <Grid size={4}>
+        <Grid size={{
+          xs: 12,
+          sm: 6,
+          md: 4,
+        }}
+        >
           <ScoreCardsComponent
             score={stocksScore}
             interpretation={interpretation}
@@ -199,7 +204,12 @@ const MarketStocksComponent: React.FC = () => {
             refetchAllData={refetchMarketStocksData}
           />
         </Grid>
-        <Grid size={8}>
+        <Grid size={{
+          xs: 12,
+          sm: 6,
+          md: 8,
+        }}
+        >
           <IndicatorsComponent
             indexList={StocksIndexList}
           />

@@ -206,7 +206,12 @@ const MarketCryptoComponent: React.FC = () => {
           alignItems: 'stretch',
         }}
       >
-        <Grid size={4}>
+        <Grid size={{
+          xs: 12,
+          sm: 6,
+          md: 4,
+        }}
+        >
           <ScoreCardsComponent
             score={cryptoScore}
             interpretation={interpretation}
@@ -216,7 +221,12 @@ const MarketCryptoComponent: React.FC = () => {
             refetchAllData={refetchMarketCryptoData}
           />
         </Grid>
-        <Grid size={8}>
+        <Grid size={{
+          xs: 12,
+          sm: 6,
+          md: 8,
+        }}
+        >
           <IndicatorsComponent indexList={CryptoIndexList} />
 
         </Grid>

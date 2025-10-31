@@ -2,66 +2,57 @@ import { STOCKS_WEIGHTS } from '../../constants/config';
 import type { IStocksData } from '../../interfaces/market-stocks';
 
 export const calculateVixScore = (value = 0): number => {
-  // VIX = "fear index" - ALTO = bearish, BASSO = bullish
-  // ⚠️ CORRETTO rispetto alla versione precedente!
-  if (value > 40) return -4;   // Paura estrema (bearish)
-  if (value > 30) return -3;   // Alta volatilità (bearish)
-  if (value > 25) return -1;   // Volatilità elevata
-  if (value < 12) return 2;    // Complacency (bullish)
-  if (value < 15) return 1;    // Bassa volatilità (bullish)
-  return 0;  // Normale (15-25)
+  if (value > 40) return -4;
+  if (value > 30) return -3;
+  if (value > 25) return -1;
+  if (value < 12) return 2;
+  if (value < 15) return 1;
+  return 0;
 };
 
 export const calculateRsiScore = (value = 0): number => {
-  // RSI S&P500 - con soglie migliorate
-  if (value > 85) return -4;   // Estremo ipercomprato
-  if (value > 80) return -3;   // Molto ipercomprato
-  if (value > 70) return -2;   // ⬅️ AGGIUNTO: ipercomprato classico
-  if (value > 65) return -1;   // ⬅️ AGGIUNTO: leggero ipercomprato
-  if (value < 15) return 4;    // Estremo ipervenduto
-  if (value < 20) return 3;    // Molto ipervenduto
-  if (value < 30) return 2;    // Ipervenduto
-  if (value < 35) return 1;    // Leggero ipervenduto
-  return 0;  // Neutrale (35-65)
+  if (value > 85) return -4;
+  if (value > 80) return -3;
+  if (value > 70) return -2;
+  if (value > 65) return -1;
+  if (value < 15) return 4;
+  if (value < 20) return 3;
+  if (value < 30) return 2;
+  if (value < 35) return 1;
+  return 0;
 };
 
 export const calculateEurUsdScore = (value = 0): number => {
-  // EUR/USD - più granulare
-  if (value < 1.02) return 3;   // Dollar molto forte (risk-off)
-  if (value < 1.05) return 2;   // Dollar forte
-  if (value < 1.08) return 1;   // Dollar leggermente forte
-  if (value > 1.20) return -2;  // Dollar debole (risk-on)
-  if (value > 1.15) return -1;  // Dollar leggermente debole
-  return 0;  // Range normale (1.08-1.15)
+  if (value < 1.02) return 3;
+  if (value < 1.05) return 2;
+  if (value < 1.08) return 1;
+  if (value > 1.20) return -2;
+  if (value > 1.15) return -1;
+  return 0;
 };
 
 export const calculateFearGreedScore = (value = 0): number => {
-  // Fear & Greed (stocks) - più granulare
-  if (value < 15) return 4;    // Extreme fear (opportunity)
-  if (value < 25) return 3;    // Fear (buying opportunity)
-  if (value < 40) return 1;    // Some fear
-  if (value > 85) return -4;   // Extreme greed (danger)
-  if (value > 75) return -3;   // Greed (caution)
-  if (value > 60) return -1;   // Some greed
-  return 0;  // Neutral (40-60)
+  if (value < 15) return 4;
+  if (value < 25) return 3;
+  if (value < 40) return 1;
+  if (value > 85) return -4;
+  if (value > 75) return -3;
+  if (value > 60) return -1;
+  return 0;
 };
-
-// ============================================
-// NUOVE FORMULE INDICATORI
-// ============================================
 
 export const calculateAthDistanceScore = (current: number, ath: number): number => {
   if (!current || !ath) return 0;
 
   const distance = (current / ath) * 100;
 
-  if (distance > 99) return 3;    // Near ATH (strong bullish)
-  if (distance > 95) return 2;    // Close to ATH (bullish)
-  if (distance > 90) return 1;    // Above 90% (mild bullish)
-  if (distance < 70) return -3;   // Deep correction (bearish)
-  if (distance < 80) return -2;   // Correction (mild bearish)
-  if (distance < 85) return -1;   // Pullback
-  return 0;  // Normal range (85-90%)
+  if (distance > 99) return 3;
+  if (distance > 95) return 2;
+  if (distance > 90) return 1;
+  if (distance < 70) return -3;
+  if (distance < 80) return -2;
+  if (distance < 85) return -1;
+  return 0;
 };
 
 export const calculateMomentumScore = (prices: number[]): number => {
@@ -76,13 +67,11 @@ export const calculateMomentumScore = (prices: number[]): number => {
 
   let score = 0;
 
-  // 7-day momentum
   if (momentum7d > 5) score += 2;
   else if (momentum7d > 2) score += 1;
   else if (momentum7d < -5) score -= 2;
   else if (momentum7d < -2) score -= 1;
 
-  // 30-day momentum
   if (momentum30d > 10) score += 2;
   else if (momentum30d > 5) score += 1;
   else if (momentum30d < -10) score -= 2;
@@ -100,13 +89,11 @@ export const calculateMaScore = (prices: number[]): number => {
 
   let score = 0;
 
-  // Price vs MA50
   if (current > ma50 * 1.05) score += 2;
   else if (current > ma50) score += 1;
   else if (current < ma50 * 0.95) score -= 2;
   else if (current < ma50) score -= 1;
 
-  // MA50 vs MA200 (Golden/Death Cross)
   if (ma50 > ma200 * 1.02) score += 2;
   else if (ma50 > ma200) score += 1;
   else if (ma50 < ma200 * 0.98) score -= 2;
@@ -118,32 +105,29 @@ export const calculateMaScore = (prices: number[]): number => {
 export const calculatePutCallScore = (ratio: number): number => {
   if (!ratio) return 0;
 
-  // Put/Call Ratio - alto = bearish, basso = bullish
-  if (ratio > 1.3) return 3;    // Molto bearish sentiment (contrarian buy)
-  if (ratio > 1.1) return 2;    // Bearish sentiment
-  if (ratio > 0.9) return 1;    // Cauto
-  if (ratio < 0.5) return -3;   // Eccessiva confidenza (danger)
-  if (ratio < 0.7) return -2;   // Troppo bullish sentiment
-  if (ratio < 0.8) return -1;   // Bullish sentiment
-  return 0;  // Balanced (0.8-0.9)
+  if (ratio > 1.3) return 3;
+  if (ratio > 1.1) return 2;
+  if (ratio > 0.9) return 1;
+  if (ratio < 0.5) return -3;
+  if (ratio < 0.7) return -2;
+  if (ratio < 0.8) return -1;
+  return 0;
 };
 
 export const calculateTreasury10YScore = (yield10Y: number): number => {
   if (!yield10Y) return 0;
 
-  // Treasury Yield alto = tassi alti = bearish per stocks
-  if (yield10Y > 5.0) return -3;   // Molto alto (bearish)
-  if (yield10Y > 4.5) return -2;   // Alto (bearish)
-  if (yield10Y > 4.0) return -1;   // Elevato
-  if (yield10Y < 2.5) return 2;    // Molto basso (bullish)
-  if (yield10Y < 3.0) return 1;    // Basso (bullish)
-  return 0;  // Normale (3.0-4.0)
+  if (yield10Y > 5.0) return -3;
+  if (yield10Y > 4.5) return -2;
+  if (yield10Y > 4.0) return -1;
+  if (yield10Y < 2.5) return 2;
+  if (yield10Y < 3.0) return 1;
+  return 0;
 };
 
 export const calculateStocksScore = (data: IStocksData): number => {
   if (!data) return 0;
 
-  // Indicatori esistenti
   const vixScore = data?.vix ? calculateVixScore(data.vix) : 0;
   const rsiScore = data?.rsiSP500 ? calculateRsiScore(data.rsiSP500) : 0;
   const eurUsdScore = data?.eurUsd ? calculateEurUsdScore(data.eurUsd) : 0;
@@ -161,15 +145,15 @@ export const calculateStocksScore = (data: IStocksData): number => {
     ? calculateTreasury10YScore(data.treasury10Y) : 0;
 
   const weightedScore =
-    (vixScore * STOCKS_WEIGHTS.vix) +           // VIX importante
-    (rsiScore * STOCKS_WEIGHTS.rsi) +           // Ridotto da 1.2
-    (eurUsdScore * STOCKS_WEIGHTS.eurUsd) +        // Ridotto da 0.8 (meno rilevante)
-    (fearGreedScore * STOCKS_WEIGHTS.fearGreed) +     // Mantenuto
-    (athDistanceScore * STOCKS_WEIGHTS.athDistance) +   // NUOVO - peso alto!
-    (momentumScore * STOCKS_WEIGHTS.momentum) +      // NUOVO - peso alto!
-    (maScore * STOCKS_WEIGHTS.ma) +            // NUOVO
-    (putCallScore * STOCKS_WEIGHTS.putCall) +       // NUOVO - sentiment
-    (treasury10YScore * STOCKS_WEIGHTS.treasury10Y);    // NUOVO - macro context
+    (vixScore * STOCKS_WEIGHTS.vix) +
+    (rsiScore * STOCKS_WEIGHTS.rsi) +
+    (eurUsdScore * STOCKS_WEIGHTS.eurUsd) +
+    (fearGreedScore * STOCKS_WEIGHTS.fearGreed) +
+    (athDistanceScore * STOCKS_WEIGHTS.athDistance) +
+    (momentumScore * STOCKS_WEIGHTS.momentum) +
+    (maScore * STOCKS_WEIGHTS.ma) +
+    (putCallScore * STOCKS_WEIGHTS.putCall) +
+    (treasury10YScore * STOCKS_WEIGHTS.treasury10Y);
 
-  return weightedScore * STOCKS_WEIGHTS.score;    // Ridotto da 0.6
+  return weightedScore * STOCKS_WEIGHTS.score;
 };

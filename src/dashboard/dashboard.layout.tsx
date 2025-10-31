@@ -35,18 +35,6 @@ import DashboardContext from './dashboard.context';
 const theme = createTheme({
   palette: {
     mode: 'dark',
-
-    // primary: {
-    //   main: indigo[500],
-
-    //   contrastText: '#fff',
-    // },
-    // secondary: {
-    //   light: '#ff7961',
-    //   main: '#f44336',
-    //   dark: '#ba000d',
-    //   contrastText: '#000',
-    // },
   },
 });
 const DashboardLayout: React.FC = () => {
