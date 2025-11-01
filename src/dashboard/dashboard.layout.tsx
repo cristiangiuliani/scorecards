@@ -48,7 +48,7 @@ const DashboardLayout: React.FC = () => {
       <CssBaseline />
       <ErrorDisplay />
       <Container
-        maxWidth="xl"
+        maxWidth="lg"
         sx={{
           py: 4,
           minHeight: '100vh',

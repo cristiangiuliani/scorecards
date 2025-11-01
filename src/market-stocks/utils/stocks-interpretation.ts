@@ -2,12 +2,12 @@ import type { TInterpretation } from '../../types/data.type';
 
 export const getStockInterpretation = (score: number): TInterpretation => {
   if (score > 7) return {
-    text: '🟢 STRONG BULLISH',
+    text: '🚀 STRONG BULLISH',
     color: 'success',
     severity: 'success',
   };
   if (score > 3) return {
-    text: '🟡 BULLISH',
+    text: '🟢 BULLISH',
     color: 'success',
     severity: 'info',
   };

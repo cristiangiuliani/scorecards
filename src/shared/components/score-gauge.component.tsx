@@ -20,7 +20,7 @@ const GaugePointer = () => {
     y: cy - outerRadius * Math.cos(valueAngle),
   };
 
-  const halfRadius = outerRadius * 0.5;
+  const halfRadius = outerRadius * 0.6;
   const endPoint = {
     x: cx + halfRadius * Math.sin(valueAngle),
     y: cy - halfRadius * Math.cos(valueAngle),
@@ -77,12 +77,12 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
 
   const labelOffset = 25;
 
-  const startX = cx + (outerRadius + labelOffset) * Math.cos(startAngleRad + Math.PI / 3.36);
+  const startX = cx + (outerRadius + labelOffset) * Math.cos(startAngleRad + Math.PI / 3.2);
   const startY = cy + (outerRadius + labelOffset) * Math.sin(startAngleRad + Math.PI / 1.39);
-  const endX = cx + (outerRadius + labelOffset) * Math.cos(endAngleRad + Math.PI / 1.39);
+  const endX = cx + (outerRadius + labelOffset) * Math.cos(endAngleRad + Math.PI / 1.49);
   const endY = cy + (outerRadius + labelOffset) * Math.sin(endAngleRad + Math.PI / 3.6);
 
-  const centerX = cx + 5;
+  const centerX = cx;
   const centerY = cy - outerRadius - 10;
 
   return (
@@ -98,7 +98,7 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
           opacity: 0.5,
         }}
       >
-        {valueMax} 🟢
+        {valueMin < 0 ? `+${valueMax}` : valueMax}
       </text>
       <text
         x={centerX}
@@ -111,7 +111,7 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
           opacity: 0.5,
         }}
       >
-        ⚪ {(valueMax + valueMin) / 2}
+        {valueMin < 0 && (valueMax + valueMin) / 2 > 0 ? `+${(valueMax + valueMin) / 2}` : (valueMax + valueMin) / 2}
       </text>
       <text
         x={endX}
@@ -124,7 +124,7 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
           opacity: 0.5,
         }}
       >
-        🔴 {valueMin}
+        {valueMin}
       </text>
     </g>
   );

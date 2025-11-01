@@ -40,7 +40,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
   }
 
   return {
-    text: '✅ LOW RISK',
+    text: '🚀 LOW RISK',
     color: 'success',
     severity: 'success',
   };

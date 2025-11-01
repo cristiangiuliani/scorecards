@@ -131,7 +131,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
               />
               {minutesRemaining !== null && (
                 <Typography variant="body2" color="text.secondary">
-                  Last updated: {lastUpdated}<br />Updates in { minutesRemaining <= 0
+                  Last updated: {lastUpdated}<br />{ minutesRemaining <= 0
                     ? (
                       <Button
                         variant="contained"
@@ -153,7 +153,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                       >
                         Refresh now
                       </Button>
-                    ) : ` ${formatTimeRemaining(minutesRemaining)}` }
+                    ) : `Updates in ${formatTimeRemaining(minutesRemaining)}` }
                 </Typography>
               )}
             </>
