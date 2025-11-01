@@ -10,13 +10,13 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     // STRONG BEARISH/HIGH RISK
     if (score === -10) {
       return {
-        text: '🚨 CRITICAL',
+        text: 'CRITICAL',
         color: 'error',
         severity: 'error',
       };
     }
     return {
-      text: '🔴 HIGH RISK',
+      text: 'HIGH RISK',
       color: 'error',
       severity: 'error',
     };
@@ -24,16 +24,15 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
 
   if (score <= -3) {
     return {
-      text: '⚪ MODERATE RISK',
+      text: 'MODERATE RISK',
       color: 'default',
       severity: 'warning',
     };
   }
 
   if (score > -3) {
-    // NEUTRAL/LOW RISK
     return {
-      text: '🟢 LOW RISK',
+      text: 'LOW RISK',
       color: 'success',
       severity: 'success',
     };

@@ -40,7 +40,11 @@ const MarketStocksContainer: React.FC = () => {
       data, loading, cacheExpiresAt, cacheCreatedAt,
     } = sp500Data || {};
     const result = data?.chart?.result || [];
-    updateMarketStocks({ isSp500Loading: loading });
+    updateMarketStocks({
+      isSp500Loading: loading,
+      cacheExpiresAt,
+      cacheCreatedAt,
+    });
 
     if (result.length > 0) {
       const sp500Quotes = result[0]?.indicators?.quote || [];
@@ -50,8 +54,6 @@ const MarketStocksContainer: React.FC = () => {
         sp500Volumes: result[0]?.indicators?.quote[0]?.volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
         treasury10Y: result[0]?.meta?.regularMarketPrice,
-        cacheExpiresAt,
-        cacheCreatedAt,
       });
     }
   }, [sp500Data.data, sp500Data.cacheExpiresAt, sp500Data.cacheCreatedAt]);

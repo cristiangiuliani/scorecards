@@ -56,7 +56,11 @@ const MarketBubbleContainer: React.FC = () => {
     const {
       data, loading, cacheExpiresAt, cacheCreatedAt,
     } = vixHistoryData;
-    updateMarketBubble({ isVixHistoryLoading: loading });
+    updateMarketBubble({
+      isVixHistoryLoading: loading,
+      cacheExpiresAt,
+      cacheCreatedAt,
+    });
     if (data) {
       const closeValues = data?.chart?.result[0]?.indicators?.quote[0]?.close || [];
       const cleanedVixHistory = closeValues.filter((value: number | null) =>
@@ -65,11 +69,9 @@ const MarketBubbleContainer: React.FC = () => {
 
       updateMarketBubble({
         vixHistory: cleanedVixHistory,
-        cacheExpiresAt,
-        cacheCreatedAt,
       });
     }
-  }, [vixHistoryData.data]);
+  }, [vixHistoryData.data, vixHistoryData.cacheExpiresAt, vixHistoryData.cacheCreatedAt]);
 
   useEffect(() => {
     updateMarketBubble({

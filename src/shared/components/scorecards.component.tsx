@@ -59,11 +59,8 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
 }) => {
   const theme = useTheme();
   const [minutesRemaining, setMinutesRemaining] = useState<number | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const userLocale = navigator.language || 'nl-NL';
-  const lastUpdated = cacheCreatedAt && new Date(cacheCreatedAt).toLocaleTimeString(userLocale, {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
 
   const getBackgroundColor = () => {
     if (!interpretation?.color) return undefined;
@@ -89,7 +86,19 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
     updateMinutesRemaining();
     const interval = setInterval(updateMinutesRemaining, EXPIRES_INTERVAL);
     return () => clearInterval(interval);
-  }, [cacheExpiresAt]);
+  }, [cacheExpiresAt, cacheCreatedAt]);
+
+  useEffect(() => {
+    if (cacheCreatedAt) {
+      const formattedTime = new Date(cacheCreatedAt).toLocaleTimeString(userLocale, {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      setLastUpdated(formattedTime);
+    } else {
+      setLastUpdated(null);
+    }
+  }, [cacheCreatedAt, userLocale]);
 
   return (
     <>

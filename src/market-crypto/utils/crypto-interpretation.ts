@@ -4,27 +4,27 @@ import type {
 
 export const getCryptoInterpretation = (score:number):TInterpretation => {
   if (score > 7) return {
-    text: '🚀 STRONG BULL RUN',
+    text: 'STRONG BULL RUN',
     color: 'success',
     severity: 'success',
   };
   if (score > 3) return {
-    text: '🟢 CRYPTO BULLISH',
+    text: 'CRYPTO BULLISH',
     color: 'success',
     severity: 'info',
   };
   if (score > -3) return {
-    text: '⚪ CRAB MARKET',
+    text: 'CRAB MARKET',
     color: 'default',
     severity: 'info',
   };
   if (score > -7) return {
-    text: '🔻 CRYPTO BEARISH',
+    text: 'CRYPTO BEARISH',
     color: 'warning',
     severity: 'warning',
   };
   return {
-    text: '💀 CRYPTO WINTER',
+    text: 'CRYPTO WINTER',
     color: 'error',
     severity: 'error',
   };

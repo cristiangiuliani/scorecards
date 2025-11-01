@@ -32,14 +32,16 @@ const MarketCryptoContainer: React.FC = () => {
     const {
       data, loading, cacheExpiresAt, cacheCreatedAt,
     } = btcData;
-    updateMarketCrypto({ isBtcLoading: loading });
+    updateMarketCrypto({
+      isBtcLoading: loading,
+      cacheExpiresAt,
+      cacheCreatedAt,
+    });
 
     if (data) {
       updateMarketCrypto({
         currentPrice: data?.market_data?.current_price?.usd,
         ath: data?.market_data?.ath?.usd,
-        cacheExpiresAt,
-        cacheCreatedAt,
       });
     }
   }, [btcData.data, btcData.cacheExpiresAt, btcData.cacheCreatedAt]);
