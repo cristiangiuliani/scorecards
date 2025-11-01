@@ -6,6 +6,7 @@ export type TInterpretation = {
 
 export type TIndicatorsListItem = {
   label?: string;
+  decimals?: number;
   weight?: number;
   value?: number;
   score?: number;

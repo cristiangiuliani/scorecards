@@ -38,7 +38,7 @@ const GaugePointer = () => {
   );
 };
 
-const GaugeText = ({ fontSize }: { fontSize: number }) => {
+const GaugeText = ({ fontSize, decimals }: { fontSize: number; decimals?: number }) => {
   const {
     value, cx, cy,
   } = useGaugeState();
@@ -59,7 +59,7 @@ const GaugeText = ({ fontSize }: { fontSize: number }) => {
         fill: 'currentColor',
       }}
     >
-      {value.toFixed(1)}
+      {value.toFixed(decimals)}
     </text>
   );
 };
@@ -140,6 +140,7 @@ type ScoreGaugeProps = {
   labelFontSize?: number;
   minLabel?: string;
   maxLabel?: string;
+  decimals?: number;
 }
 export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
   value,
@@ -151,6 +152,7 @@ export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
   labelFontSize = 12,
   minLabel,
   maxLabel,
+  decimals = 1,
 }) => {
   return (
     <div style={{
@@ -171,7 +173,7 @@ export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
         <GaugeReferenceArc />
         <GaugeValueArc style={{ fill: 'rgba(255, 255, 255, 0.5)' }} />
         <GaugePointer />
-        <GaugeText fontSize={fontSize} />
+        <GaugeText fontSize={fontSize} decimals={decimals} />
         <GaugeScaleLabels
           valueMin={min}
           valueMax={max}

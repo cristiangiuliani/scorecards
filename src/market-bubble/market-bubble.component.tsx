@@ -182,6 +182,8 @@ const MarketBubbleComponent: React.FC = () => {
             cacheExpiresAt={cacheExpiresAt}
             isLoading={isNvidiaPELoading && isNasdaqPELoading && isVixHistoryLoading}
             refetchAllData={refetchMarketBubbleData}
+            minLabel="Safe"
+            maxLabel="Bubble"
           />
         </Grid>
         <Grid size={{

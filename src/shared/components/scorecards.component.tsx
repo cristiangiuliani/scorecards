@@ -20,6 +20,9 @@ type TScoreCardsComponentProps = {
   score: number;
   min?: number;
   max?: number;
+  minLabel?: string;
+  maxLabel?: string;
+  decimals?: number;
   interpretation: TInterpretation;
   cacheCreatedAt?: string | null;
   cacheExpiresAt?: string | null;
@@ -46,6 +49,8 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   score = undefined,
   min = -10,
   max = 10,
+  minLabel,
+  maxLabel,
   interpretation = undefined,
   cacheCreatedAt = null,
   cacheExpiresAt = null,
@@ -114,7 +119,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
             </>
           ) : score !== undefined && interpretation !== undefined ? (
             <>
-              <ScoreGauge value={score} width={250} height={200} min={min} max={max} fontSize={54} />
+              <ScoreGauge value={score} width={250} height={200} min={min} max={max} fontSize={54} minLabel={minLabel} maxLabel={maxLabel} />
 
               <Chip
                 label={interpretation.text}

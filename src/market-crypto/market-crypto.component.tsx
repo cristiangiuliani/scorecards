@@ -243,6 +243,8 @@ const MarketCryptoComponent: React.FC = () => {
             cacheExpiresAt={cacheExpiresAt}
             isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
             refetchAllData={refetchMarketCryptoData}
+            minLabel="Bearish"
+            maxLabel="Bullish"
           />
         </Grid>
         <Grid size={{

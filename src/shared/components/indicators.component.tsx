@@ -82,8 +82,9 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
                         <ScoreGauge
                           value={item.value}
-                          width={120}
-                          height={100}
+                          decimals={item.decimals}
+                          width={160}
+                          height={130}
                           min={item.min}
                           max={item.max}
                           fontSize={22}

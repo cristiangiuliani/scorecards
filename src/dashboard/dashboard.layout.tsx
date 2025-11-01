@@ -57,68 +57,78 @@ const DashboardLayout: React.FC = () => {
         <Box sx={{ flexGrow: 1 }} mb={8}>
           <AppBar position="fixed">
             <Toolbar>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{
-                  flexGrow: 1,
-                  display: {
-                    xs: 'none',
-                    sm: 'block',
-                  },
-                }}
+
+              <Grid
+                container
+                spacing={2}
+                alignItems="center"
+                justifyContent="flex-start"
+                size="grow"
               >
-                <Grid container spacing={2} alignItems="center">
-                  <Grid size="auto"alignItems="center">
-                    <Typography variant="h4" color="text.secondary" lineHeight={1} fontWeight="bold">
-                      Market Scorecard
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" lineHeight={1}>
-                      Automated market reversal analysis system
-                    </Typography>
+                <Grid
+                  size="auto"
+                  alignItems="center"
+                  sx={{
+                    display: {
+                      xs: 'none',
+                      sm: 'block',
+                    },
+                  }}
+                >
+                  <Typography variant="h4" color="text.secondary" lineHeight={1} fontWeight="bold">
+                    Market Scorecard
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" lineHeight={1}>
+                    Automated market reversal analysis system
+                  </Typography>
 
-                  </Grid>
-
-                  <Grid size="grow" container alignItems="center" justifyContent="flex-end">
-                    <Tabs
-                      value={activeTab}
-                      onChange={(_e, newValue) => updateDashboard({
-                        activeTab: newValue,
-                      })}
-                    >
-                      <Tab
-                        icon={<ShowChart />}
-                        label="Stocks Market"
-                        iconPosition="start"
-                        sx={{
-                          textTransform: 'none',
-                          fontWeight: 'medium',
-                        }}
-                      />
-                      <Tab
-                        icon={<CurrencyBitcoin />}
-                        label="Crypto"
-                        iconPosition="start"
-                        sx={{
-                          textTransform: 'none',
-                          fontWeight: 'medium',
-                        }}
-                      />
-                      <Tab
-                        icon={<BubbleChart />}
-                        label="AI Bubble"
-                        iconPosition="start"
-                        sx={{
-                          textTransform: 'none',
-                          fontWeight: 'medium',
-                        }}
-                      />
-                    </Tabs>
-                  </Grid>
                 </Grid>
 
-              </Typography>
+                <Grid
+                  size="grow"
+                  container
+                  alignItems="center"
+                  justifyContent={{
+                    xs: 'center',
+                    sm: 'flex-end',
+                  }}
+                >
+                  <Tabs
+                    value={activeTab}
+                    onChange={(_e, newValue) => updateDashboard({
+                      activeTab: newValue,
+                    })}
+                  >
+                    <Tab
+                      icon={<ShowChart />}
+                      label="Stocks"
+                      iconPosition="start"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'medium',
+                      }}
+                    />
+                    <Tab
+                      icon={<CurrencyBitcoin />}
+                      label="Crypto"
+                      iconPosition="start"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'medium',
+                      }}
+                    />
+                    <Tab
+                      icon={<BubbleChart />}
+                      label="AI Bubble"
+                      iconPosition="start"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'medium',
+                      }}
+                    />
+                  </Tabs>
+                </Grid>
+              </Grid>
             </Toolbar>
           </AppBar>
         </Box>

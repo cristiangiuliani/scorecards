@@ -96,6 +96,7 @@ const MarketStocksComponent: React.FC = () => {
       weight: STOCKS_WEIGHTS.eurUsd,
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
+      decimals: 2,
       isLoading: isEurUsdLoading,
       min: STOCKS_RANGES.eurUsd.min,
       max: STOCKS_RANGES.eurUsd.max,
@@ -226,6 +227,8 @@ const MarketStocksComponent: React.FC = () => {
             cacheExpiresAt={cacheExpiresAt}
             isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
             refetchAllData={refetchMarketStocksData}
+            minLabel="Bearish"
+            maxLabel="Bullish"
           />
         </Grid>
         <Grid size={{
