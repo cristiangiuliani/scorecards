@@ -114,7 +114,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
             </>
           ) : score !== undefined && interpretation !== undefined ? (
             <>
-              <ScoreGauge value={score} width={180} height={160} min={min} max={max} />
+              <ScoreGauge value={score} width={250} height={200} min={min} max={max} fontSize={54} />
 
               <Chip
                 label={interpretation.text}

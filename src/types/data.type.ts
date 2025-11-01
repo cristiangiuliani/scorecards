@@ -10,6 +10,10 @@ export type TIndicatorsListItem = {
   value?: number;
   score?: number;
   isLoading?: boolean;
+  min?: number;
+  max?: number;
+  minLabel?: string;
+  maxLabel?: string;
 };
 
 export type TStrategiesListItem = {

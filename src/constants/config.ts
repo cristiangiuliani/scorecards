@@ -43,3 +43,30 @@ export const STOCKS_SCOPE = {
 export const CRYPTO_SCOPES = {
   lookbackDays: 120,
 };
+
+export const STOCKS_RANGES = {
+  vix: { min: 0, max: 80, minLabel: 'Low', maxLabel: 'High' },
+  rsi: { min: 0, max: 100, minLabel: 'Oversold', maxLabel: 'Overbought' },
+  eurUsd: { min: 0.90, max: 1.30, minLabel: 'Weak €', maxLabel: 'Strong €' },
+  fearGreed: { min: 0, max: 100, minLabel: 'Fear', maxLabel: 'Greed' },
+  athDistance: { min: 70, max: 100, minLabel: 'Low', maxLabel: 'ATH' },
+  momentum: { min: -10, max: 10, minLabel: 'Down', maxLabel: 'Up' },
+  putCall: { min: 0.5, max: 1.5, minLabel: 'Bullish', maxLabel: 'Bearish' },
+  treasury10Y: { min: 0, max: 8, minLabel: 'Low', maxLabel: 'High' },
+};
+
+export const CRYPTO_RANGES = {
+  fearGreed: { min: 0, max: 100, minLabel: 'Fear', maxLabel: 'Greed' },
+  rsi: { min: 0, max: 100, minLabel: 'Oversold', maxLabel: 'Overbought' },
+  dominance: { min: 40, max: 70, minLabel: 'Altcoins', maxLabel: 'BTC' },
+  altcoinSeason: { min: 0, max: 100, minLabel: 'BTC Season', maxLabel: 'Alt Season' },
+  athDistance: { min: 50, max: 100, minLabel: 'Low', maxLabel: 'ATH' },
+  momentum: { min: -15, max: 15, minLabel: 'Down', maxLabel: 'Up' },
+};
+
+export const BUBBLE_RANGES = {
+  nvidiaPE: { min: 0, max: 100, minLabel: 'Low', maxLabel: 'Bubble' },
+  nasdaqPE: { min: 0, max: 50, minLabel: 'Low', maxLabel: 'Bubble' },
+  nvdaNasdaqRatio: { min: 0, max: 3, minLabel: 'Low', maxLabel: 'High' },
+  vixPersistence: { min: 0, max: 5, minLabel: 'Calm', maxLabel: 'Fear' },
+};

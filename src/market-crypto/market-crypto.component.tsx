@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { RSI } from 'technicalindicators';
 
-import { CRYPTO_WEIGHTS } from '../constants/config';
+import { CRYPTO_WEIGHTS, CRYPTO_RANGES } from '../constants/config';
 import { COMMON_LABELS, CRYPTO_LABELS } from '../constants/labels';
 import type { IMarketCryptoContext } from '../interfaces/market-crypto';
 import IndicatorsComponent from '../shared/components/indicators.component';
@@ -79,6 +79,10 @@ const MarketCryptoComponent: React.FC = () => {
       value: btcDominance,
       score: calculateBtcDominanceScore(btcDominance),
       isLoading: isBtcDominanceLoading,
+      min: CRYPTO_RANGES.dominance.min,
+      max: CRYPTO_RANGES.dominance.max,
+      minLabel: CRYPTO_RANGES.dominance.minLabel,
+      maxLabel: CRYPTO_RANGES.dominance.maxLabel,
     },
     {
       label: CRYPTO_LABELS.BtcRsi,
@@ -86,6 +90,10 @@ const MarketCryptoComponent: React.FC = () => {
       value: btcRsi,
       score: calculateBtcRsiScore(btcRsi),
       isLoading: isBtcRsiLoading,
+      min: CRYPTO_RANGES.rsi.min,
+      max: CRYPTO_RANGES.rsi.max,
+      minLabel: CRYPTO_RANGES.rsi.minLabel,
+      maxLabel: CRYPTO_RANGES.rsi.maxLabel,
     },
     {
       label: CRYPTO_LABELS.AltSeasonIndex,
@@ -93,6 +101,10 @@ const MarketCryptoComponent: React.FC = () => {
       value: altcoinSeasonIndex,
       score: calculateAltSeasonScore(altcoinSeasonIndex),
       isLoading: isBtcDominanceLoading,
+      min: CRYPTO_RANGES.altcoinSeason.min,
+      max: CRYPTO_RANGES.altcoinSeason.max,
+      minLabel: CRYPTO_RANGES.altcoinSeason.minLabel,
+      maxLabel: CRYPTO_RANGES.altcoinSeason.maxLabel,
     },
     {
       label: CRYPTO_LABELS.BtcFearGreed,
@@ -100,6 +112,10 @@ const MarketCryptoComponent: React.FC = () => {
       value: btcFearGreed,
       score: calculateBtcFearGreedScore(btcFearGreed),
       isLoading: isBtcFearGreedLoading,
+      min: CRYPTO_RANGES.fearGreed.min,
+      max: CRYPTO_RANGES.fearGreed.max,
+      minLabel: CRYPTO_RANGES.fearGreed.minLabel,
+      maxLabel: CRYPTO_RANGES.fearGreed.maxLabel,
     },
     {
       label: CRYPTO_LABELS.AthDistance,
@@ -107,6 +123,10 @@ const MarketCryptoComponent: React.FC = () => {
       value: athDistance,
       score: calculateAthDistanceScore(currentPrice, ath),
       isLoading: isBtcLoading,
+      min: CRYPTO_RANGES.athDistance.min,
+      max: CRYPTO_RANGES.athDistance.max,
+      minLabel: CRYPTO_RANGES.athDistance.minLabel,
+      maxLabel: CRYPTO_RANGES.athDistance.maxLabel,
     },
     {
       label: CRYPTO_LABELS.Momentum7D,
@@ -114,6 +134,10 @@ const MarketCryptoComponent: React.FC = () => {
       value: momentum7d,
       score: calculateMomentumScore(prices),
       isLoading: isBtcRsiLoading,
+      min: CRYPTO_RANGES.momentum.min,
+      max: CRYPTO_RANGES.momentum.max,
+      minLabel: CRYPTO_RANGES.momentum.minLabel,
+      maxLabel: CRYPTO_RANGES.momentum.maxLabel,
     },
   ];
 

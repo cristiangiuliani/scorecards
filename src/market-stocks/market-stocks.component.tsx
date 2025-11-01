@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import React, { useContext } from 'react';
 
-import { STOCKS_WEIGHTS } from '../constants/config';
+import { STOCKS_WEIGHTS, STOCKS_RANGES } from '../constants/config';
 import { STOCKS_LABELS } from '../constants/labels';
 import type { IMarketStocksContext } from '../interfaces/market-stocks';
 import IndicatorsComponent from '../shared/components/indicators.component';
@@ -75,6 +75,10 @@ const MarketStocksComponent: React.FC = () => {
       value: vix,
       score: calculateVixScore(vix),
       isLoading: isVixLoading,
+      min: STOCKS_RANGES.vix.min,
+      max: STOCKS_RANGES.vix.max,
+      minLabel: STOCKS_RANGES.vix.minLabel,
+      maxLabel: STOCKS_RANGES.vix.maxLabel,
     },
     {
       label: STOCKS_LABELS.RsiSP500,
@@ -82,6 +86,10 @@ const MarketStocksComponent: React.FC = () => {
       value: rsiSP500,
       score: calculateRsiScore(rsiSP500),
       isLoading: isRsiLoading,
+      min: STOCKS_RANGES.rsi.min,
+      max: STOCKS_RANGES.rsi.max,
+      minLabel: STOCKS_RANGES.rsi.minLabel,
+      maxLabel: STOCKS_RANGES.rsi.maxLabel,
     },
     {
       label: STOCKS_LABELS.EurUsd,
@@ -89,6 +97,10 @@ const MarketStocksComponent: React.FC = () => {
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
       isLoading: isEurUsdLoading,
+      min: STOCKS_RANGES.eurUsd.min,
+      max: STOCKS_RANGES.eurUsd.max,
+      minLabel: STOCKS_RANGES.eurUsd.minLabel,
+      maxLabel: STOCKS_RANGES.eurUsd.maxLabel,
     },
     {
       label: STOCKS_LABELS.FearGreed,
@@ -96,6 +108,10 @@ const MarketStocksComponent: React.FC = () => {
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
       isLoading: isFearGreedLoading,
+      min: STOCKS_RANGES.fearGreed.min,
+      max: STOCKS_RANGES.fearGreed.max,
+      minLabel: STOCKS_RANGES.fearGreed.minLabel,
+      maxLabel: STOCKS_RANGES.fearGreed.maxLabel,
     },
     {
       label: STOCKS_LABELS.AthDistance,
@@ -103,6 +119,10 @@ const MarketStocksComponent: React.FC = () => {
       value: athDistance,
       score: calculateAthDistanceScore(sp500Price, sp500ATH),
       isLoading: isSp500Loading,
+      min: STOCKS_RANGES.athDistance.min,
+      max: STOCKS_RANGES.athDistance.max,
+      minLabel: STOCKS_RANGES.athDistance.minLabel,
+      maxLabel: STOCKS_RANGES.athDistance.maxLabel,
     },
     {
       label: STOCKS_LABELS.Momentum7D,
@@ -110,6 +130,10 @@ const MarketStocksComponent: React.FC = () => {
       value: momentum7d,
       score: calculateMomentumScore(sp500Prices),
       isLoading: isSp500Loading,
+      min: STOCKS_RANGES.momentum.min,
+      max: STOCKS_RANGES.momentum.max,
+      minLabel: STOCKS_RANGES.momentum.minLabel,
+      maxLabel: STOCKS_RANGES.momentum.maxLabel,
     },
   ];
 

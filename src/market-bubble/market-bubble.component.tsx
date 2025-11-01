@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import React, { useContext } from 'react';
 
+import { BUBBLE_RANGES } from '../constants/config';
 import { AI_BUBBLE_LABELS, COMMON_LABELS } from '../constants/labels';
 import type { IMarketBubbleContext } from '../interfaces/market-bubble';
 import IndicatorsComponent from '../shared/components/indicators.component';
@@ -66,6 +67,10 @@ const MarketBubbleComponent: React.FC = () => {
       value: nvidiaPE,
       score: nvidiaScore,
       isLoading: isNvidiaPELoading,
+      min: BUBBLE_RANGES.nvidiaPE.min,
+      max: BUBBLE_RANGES.nvidiaPE.max,
+      minLabel: BUBBLE_RANGES.nvidiaPE.minLabel,
+      maxLabel: BUBBLE_RANGES.nvidiaPE.maxLabel,
     },
     {
       label: AI_BUBBLE_LABELS.nasdaqPE,
@@ -73,6 +78,10 @@ const MarketBubbleComponent: React.FC = () => {
       value: nasdaqPE,
       score: nasdaqScore,
       isLoading: isNasdaqPELoading,
+      min: BUBBLE_RANGES.nasdaqPE.min,
+      max: BUBBLE_RANGES.nasdaqPE.max,
+      minLabel: BUBBLE_RANGES.nasdaqPE.minLabel,
+      maxLabel: BUBBLE_RANGES.nasdaqPE.maxLabel,
     },
     {
       label: AI_BUBBLE_LABELS.nvdaNasdaqRatio,
@@ -80,6 +89,10 @@ const MarketBubbleComponent: React.FC = () => {
       value: nvdaNasdaqRatio,
       score: 0,
       isLoading: isNvidiaPELoading || isNasdaqPELoading,
+      min: BUBBLE_RANGES.nvdaNasdaqRatio.min,
+      max: BUBBLE_RANGES.nvdaNasdaqRatio.max,
+      minLabel: BUBBLE_RANGES.nvdaNasdaqRatio.minLabel,
+      maxLabel: BUBBLE_RANGES.nvdaNasdaqRatio.maxLabel,
     },
     {
       label: AI_BUBBLE_LABELS.vixPersistence,
@@ -87,7 +100,10 @@ const MarketBubbleComponent: React.FC = () => {
       value: daysAbove30,
       score: vixPersistScore,
       isLoading: isVixHistoryLoading,
-
+      min: BUBBLE_RANGES.vixPersistence.min,
+      max: BUBBLE_RANGES.vixPersistence.max,
+      minLabel: BUBBLE_RANGES.vixPersistence.minLabel,
+      maxLabel: BUBBLE_RANGES.vixPersistence.maxLabel,
     },
   ];
 

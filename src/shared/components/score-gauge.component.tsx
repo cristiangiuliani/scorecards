@@ -38,7 +38,7 @@ const GaugePointer = () => {
   );
 };
 
-const GaugeText = () => {
+const GaugeText = ({ fontSize }: { fontSize: number }) => {
   const {
     value, cx, cy,
   } = useGaugeState();
@@ -54,7 +54,7 @@ const GaugeText = () => {
       textAnchor="middle"
       dominantBaseline="middle"
       style={{
-        fontSize: '3rem',
+        fontSize: `${fontSize}px`,
         fontWeight: 'bold',
         fill: 'currentColor',
       }}
@@ -64,7 +64,19 @@ const GaugeText = () => {
   );
 };
 
-const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: number; }) => {
+const GaugeScaleLabels = ({
+  valueMin,
+  valueMax,
+  minLabel,
+  maxLabel,
+  labelFontSize,
+}: {
+  valueMin: number;
+  valueMax: number;
+  minLabel?: string;
+  maxLabel?: string;
+  labelFontSize?: number;
+}) => {
   const {
     cx, cy, outerRadius,
   } = useGaugeState();
@@ -82,8 +94,9 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
   const endX = cx + (outerRadius + labelOffset) * Math.cos(endAngleRad + Math.PI / 1.49);
   const endY = cy + (outerRadius + labelOffset) * Math.sin(endAngleRad + Math.PI / 3.6);
 
-  const centerX = cx;
-  const centerY = cy - outerRadius - 10;
+  // Display logic: use label if provided, otherwise use numeric value
+  const displayMax = maxLabel || (valueMin < 0 ? `+${valueMax}` : valueMax);
+  const displayMin = minLabel || valueMin;
 
   return (
     <g>
@@ -93,25 +106,12 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
         textAnchor="middle"
         dominantBaseline="middle"
         style={{
-          fontSize: '0.75rem',
+          fontSize: `${labelFontSize}px`,
           fill: 'currentColor',
           opacity: 0.5,
         }}
       >
-        {valueMin < 0 ? `+${valueMax}` : valueMax}
-      </text>
-      <text
-        x={centerX}
-        y={centerY}
-        textAnchor="middle"
-        dominantBaseline="middle"
-        style={{
-          fontSize: '0.75rem',
-          fill: 'currentColor',
-          opacity: 0.5,
-        }}
-      >
-        {valueMin < 0 && (valueMax + valueMin) / 2 > 0 ? `+${(valueMax + valueMin) / 2}` : (valueMax + valueMin) / 2}
+        {displayMax}
       </text>
       <text
         x={endX}
@@ -119,12 +119,12 @@ const GaugeScaleLabels = ({ valueMin, valueMax }: { valueMin: number; valueMax: 
         textAnchor="middle"
         dominantBaseline="middle"
         style={{
-          fontSize: '0.75rem',
+          fontSize: `${labelFontSize}px`,
           fill: 'currentColor',
           opacity: 0.5,
         }}
       >
-        {valueMin}
+        {displayMin}
       </text>
     </g>
   );
@@ -136,14 +136,21 @@ type ScoreGaugeProps = {
   height?: number;
   min?: number;
   max?: number;
-};
-
+  fontSize?: number;
+  labelFontSize?: number;
+  minLabel?: string;
+  maxLabel?: string;
+}
 export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
   value,
   width = 200,
   height = 200,
   min = -10,
   max = 10,
+  fontSize = 24,
+  labelFontSize = 12,
+  minLabel,
+  maxLabel,
 }) => {
   return (
     <div style={{
@@ -164,10 +171,13 @@ export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
         <GaugeReferenceArc />
         <GaugeValueArc style={{ fill: 'rgba(255, 255, 255, 0.5)' }} />
         <GaugePointer />
-        <GaugeText />
+        <GaugeText fontSize={fontSize} />
         <GaugeScaleLabels
           valueMin={min}
           valueMax={max}
+          minLabel={minLabel}
+          maxLabel={maxLabel}
+          labelFontSize={labelFontSize}
         />
       </GaugeContainer>
     </div>

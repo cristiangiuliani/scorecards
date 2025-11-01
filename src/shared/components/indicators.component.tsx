@@ -11,6 +11,8 @@ import React, {
 
 import type { TIndicatorsListItem } from '../../types/data.type';
 
+import { ScoreGauge } from './score-gauge.component';
+
 type TIndicatorsComponentProps = {
   indexList: TIndicatorsListItem[];
 };
@@ -76,17 +78,38 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       />
                     </Box>
 
-                    <Typography variant="h5" component="div" fontWeight="bold" mb={1}>
-                      {typeof item.value === 'number' && !isNaN(item.value) ?
-                        item.value.toFixed(2)
-                        : (
-                          <ErrorOutlineIcon color="error" fontSize="large" />
-                        )}
-                    </Typography>
+                    {item.min !== undefined && item.max !== undefined ? (
+                      <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+                        <ScoreGauge
+                          value={item.value}
+                          width={120}
+                          height={100}
+                          min={item.min}
+                          max={item.max}
+                          fontSize={22}
+                          minLabel={item.minLabel}
+                          maxLabel={item.maxLabel}
+                          labelFontSize={10}
+                        />
+                        <Typography variant="caption" color="text.secondary">
+                          Weight: {item.weight}x
+                        </Typography>
+                      </Box>
+                    ) : (
+                      <>
+                        <Typography variant="h5" component="div" fontWeight="bold" mb={1}>
+                          {typeof item.value === 'number' && !isNaN(item.value) ?
+                            item.value.toFixed(2)
+                            : (
+                              <ErrorOutlineIcon color="error" fontSize="large" />
+                            )}
+                        </Typography>
 
-                    <Typography variant="caption" color="text.secondary">
-                      Weight: {item.weight}x
-                    </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          Weight: {item.weight}x
+                        </Typography>
+                      </>
+                    )}
                   </>
                 ) : (
                   <Alert severity="warning">Component cannot retrieve indicators data. Try later.</Alert>
