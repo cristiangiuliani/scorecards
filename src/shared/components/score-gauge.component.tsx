@@ -89,12 +89,11 @@ const GaugeScaleLabels = ({
 
   const labelOffset = 25;
 
-  const startX = cx + (outerRadius + labelOffset) * Math.cos(startAngleRad + Math.PI / 3.2);
+  const startX = cx + (outerRadius + labelOffset) * Math.cos(startAngleRad + Math.PI / 3);
   const startY = cy + (outerRadius + labelOffset) * Math.sin(startAngleRad + Math.PI / 1.39);
   const endX = cx + (outerRadius + labelOffset) * Math.cos(endAngleRad + Math.PI / 1.49);
   const endY = cy + (outerRadius + labelOffset) * Math.sin(endAngleRad + Math.PI / 3.6);
 
-  // Display logic: use label if provided, otherwise use numeric value
   const displayMax = maxLabel || (valueMin < 0 ? `+${valueMax}` : valueMax);
   const displayMin = minLabel || valueMin;
 
