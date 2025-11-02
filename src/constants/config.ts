@@ -159,6 +159,18 @@ export const BUBBLE_RANGES = {
     minLabel: 'Calm',
     maxLabel: 'Fear',
   },
+  fearGreed: {
+    min: 0,
+    max: 100,
+    minLabel: 'Fear',
+    maxLabel: 'Greed',
+  },
+  rsi: {
+    min: 0,
+    max: 100,
+    minLabel: 'Oversold',
+    maxLabel: 'Overbought',
+  },
 };
 
 export const TREASURY_BONDS_WEIGHTS = {

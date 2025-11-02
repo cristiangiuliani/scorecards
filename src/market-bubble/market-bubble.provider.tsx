@@ -13,10 +13,14 @@ export const MarketBubbleProvider = ({
     vixHistory: undefined,
     nvidiaPE: undefined,
     nasdaqPE: undefined,
+    fearGreed: undefined,
+    rsiSP500: undefined,
     isNvidiaPELoading: false,
     isNasdaqPELoading: false,
     isLoadingBubble: false,
     isVixHistoryLoading: false,
+    isFearGreedLoading: false,
+    isRsiLoading: false,
     refetchMarketBubbleData: () => {},
   };
   const [marketBubble, setMarketBubble] = useState<IMarketBubbleProvider>(marketBubbleProviderValue);

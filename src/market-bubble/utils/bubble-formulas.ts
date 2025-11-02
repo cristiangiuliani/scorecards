@@ -33,6 +33,44 @@ export function calculateVixPersistenceScore(vixHistory: number[] | undefined): 
   return 0;
 }
 
+export function calculateNvdaNasdaqRatioScore(
+  nvidiaPE: number | undefined,
+  nasdaqPE: number | undefined
+): number {
+  if (!nvidiaPE || !nasdaqPE) return 0;
+
+  const ratio = nvidiaPE / nasdaqPE;
+
+  // Ratio > 2.0 indicates NVIDIA is significantly overvalued vs NASDAQ
+  if (ratio > 2.0) return -2.0;
+  // Ratio > 1.7 is warning zone
+  if (ratio > 1.7) return -1.0;
+
+  return 0;
+}
+
+export function calculateFearGreedScore(fearGreed: number | undefined): number {
+  if (!fearGreed) return 0;
+
+  // Extreme greed (>75) indicates bubble risk
+  if (fearGreed > 75) return -2.0;
+  // Greed zone (>60)
+  if (fearGreed > 60) return -1.0;
+
+  return 0;
+}
+
+export function calculateRsiScore(rsi: number | undefined): number {
+  if (!rsi) return 0;
+
+  // Severely overbought (>75) indicates correction risk
+  if (rsi > 75) return -2.0;
+  // Overbought zone (>70)
+  if (rsi > 70) return -1.0;
+
+  return 0;
+}
+
 export function isVixPersistent(vixHistory: number[]): boolean {
   if (vixHistory.length < VIX_PERSISTENCE_DAYS) return false;
 
@@ -55,18 +93,21 @@ export function isVixPersistent(vixHistory: number[]): boolean {
 export function calculateBubbleRisk(data: IBubbleData): IBubbleIndicator {
   const nvidiaScore = calculateNvidiaPEScore(data.nvidiaPE);
   const nasdaqScore = calculateNasdaqPEScore(data.nasdaqPE);
+  const ratioScore = calculateNvdaNasdaqRatioScore(data.nvidiaPE, data.nasdaqPE);
   const vixScore = calculateVixPersistenceScore(data.vixHistory);
+  const fearGreedScore = calculateFearGreedScore(data.fearGreed);
+  const rsiScore = calculateRsiScore(data.rsiSP500);
 
-  const totalScore = nvidiaScore + nasdaqScore + vixScore;
+  const totalScore = nvidiaScore + nasdaqScore + ratioScore + vixScore + fearGreedScore + rsiScore;
 
   const nvidiaOvervalued = (data.nvidiaPE ?? 0) > NVIDIA_PE_THRESHOLD;
   const nasdaqOvervalued = (data.nasdaqPE ?? 0) > NASDAQ_PE_THRESHOLD;
   const vixPersistent = data.vixHistory ? isVixPersistent(data.vixHistory) : false;
 
   let risk: 'LOW' | 'MEDIUM' | 'HIGH';
-  if (totalScore <= -7) {
+  if (totalScore <= -9) {
     risk = 'HIGH';
-  } else if (totalScore <= -3) {
+  } else if (totalScore <= -4) {
     risk = 'MEDIUM';
   } else {
     risk = 'LOW';

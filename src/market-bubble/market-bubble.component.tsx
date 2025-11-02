@@ -15,8 +15,11 @@ import type {
 import MarketBubbleContext from './market-bubble.context';
 import {
   calculateBubbleRisk,
+  calculateFearGreedScore,
   calculateNasdaqPEScore,
+  calculateNvdaNasdaqRatioScore,
   calculateNvidiaPEScore,
+  calculateRsiScore,
   calculateVixPersistenceScore,
   displayScoreRisk,
 } from './utils/bubble-formulas';
@@ -33,11 +36,15 @@ const MarketBubbleComponent: React.FC = () => {
     nvidiaPE = 0,
     nasdaqPE = 0,
     vixHistory = [],
+    fearGreed = 0,
+    rsiSP500 = 0,
     cacheCreatedAt,
     cacheExpiresAt,
     isNvidiaPELoading = false,
     isNasdaqPELoading = false,
     isVixHistoryLoading = false,
+    isFearGreedLoading = false,
+    isRsiLoading = false,
     refetchMarketBubbleData = () => {},
   } = useContext<IMarketBubbleContext>(MarketBubbleContext);
 
@@ -45,6 +52,8 @@ const MarketBubbleComponent: React.FC = () => {
     nvidiaPE,
     nasdaqPE,
     vixHistory,
+    fearGreed,
+    rsiSP500,
   });
 
   const interpretation = getBubbleInterpretation(bubbleIndicator);
@@ -58,7 +67,10 @@ const MarketBubbleComponent: React.FC = () => {
   const nvdaNasdaqRatio = nvidiaPE && nasdaqPE ? nvidiaPE / nasdaqPE : 0;
   const nvidiaScore = calculateNvidiaPEScore(nvidiaPE);
   const nasdaqScore = calculateNasdaqPEScore(nasdaqPE);
+  const nvdaNasdaqRatioScore = calculateNvdaNasdaqRatioScore(nvidiaPE, nasdaqPE);
   const vixPersistScore = calculateVixPersistenceScore(vixHistory);
+  const fearGreedScore = calculateFearGreedScore(fearGreed);
+  const rsiScore = calculateRsiScore(rsiSP500);
 
   const BubbleIndexList: TIndicatorsListItem[] = [
     {
@@ -88,9 +100,10 @@ const MarketBubbleComponent: React.FC = () => {
     {
       label: AI_BUBBLE_LABELS.nvdaNasdaqRatio,
       description: 'AI vs tech valuation ratio',
-      weight: 0,
+      weight: 1.0,
       value: nvdaNasdaqRatio,
-      score: 0,
+      score: nvdaNasdaqRatioScore,
+      decimals: 2,
       isLoading: isNvidiaPELoading || isNasdaqPELoading,
       min: BUBBLE_RANGES.nvdaNasdaqRatio.min,
       max: BUBBLE_RANGES.nvdaNasdaqRatio.max,
@@ -109,13 +122,37 @@ const MarketBubbleComponent: React.FC = () => {
       minLabel: BUBBLE_RANGES.vixPersistence.minLabel,
       maxLabel: BUBBLE_RANGES.vixPersistence.maxLabel,
     },
+    {
+      label: AI_BUBBLE_LABELS.fearGreed,
+      description: 'Market sentiment gauge',
+      weight: 1.0,
+      value: fearGreed,
+      score: fearGreedScore,
+      isLoading: isFearGreedLoading,
+      min: BUBBLE_RANGES.fearGreed.min,
+      max: BUBBLE_RANGES.fearGreed.max,
+      minLabel: BUBBLE_RANGES.fearGreed.minLabel,
+      maxLabel: BUBBLE_RANGES.fearGreed.maxLabel,
+    },
+    {
+      label: AI_BUBBLE_LABELS.rsiSP500,
+      description: 'Overbought/oversold indicator',
+      weight: 1.0,
+      value: rsiSP500,
+      score: rsiScore,
+      isLoading: isRsiLoading,
+      min: BUBBLE_RANGES.rsi.min,
+      max: BUBBLE_RANGES.rsi.max,
+      minLabel: BUBBLE_RANGES.rsi.minLabel,
+      maxLabel: BUBBLE_RANGES.rsi.maxLabel,
+    },
   ];
 
   const BubbleStrategyList: TStrategiesListItem[] = [
     {
       title: AI_BUBBLE_LABELS.portfolioAction,
       color: interpretation.color,
-      isLoading: isNvidiaPELoading || isNasdaqPELoading || isVixHistoryLoading,
+      isLoading: isNvidiaPELoading || isNasdaqPELoading || isVixHistoryLoading || isFearGreedLoading || isRsiLoading,
       items: [
         {
           label: COMMON_LABELS.RiskLevel,
@@ -130,7 +167,7 @@ const MarketBubbleComponent: React.FC = () => {
     {
       title: AI_BUBBLE_LABELS.sectorRotation,
       color: interpretation.color,
-      isLoading: isNvidiaPELoading || isNasdaqPELoading,
+      isLoading: isNvidiaPELoading || isNasdaqPELoading || isFearGreedLoading || isRsiLoading,
       items: [
         {
           label: AI_BUBBLE_LABELS.recommendedSectors,
@@ -141,7 +178,7 @@ const MarketBubbleComponent: React.FC = () => {
     {
       title: AI_BUBBLE_LABELS.timingStrategy,
       color: interpretation.color,
-      isLoading: isVixHistoryLoading,
+      isLoading: isVixHistoryLoading || isFearGreedLoading || isRsiLoading,
       items: [
         {
           label: AI_BUBBLE_LABELS.action,
@@ -152,7 +189,7 @@ const MarketBubbleComponent: React.FC = () => {
     {
       title: AI_BUBBLE_LABELS.actionableTips,
       color: interpretation.color,
-      isLoading: isNvidiaPELoading || isNasdaqPELoading || isVixHistoryLoading,
+      isLoading: isNvidiaPELoading || isNasdaqPELoading || isVixHistoryLoading || isFearGreedLoading || isRsiLoading,
       items: getActionableTips(bubbleIndicator).map((tip, index) => ({
         label: `Tip ${index + 1}`,
         value: tip,
@@ -174,7 +211,7 @@ const MarketBubbleComponent: React.FC = () => {
         <Grid size={{
           xs: 12,
           sm: 6,
-          md: 6,
+          md: 4,
         }}
         >
           <ScoreCardsComponent
@@ -184,24 +221,24 @@ const MarketBubbleComponent: React.FC = () => {
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
             cacheExpiresAt={cacheExpiresAt}
-            isLoading={isNvidiaPELoading && isNasdaqPELoading && isVixHistoryLoading}
+            isLoading={isNvidiaPELoading && isNasdaqPELoading && isVixHistoryLoading && isFearGreedLoading && isRsiLoading}
             refetchAllData={refetchMarketBubbleData}
             minLabel="Safe"
             maxLabel="Bubble"
             label={AI_BUBBLE_LABELS.OverallScore}
-            description="AI sector bubble risk assessment based on NVIDIA and NASDAQ valuations, and market volatility patterns."
+            description="AI sector bubble risk assessment based on tech valuations (NVIDIA, NASDAQ), market sentiment (Fear & Greed, RSI), and volatility patterns (VIX)."
             thresholds={[
-              'Score < 3: LOW RISK',
-              'Score 3-7: MODERATE RISK',
-              'Score > 7: HIGH RISK',
-              'Score = 10: CRITICAL',
+              'Score < 4: LOW RISK',
+              'Score 4-9: MODERATE RISK',
+              'Score > 9: HIGH RISK',
+              'Score = 12+: CRITICAL',
             ]}
           />
         </Grid>
         <Grid size={{
           xs: 12,
           sm: 6,
-          md: 6,
+          md: 8,
         }}
         >
           <IndicatorsComponent

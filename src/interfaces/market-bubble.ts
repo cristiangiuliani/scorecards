@@ -6,6 +6,8 @@ export interface IBubbleData {
   vixHistory?: number[];
   nvidiaPE?: number;
   nasdaqPE?: number;
+  fearGreed?: number;
+  rsiSP500?: number;
   cacheCreatedAt?: string | null;
   cacheExpiresAt?: string | null;
 }
@@ -14,6 +16,8 @@ export interface IBubbleDataStatus extends IBubbleData {
   isNvidiaPELoading?: boolean;
   isNasdaqPELoading?: boolean;
   isVixHistoryLoading?: boolean;
+  isFearGreedLoading?: boolean;
+  isRsiLoading?: boolean;
 }
 
 export interface IMarketBubbleProvider extends IBubbleDataStatus {

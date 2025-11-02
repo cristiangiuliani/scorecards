@@ -5,7 +5,8 @@ import React, {
 import { API } from '../constants/api';
 import { NASDAQ_PE_RATIO } from '../constants/config';
 import type {
-
+  IAlphaVantageRSIResponse,
+  IFearGreedResponse,
   IFinancialModelingPrepResponse,
   IYahooFinanceResponse,
 } from '../interfaces/api-responses';
@@ -73,12 +74,50 @@ const MarketBubbleContainer: React.FC = () => {
     }
   }, [vixHistoryData.data, vixHistoryData.cacheExpiresAt, vixHistoryData.cacheCreatedAt]);
 
+  const fearGreedData = useNetlifyApi<IFearGreedResponse>({
+    apiFunction: API.fearGreed,
+    options: {
+      autoFetch: true,
+    },
+  });
+
+  useEffect(() => {
+    const { data, loading } = fearGreedData;
+    updateMarketBubble({ isFearGreedLoading: loading });
+    if (data) {
+      updateMarketBubble({
+        fearGreed: parseFloat(data.fear_and_greed?.score?.toString()),
+      });
+    }
+  }, [fearGreedData.data]);
+
+  const rsiData = useNetlifyApi<IAlphaVantageRSIResponse>({
+    apiFunction: API.rsiSP500,
+    options: {
+      autoFetch: true,
+    },
+  });
+
+  useEffect(() => {
+    const { data, loading } = rsiData;
+    updateMarketBubble({ isRsiLoading: loading });
+    if (data) {
+      const lastUpdate = data['Meta Data']?.['3: Last Refreshed'];
+      const lastRsi = data['Technical Analysis: RSI']?.[lastUpdate]?.['RSI'];
+      updateMarketBubble({
+        rsiSP500: parseFloat(lastRsi),
+      });
+    }
+  }, [rsiData.data]);
+
   useEffect(() => {
     updateMarketBubble({
       nasdaqPE: NASDAQ_PE_RATIO.value,
       refetchMarketBubbleData: () => {
         vixHistoryData.forceRefresh();
         nvidiaPEData.forceRefresh();
+        fearGreedData.forceRefresh();
+        rsiData.forceRefresh();
       },
     });
   }, []);

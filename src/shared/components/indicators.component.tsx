@@ -43,7 +43,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
             size={{
               xs: 12,
               sm: 6,
-              md: indexList.length > 4 ? 4 : 6,
+              md: 4,
             }}
           >
             <Card
