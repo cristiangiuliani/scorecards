@@ -1,11 +1,16 @@
 import { Update } from '@mui/icons-material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import UpdateIcon from '@mui/icons-material/Update';
 import {
   Alert,
   Button,
   Card,
+  CardActions,
   CardContent,
+  CardHeader,
   Chip,
-  Skeleton, Typography,
+  Skeleton,
+  Typography,
   useTheme,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
@@ -13,6 +18,7 @@ import React, { useState, useEffect } from 'react';
 import type { TInterpretation } from '../../types/data.type';
 
 import { ScoreGauge } from './score-gauge.component';
+import { StyledBlackTooltip } from './styled-dark-tooltip.component';
 
 const EXPIRES_INTERVAL = 60000; // 1 minute
 
@@ -27,6 +33,9 @@ type TScoreCardsComponentProps = {
   cacheCreatedAt?: string | null;
   cacheExpiresAt?: string | null;
   isLoading?: boolean;
+  label?: string;
+  description?: string;
+  thresholds?: string[];
   refetchAllData?: () => void;
 };
 
@@ -37,11 +46,11 @@ const formatTimeRemaining = (minutes: number): string => {
   const mins = minutes % 60;
 
   if (hours > 0 && mins > 0) {
-    return `${hours} hour${hours > 1 ? 's' : ''} ${mins} min${mins > 1 ? 's' : ''}`;
+    return `${hours}h ${mins}m`;
   } else if (hours > 0) {
-    return `${hours} hour${hours > 1 ? 's' : ''}`;
+    return `${hours}h`;
   } else {
-    return `${mins} min${mins > 1 ? 's' : ''}`;
+    return `${mins}m`;
   }
 };
 
@@ -55,6 +64,15 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   cacheCreatedAt = null,
   cacheExpiresAt = null,
   isLoading = false,
+  label = '',
+  description = '',
+  thresholds = [
+    'Score > 7: STRONG BULL RUN',
+    'Score > 3: BULLISH',
+    'Score > -3: CRAB MARKET',
+    'Score > -7: BEARISH',
+    'Score ≤ -7: WINTER/HIGH RISK',
+  ],
   refetchAllData = () => {},
 }) => {
   const theme = useTheme();
@@ -90,11 +108,17 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
 
   useEffect(() => {
     if (cacheCreatedAt) {
-      const formattedTime = new Date(cacheCreatedAt).toLocaleTimeString(userLocale, {
+      const date = new Date(cacheCreatedAt);
+      const formattedDate = date.toLocaleDateString(userLocale, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+      const formattedTime = date.toLocaleTimeString(userLocale, {
         hour: '2-digit',
         minute: '2-digit',
       });
-      setLastUpdated(formattedTime);
+      setLastUpdated(`${formattedDate} at ${formattedTime}`);
     } else {
       setLastUpdated(null);
     }
@@ -112,6 +136,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
           backgroundColor: getBackgroundColor(),
         }}
       >
+        <CardHeader title={label} />
         <CardContent
           sx={{
             flex: 1,
@@ -143,39 +168,105 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                   margin: '0.5rem auto',
                 }}
               />
-              {minutesRemaining !== null && (
-                <Typography variant="body2" color="text.secondary">
-                  Last updated: {lastUpdated}<br />{ minutesRemaining <= 0
-                    ? (
-                      <Button
-                        variant="contained"
-                        size="small"
-                        onClick={refreshData}
-                        startIcon={<Update />}
-                        sx={{
-                          backgroundColor: '#fff',
-                          textTransform: 'none',
 
-                          opacity: 0.5,
-                          borderRadius: '4px',
-                          padding: '0px 8px',
-                          ':hover, :active, :focus, :link, :visited': {
-                            backgroundColor: '#fff',
-                            opacity: 0.6,
-                          },
-                        }}
-                      >
-                        Refresh now
-                      </Button>
-                    ) : `Updates in ${formatTimeRemaining(minutesRemaining)}` }
-                </Typography>
-              )}
             </>
           ) : (
             <Alert severity="warning">Component cannot retrieve scorecards data. Try later.</Alert>
           )
           }
         </CardContent>
+        <CardActions
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            px: 2,
+          }}
+        >
+          <StyledBlackTooltip
+            title={(
+              <Typography variant="caption">
+                {description && (
+                  <>
+                    {description}
+                    <br />
+                    <br />
+                  </>
+                )}
+                <strong>Legend:</strong>
+                <br />
+                {thresholds.map((threshold, index) => (
+                  <React.Fragment key={index}>
+                    {threshold}
+                    {index < thresholds.length - 1 && <br />}
+                  </React.Fragment>
+                ))}
+              </Typography>
+            )}
+            placement="top"
+            arrow
+            enterTouchDelay={0}
+          >
+            <InfoOutlinedIcon
+              color="action"
+              sx={{
+                fontSize: 18,
+                opacity: 0.5,
+                cursor: 'help',
+                ':hover': { opacity: 0.7 },
+              }}
+            />
+          </StyledBlackTooltip>
+          <StyledBlackTooltip
+            title={(
+              <>
+                {minutesRemaining !== null && (
+                  <Typography
+                    variant="caption"
+
+                  >
+                    Data fetched {lastUpdated}.<br />{ minutesRemaining <= 0
+                      ? (
+                        <Button
+                          variant="contained"
+                          size="small"
+                          onClick={refreshData}
+                          startIcon={<Update />}
+                          sx={{
+                            backgroundColor: '#fff',
+                            textTransform: 'none',
+
+                            opacity: 0.5,
+                            borderRadius: '4px',
+                            padding: '0px 8px',
+                            ':hover, :active, :focus, :link, :visited': {
+                              backgroundColor: '#fff',
+                              opacity: 0.6,
+                            },
+                          }}
+                        >
+                          Refresh now
+                        </Button>
+                      ) : `Updates in ${formatTimeRemaining(minutesRemaining)}` }
+                  </Typography>
+                )}
+              </>
+            )}
+            placement="top"
+            arrow
+            enterTouchDelay={0}
+          >
+            <UpdateIcon
+              color="action"
+              sx={{
+                fontSize: 18,
+                opacity: 0.5,
+                cursor: 'help',
+                ':hover': { opacity: 0.7 },
+              }}
+            />
+          </StyledBlackTooltip>
+
+        </CardActions>
       </Card>
 
     </>

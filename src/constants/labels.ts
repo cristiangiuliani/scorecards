@@ -17,6 +17,7 @@ export const CRYPTO_LABELS = {
   RiskManagement: '🚨 Risk Management',
   KeyMetric: 'Key Metric',
   ActionItems: '💡 Action Items',
+  OverallScore: 'Crypto Overall Score',
 };
 
 export const STOCKS_LABELS = {
@@ -26,6 +27,7 @@ export const STOCKS_LABELS = {
   FearGreed: 'Fear & Greed',
   AthDistance: 'ATH Distance',
   Momentum7D: 'Momentum 7D',
+  OverallScore: 'Stocks Overall Score',
 };
 
 export const AI_BUBBLE_LABELS = {
@@ -44,4 +46,5 @@ export const AI_BUBBLE_LABELS = {
   recommendation: 'Recommendation',
   recommendedSectors: 'Recommended Sectors',
   action: 'Action',
+  OverallScore: 'AI Bubble Risk Score',
 };

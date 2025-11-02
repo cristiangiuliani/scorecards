@@ -63,6 +63,7 @@ const MarketBubbleComponent: React.FC = () => {
   const BubbleIndexList: TIndicatorsListItem[] = [
     {
       label: AI_BUBBLE_LABELS.nvidiaPE,
+      description: 'AI sector valuation proxy',
       weight: 1.0,
       value: nvidiaPE,
       score: nvidiaScore,
@@ -74,6 +75,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.nasdaqPE,
+      description: 'Tech market valuation',
       weight: 1.0,
       value: nasdaqPE,
       score: nasdaqScore,
@@ -85,6 +87,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.nvdaNasdaqRatio,
+      description: 'AI vs tech valuation ratio',
       weight: 0,
       value: nvdaNasdaqRatio,
       score: 0,
@@ -96,6 +99,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.vixPersistence,
+      description: 'Sustained market stress',
       weight: 1.0,
       value: daysAbove30,
       score: vixPersistScore,
@@ -184,6 +188,14 @@ const MarketBubbleComponent: React.FC = () => {
             refetchAllData={refetchMarketBubbleData}
             minLabel="Safe"
             maxLabel="Bubble"
+            label={AI_BUBBLE_LABELS.OverallScore}
+            description="AI sector bubble risk assessment based on NVIDIA and NASDAQ valuations, and market volatility patterns."
+            thresholds={[
+              'Score < 3: LOW RISK',
+              'Score 3-7: MODERATE RISK',
+              'Score > 7: HIGH RISK',
+              'Score = 10: CRITICAL',
+            ]}
           />
         </Grid>
         <Grid size={{

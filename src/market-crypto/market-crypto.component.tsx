@@ -75,6 +75,7 @@ const MarketCryptoComponent: React.FC = () => {
   const CryptoIndexList:TIndicatorsListItem[] = [
     {
       label: CRYPTO_LABELS.BtcDominance,
+      description: 'Bitcoin market share',
       weight: CRYPTO_WEIGHTS.dominance,
       value: btcDominance,
       score: calculateBtcDominanceScore(btcDominance),
@@ -86,6 +87,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.BtcRsi,
+      description: 'Overbought/oversold level',
       weight: CRYPTO_WEIGHTS.rsi,
       value: btcRsi,
       score: calculateBtcRsiScore(btcRsi),
@@ -97,6 +99,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.AltSeasonIndex,
+      description: 'Altcoin performance index',
       weight: CRYPTO_WEIGHTS.altcoinSeason,
       value: altcoinSeasonIndex,
       score: calculateAltSeasonScore(altcoinSeasonIndex),
@@ -108,6 +111,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.BtcFearGreed,
+      description: 'Crypto market sentiment',
       weight: CRYPTO_WEIGHTS.fearGreed,
       value: btcFearGreed,
       score: calculateBtcFearGreedScore(btcFearGreed),
@@ -119,6 +123,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.AthDistance,
+      description: 'Distance from peak price',
       weight: CRYPTO_WEIGHTS.athDistance,
       value: athDistance,
       score: calculateAthDistanceScore(currentPrice, ath),
@@ -130,6 +135,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.Momentum7D,
+      description: '7-day price trend',
       weight: CRYPTO_WEIGHTS.momentum,
       value: momentum7d,
       score: calculateMomentumScore(prices),
@@ -245,6 +251,8 @@ const MarketCryptoComponent: React.FC = () => {
             refetchAllData={refetchMarketCryptoData}
             minLabel="Bearish"
             maxLabel="Bullish"
+            label={CRYPTO_LABELS.OverallScore}
+            description="Comprehensive crypto market sentiment based on BTC metrics, dominance, RSI, and Fear & Greed index."
           />
         </Grid>
         <Grid size={{

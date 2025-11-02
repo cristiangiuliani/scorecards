@@ -1,7 +1,8 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Alert,
-  Box, Card, CardContent, Chip, Skeleton, Typography,
+  Box, Card, CardActions, CardContent, CardHeader, Skeleton, Typography,
   useTheme,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -12,6 +13,7 @@ import React, {
 import type { TIndicatorsListItem } from '../../types/data.type';
 
 import { ScoreGauge } from './score-gauge.component';
+import { StyledBlackTooltip } from './styled-dark-tooltip.component';
 
 type TIndicatorsComponentProps = {
   indexList: TIndicatorsListItem[];
@@ -51,7 +53,18 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                 backgroundColor: getBackgroundColor(item?.score),
               }}
             >
-              <CardContent>
+              <CardHeader
+                subheader={item.label}
+                sx={{
+                  textAlign: 'center',
+                  paddingBottom: 0,
+                }}
+              />
+              <CardContent sx={{
+                paddingTop: 0,
+                paddingBottom: 0,
+              }}
+              >
                 {item.isLoading ?  (
                   <>
                     <Skeleton height={25} />
@@ -60,23 +73,6 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                   </>
                 ) : item?.value !== undefined && item?.score !== undefined ? (
                   <>
-                    <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
-                      <Box display="flex" gap={1}>
-                        <Typography variant="body2" color="text.secondary" fontWeight="medium">
-                          {item.label}
-                        </Typography>
-                      </Box>
-                      <Chip
-                        size="small"
-                        label={item.score > 0 ? `+${item.score}` : item.score}
-                        variant="outlined"
-                        sx={{
-                          color: '#fff',
-                          borderColor: '#fff',
-                          opacity: 0.5,
-                        }}
-                      />
-                    </Box>
 
                     {item.min !== undefined && item.max !== undefined ? (
                       <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
@@ -92,9 +88,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                           maxLabel={item.maxLabel}
                           labelFontSize={10}
                         />
-                        <Typography variant="caption" color="text.secondary">
-                          Weight: {item.weight}x
-                        </Typography>
+
                       </Box>
                     ) : (
                       <>
@@ -116,6 +110,27 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                   <Alert severity="warning">Component cannot retrieve indicators data. Try later.</Alert>
                 )}
               </CardContent>
+              <CardActions sx={{
+                justifyContent: 'center',
+              }}
+              >
+                <StyledBlackTooltip
+                  title={<Typography variant='caption'>{item.description && <>{item.description}<br /></>}Score: {item.score}<br />Weight: {item.weight}x</Typography>}
+                  placement="left"
+                  arrow
+                  enterTouchDelay={0}
+                >
+                  <InfoOutlinedIcon
+                    color="action"
+                    sx={{
+                      fontSize: 14,
+                      opacity: 0.4,
+                      cursor: 'help',
+                      ':hover': { opacity: 0.6 },
+                    }}
+                  />
+                </StyledBlackTooltip>
+              </CardActions>
             </Card>
           </Grid>
         ))
