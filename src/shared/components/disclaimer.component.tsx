@@ -5,13 +5,19 @@ import {
 } from '@mui/material';
 import React from 'react';
 
+const DISCLAIMER_STORAGE_KEY = 'disclaimer-dismissed';
+
 export const DisclaimerComponent = () => {
-  const [bannerOpen, setBannerOpen] = React.useState(true);
+  const [bannerOpen, setBannerOpen] = React.useState(() => {
+    const dismissed = localStorage.getItem(DISCLAIMER_STORAGE_KEY);
+    return dismissed !== 'true';
+  });
 
   const theme = useTheme();
 
   const closeBanner = () => {
     setBannerOpen(false);
+    localStorage.setItem(DISCLAIMER_STORAGE_KEY, 'true');
   };
 
   return (
