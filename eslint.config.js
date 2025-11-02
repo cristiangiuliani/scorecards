@@ -55,10 +55,12 @@ export default [
         VariableDeclarator: 1,
         outerIIFEBody: 1,
         FunctionDeclaration: {
-          parameters: 1, body: 1,
+          parameters: 1,
+          body: 1,
         },
         FunctionExpression: {
-          parameters: 1, body: 1,
+          parameters: 1,
+          body: 1,
         },
         CallExpression: {
           arguments: 1,
@@ -84,17 +86,21 @@ export default [
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
       'no-multiple-empty-lines': ['error', {
-        max: 1, maxEOF: 0,
+        max: 1,
+        maxEOF: 0,
       }],
       'eol-last': ['error', 'always'],
       'comma-spacing': ['error', {
-        before: false, after: true,
+        before: false,
+        after: true,
       }],
       'key-spacing': ['error', {
-        beforeColon: false, afterColon: true,
+        beforeColon: false,
+        afterColon: true,
       }],
       'keyword-spacing': ['error', {
-        before: true, after: true,
+        before: true,
+        after: true,
       }],
       'space-before-blocks': ['error', 'always'],
       'space-before-function-paren': ['error', {
@@ -105,7 +111,8 @@ export default [
       'space-in-parens': ['error', 'never'],
       'space-infix-ops': 'error',
       'space-unary-ops': ['error', {
-        words: true, nonwords: false,
+        words: true,
+        nonwords: false,
       }],
       'brace-style': ['error', '1tbs', {
         allowSingleLine: true,
@@ -120,13 +127,15 @@ export default [
         enforceForArrowConditionals: false,
       }],
       'arrow-spacing': ['error', {
-        before: true, after: true,
+        before: true,
+        after: true,
       }],
       'block-spacing': ['error', 'always'],
       'computed-property-spacing': ['error', 'never'],
       'func-call-spacing': ['error', 'never'],
       'generator-star-spacing': ['error', {
-        before: false, after: true,
+        before: false,
+        after: true,
       }],
       'newline-per-chained-call': ['error', {
         ignoreChainWithDepth: 4,
@@ -134,16 +143,24 @@ export default [
       'no-mixed-spaces-and-tabs': 'error',
       'object-curly-newline': ['error', {
         ObjectExpression: {
-          minProperties: 3, multiline: true, consistent: true,
+          minProperties: 3,
+          multiline: true,
+          consistent: true,
         },
         ObjectPattern: {
-          minProperties: 3, multiline: true, consistent: true,
+          minProperties: 3,
+          multiline: true,
+          consistent: true,
         },
         ImportDeclaration: {
-          minProperties: 3, multiline: true, consistent: true,
+          minProperties: 3,
+          multiline: true,
+          consistent: true,
         },
         ExportDeclaration: {
-          minProperties: 3, multiline: true, consistent: true,
+          minProperties: 3,
+          multiline: true,
+          consistent: true,
         },
       }],
       'object-property-newline': [
@@ -168,10 +185,12 @@ export default [
       'no-useless-constructor': 'error',
       'prefer-destructuring': ['error', {
         VariableDeclarator: {
-          array: false, object: true,
+          array: false,
+          object: true,
         },
         AssignmentExpression: {
-          array: true, object: false,
+          array: true,
+          object: false,
         },
       }],
 
@@ -216,7 +235,8 @@ export default [
       'react/jsx-indent': ['error', 2],
       'react/jsx-indent-props': ['error', 2],
       'react/jsx-max-props-per-line': ['error', {
-        maximum: 1, when: 'multiline',
+        maximum: 1,
+        when: 'multiline',
       }],
       'react/jsx-tag-spacing': ['error', {
         closingSlash: 'never',

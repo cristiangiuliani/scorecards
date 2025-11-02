@@ -84,3 +84,13 @@ export interface IFinancialModelingPrepResponse {
   symbol: string;
   priceToEarningsRatioTTM: number;
 }
+
+// FRED API Response Types
+export interface IFREDObservation {
+  date: string;
+  value: string;
+}
+
+export interface IFREDResponse {
+  observations: IFREDObservation[];
+}

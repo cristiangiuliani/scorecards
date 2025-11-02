@@ -48,3 +48,17 @@ export const AI_BUBBLE_LABELS = {
   action: 'Action',
   OverallScore: 'AI Bubble Risk Score',
 };
+
+export const TREASURY_BONDS_LABELS = {
+  Yield10Y: '10Y Treasury',
+  Yield5Y: '5Y Treasury',
+  Yield2Y: '2Y Treasury',
+  YieldCurveSlope: 'Yield Curve',
+  CreditSpreads: 'Credit Spreads',
+  Inflation: 'Inflation',
+  OverallScore: 'Treasury Bonds Score',
+  DurationStrategy: '⏳ Duration Strategy',
+  AllocationStrategy: '💼 Allocation Strategy',
+  RiskAssessment: '🚨 Risk Assessment',
+  ActionItems: '💡 Action Items',
+};
