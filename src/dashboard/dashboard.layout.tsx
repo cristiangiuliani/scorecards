@@ -121,6 +121,15 @@ const DashboardLayout: React.FC = () => {
                       }}
                     />
                     <Tab
+                      icon={<AccountBalance />}
+                      label="Bonds"
+                      iconPosition="start"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'medium',
+                      }}
+                    />
+                    <Tab
                       icon={<BubbleChart />}
                       label="AI Bubble"
                       iconPosition="start"
@@ -129,15 +138,7 @@ const DashboardLayout: React.FC = () => {
                         fontWeight: 'medium',
                       }}
                     />
-                    <Tab
-                      icon={<AccountBalance />}
-                      label="Treasury Bonds"
-                      iconPosition="start"
-                      sx={{
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
-                    />
+
                   </Tabs>
                 </Grid>
               </Grid>
@@ -150,9 +151,9 @@ const DashboardLayout: React.FC = () => {
         { activeTab === 1 ? (
           <MarketCrypto />
         ) : activeTab === 2 ? (
-          <MarketBubble />
-        ) : activeTab === 3 ? (
           <MarketTreasuryBonds />
+        ) : activeTab === 3 ? (
+          <MarketBubble />
         ) : (
           <MarketStocks />
         )}
