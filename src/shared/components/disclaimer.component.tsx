@@ -3,7 +3,6 @@ import {
   Stack,
   useTheme,
 } from '@mui/material';
-import TrapFocus from '@mui/material/Unstable_TrapFocus';
 import React from 'react';
 
 export const DisclaimerComponent = () => {
