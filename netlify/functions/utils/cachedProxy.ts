@@ -104,13 +104,17 @@ export const createCachedProxyHandler = (
         body: JSON.stringify(data),
       };
     } catch (error: any) {
+      console.error('❌ Cached proxy error:', error);
+
       return {
         statusCode: 500,
         headers: {
           'Content-Type': 'application/json',
           ...CORS_HEADERS,
         },
-        body: JSON.stringify({ error: error.message }),
+        body: JSON.stringify({
+          error: error.message || 'Unknown error',
+        }),
       };
     }
   };

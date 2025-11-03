@@ -68,10 +68,31 @@ export const useNetlifyApi = <T = unknown>({
       const response = await fetch(url);
 
       if (!response.ok) {
+        // Try to parse error response from backend
+        try {
+          const errorData = await response.json();
+          if (errorData.error) {
+            // Backend returned structured error
+            const error = new Error(errorData.error);
+            (error as any).type = errorData.type;
+            (error as any).statusCode = response.status;
+            throw error;
+          }
+        } catch (parseError) {
+          // If parsing fails, throw generic HTTP error
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
+
+      // Check if result contains an error field (some APIs return 200 with error)
+      if (result.error) {
+        const error = new Error(result.error);
+        (error as any).type = result.type || 'API';
+        throw error;
+      }
 
       setData(result);
 
