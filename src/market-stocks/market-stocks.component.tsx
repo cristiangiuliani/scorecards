@@ -71,7 +71,7 @@ const MarketStocksComponent: React.FC = () => {
   const StocksIndexList: TIndicatorsListItem[] = [
     {
       label: STOCKS_LABELS.Vix,
-      description: 'Market volatility measure',
+      description: STOCKS_LABELS.MarketVolatilityMeasure,
       weight: STOCKS_WEIGHTS.vix,
       value: vix,
       score: calculateVixScore(vix),
@@ -83,7 +83,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.RsiSP500,
-      description: 'Overbought/oversold indicator',
+      description: STOCKS_LABELS.OverboughtOversold,
       weight: STOCKS_WEIGHTS.rsi,
       value: rsiSP500,
       score: calculateRsiScore(rsiSP500),
@@ -95,7 +95,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.EurUsd,
-      description: 'Currency strength indicator',
+      description: STOCKS_LABELS.CurrencyStrength,
       weight: STOCKS_WEIGHTS.eurUsd,
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
@@ -108,7 +108,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.FearGreed,
-      description: 'Market sentiment gauge',
+      description: STOCKS_LABELS.SentimentIndicator,
       weight: STOCKS_WEIGHTS.fearGreed,
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
@@ -120,7 +120,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.AthDistance,
-      description: 'Distance from all-time high',
+      description: STOCKS_LABELS.AthDistance,
       weight: STOCKS_WEIGHTS.athDistance,
       value: athDistance,
       score: calculateAthDistanceScore(sp500Price, sp500ATH),
@@ -132,7 +132,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.Momentum7D,
-      description: '7-day price momentum',
+      description: STOCKS_LABELS.Momentum7D,
       weight: STOCKS_WEIGHTS.momentum,
       value: momentum7d,
       score: calculateMomentumScore(sp500Prices),
@@ -146,35 +146,35 @@ const MarketStocksComponent: React.FC = () => {
 
   const StocksStrategyList: TStrategiesListItem[] = [
     {
-      title: '💼 Portfolio Strategy',
+      title: STOCKS_LABELS.PortfolioStrategy,
       color: interpretation.color,
       isLoading: isSp500Loading || isRsiLoading || isVixLoading || isFearGreedLoading,
       items: [
         {
-          label: 'Market Phase',
+          label: STOCKS_LABELS.MarketPhase,
           value: getMarketPhase(stocksScore, athDistance, vix),
         },
         {
-          label: 'Time Horizon',
+          label: STOCKS_LABELS.TimeHorizon,
           value: getTimeHorizon(stocksScore, momentum7d),
         },
         {
-          label: 'Allocation',
+          label: STOCKS_LABELS.Allocation,
           value: getPortfolioAllocation(stocksScore, vix),
         },
       ],
     },
     {
-      title: '🎯 Sector Focus',
+      title: STOCKS_LABELS.SectorFocus,
       color: interpretation.color,
       isLoading: isRsiLoading || isVixLoading || isFearGreedLoading,
       items: [
         {
-          label: 'Recommended Sectors',
+          label: STOCKS_LABELS.RecommendedSectors,
           value: getSectorFocus(stocksScore, rsiSP500, vix),
         },
         {
-          label: 'Key Metric',
+          label: STOCKS_LABELS.KeyMetric,
           value: athDistance > 95
             ? `S&P500: ${athDistance.toFixed(1)}% of ATH`
             : `VIX: ${vix?.toFixed(1)}`,
@@ -182,18 +182,18 @@ const MarketStocksComponent: React.FC = () => {
       ],
     },
     {
-      title: '⚠️ Risk Management',
+      title: STOCKS_LABELS.RiskManagement,
       color: interpretation.color,
       isLoading: isVixLoading || isRsiLoading || isFearGreedLoading,
       items: [
         {
-          label: 'Risk Level',
+          label: STOCKS_LABELS.RiskLevel,
           value: getRiskLevel(stocksScore, vix, rsiSP500, fearGreed, athDistance),
         },
       ],
     },
     {
-      title: '💡 Action Items',
+      title: STOCKS_LABELS.ActionItems,
       color: interpretation.color,
       isLoading: isVixLoading || isRsiLoading || isFearGreedLoading,
       items: getActionableTips(
@@ -202,8 +202,7 @@ const MarketStocksComponent: React.FC = () => {
         rsiSP500,
         fearGreed,
         athDistance
-      ).map((tip, index) => ({
-        label: `Tip ${index + 1}`,
+      ).map((tip) => ({
         value: tip,
       })),
     },
@@ -236,7 +235,7 @@ const MarketStocksComponent: React.FC = () => {
             minLabel="Bearish"
             maxLabel="Bullish"
             label={STOCKS_LABELS.OverallScore}
-            description="Overall stock market sentiment combining S&P 500 metrics, VIX volatility, RSI, and Fear & Greed indicators."
+            description={STOCKS_LABELS.Description}
           />
         </Grid>
         <Grid size={{

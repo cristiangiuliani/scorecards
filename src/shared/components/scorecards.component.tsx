@@ -136,7 +136,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
           backgroundColor: getBackgroundColor(),
         }}
       >
-        <CardHeader title={label} />
+        <CardHeader title={label} sx={{ opacity: 0.7 }} />
         <CardContent
           sx={{
             flex: 1,

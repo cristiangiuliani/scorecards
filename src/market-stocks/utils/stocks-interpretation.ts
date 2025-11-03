@@ -147,39 +147,39 @@ export function getActionableTips(
   const tips: string[] = [];
 
   if (score > 6) {
-    tips.push('💰 Take profits on overweight positions');
-    tips.push('🛡️ Increase hedges (puts, inverse ETFs)');
+    tips.push('Take profits on overweight positions');
+    tips.push('Increase hedges (puts, inverse ETFs)');
   } else if (score > 3) {
-    tips.push('⚖️ Rebalance to target allocation');
-    tips.push('📊 Set trailing stops at -8%');
+    tips.push('Rebalance to target allocation');
+    tips.push('Set trailing stops at -8%');
   } else if (score > 0) {
-    tips.push('📈 Add to growth positions gradually');
-    tips.push('✅ Good time for DCA strategy');
+    tips.push('Add to growth positions gradually');
+    tips.push('Good time for DCA strategy');
   } else if (score < -3) {
-    tips.push('💎 Accumulation zone - quality names');
-    tips.push('📅 Think 12+ months time horizon');
+    tips.push('Accumulation zone - quality names');
+    tips.push('Think 12+ months time horizon');
   }
 
   if (vix > 30) {
-    tips.push('🌊 High volatility - use limit orders');
+    tips.push('High volatility - use limit orders');
   } else if (vix < 13) {
-    tips.push('⚠️ Complacency risk - stay alert');
+    tips.push('Complacency risk - stay alert');
   }
 
   if (rsi > 75) {
-    tips.push('📉 Market overbought - wait pullback');
+    tips.push('Market overbought - wait pullback');
   } else if (rsi < 30) {
-    tips.push('📈 Market oversold - good entry');
+    tips.push('Market oversold - good entry');
   }
 
   if (athDistance > 98 && score > 3) {
-    tips.push('🎯 Near ATH - avoid FOMO buying');
+    tips.push('Near ATH - avoid FOMO buying');
   }
 
   if (fearGreed > 80) {
-    tips.push('😨 Extreme greed - be cautious');
+    tips.push('Extreme greed - be cautious');
   } else if (fearGreed < 25) {
-    tips.push('🤑 Extreme fear - opportunity');
+    tips.push('Extreme fear - opportunity');
   }
 
   return tips.slice(0, 4);

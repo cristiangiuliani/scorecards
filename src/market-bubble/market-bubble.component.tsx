@@ -190,8 +190,7 @@ const MarketBubbleComponent: React.FC = () => {
       title: AI_BUBBLE_LABELS.actionableTips,
       color: interpretation.color,
       isLoading: isNvidiaPELoading || isNasdaqPELoading || isVixHistoryLoading || isFearGreedLoading || isRsiLoading,
-      items: getActionableTips(bubbleIndicator).map((tip, index) => ({
-        label: `Tip ${index + 1}`,
+      items: getActionableTips(bubbleIndicator).map((tip) => ({
         value: tip,
       })),
     },

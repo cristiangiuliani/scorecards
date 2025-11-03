@@ -217,8 +217,7 @@ const MarketCryptoComponent: React.FC = () => {
           btcFearGreed,
           athDistance,
           btcDominance
-        ).map((tip, index) => ({
-          label: `Tip ${index + 1}`,
+        ).map((tip) => ({
           value: tip,
         })),
       },
@@ -252,7 +251,7 @@ const MarketCryptoComponent: React.FC = () => {
             minLabel="Bearish"
             maxLabel="Bullish"
             label={CRYPTO_LABELS.OverallScore}
-            description="Comprehensive crypto market sentiment based on BTC metrics, dominance, RSI, and Fear & Greed index."
+            description={CRYPTO_LABELS.Description}
           />
         </Grid>
         <Grid size={{

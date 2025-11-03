@@ -199,8 +199,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
         yieldCurveSlope,
         creditSpreads,
         inflationExpectations
-      ).map((tip, index) => ({
-        label: `${index + 1}`,
+      ).map((tip) => ({
         value: tip,
       })),
     },

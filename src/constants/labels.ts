@@ -1,3 +1,4 @@
+
 export const COMMON_LABELS = {
   RiskLevel: 'Risk Level',
 };
@@ -12,12 +13,13 @@ export const CRYPTO_LABELS = {
   Strategy: '₿ Crypto Strategy',
   MarketPhase: 'Market Phase',
   TimeHorizon: 'Time Horizon',
-  BtcAltcoin: '⚖️ BTC vs Altcoins',
+  BtcAltcoin: 'BTC vs Altcoins',
   PortfolioBalance: 'Portfolio Balance',
-  RiskManagement: '🚨 Risk Management',
+  RiskManagement: 'Risk Management',
   KeyMetric: 'Key Metric',
-  ActionItems: '💡 Action Items',
+  ActionItems: 'Action Items',
   OverallScore: 'Crypto Overall Score',
+  Description: 'Overall cryptocurrency market sentiment combining Bitcoin metrics, dominance, RSI, and Fear & Greed indicators.',
 };
 
 export const STOCKS_LABELS = {
@@ -28,6 +30,22 @@ export const STOCKS_LABELS = {
   AthDistance: 'ATH Distance',
   Momentum7D: 'Momentum 7D',
   OverallScore: 'Stocks Overall Score',
+  PortfolioStrategy: 'Portfolio Strategy',
+  SectorFocus: 'Sector Focus',
+  RiskManagement: 'Risk Management',
+  ActionItems: 'Action Items',
+  MarketPhase: 'Market Phase',
+  TimeHorizon: 'Time Horizon',
+  Allocation: 'Allocation',
+  RecommendedSectors: 'Recommended Sectors',
+  KeyMetric: 'Key Metric',
+  MarketVolatilityMeasure: 'Market volatility measure',
+  OverboughtOversold: 'Overbought/Oversold Indicator',
+  CurrencyStrength: 'Currency Strength',
+  SentimentIndicator: 'Sentiment Indicator',
+  EconomicStability: 'Economic Stability',
+  RiskLevel: 'Risk Level',
+  Description: 'Overall stock market sentiment combining S&P 500 metrics, VIX volatility, RSI, and Fear & Greed indicators.',
 };
 
 export const AI_BUBBLE_LABELS = {
@@ -42,9 +60,9 @@ export const AI_BUBBLE_LABELS = {
   riskLevel: 'Bubble Risk',
   factors: 'Active Factors',
   portfolioAction: '💼 Portfolio Action',
-  sectorRotation: '🏢 Sector Rotation',
-  timingStrategy: '⏱️ Timing Strategy',
-  actionableTips: '💡 Actionable Tips',
+  sectorRotation: 'Sector Rotation',
+  timingStrategy: 'Timing Strategy',
+  actionableTips: 'Actionable Tips',
   recommendation: 'Recommendation',
   recommendedSectors: 'Recommended Sectors',
   action: 'Action',
@@ -59,8 +77,8 @@ export const TREASURY_BONDS_LABELS = {
   CreditSpreads: 'Credit Spreads',
   Inflation: 'Inflation',
   OverallScore: 'Treasury Bonds Score',
-  DurationStrategy: '⏳ Duration Strategy',
-  AllocationStrategy: '💼 Allocation Strategy',
-  RiskAssessment: '🚨 Risk Assessment',
-  ActionItems: '💡 Action Items',
+  DurationStrategy: 'Duration Strategy',
+  AllocationStrategy: 'Allocation Strategy',
+  RiskAssessment: 'Risk Assessment',
+  ActionItems: 'Action Items',
 };

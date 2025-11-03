@@ -83,30 +83,30 @@ export function getActionableTips(indicator: IBubbleIndicator): string[] {
   const tips: string[] = [];
 
   if (risk === 'HIGH') {
-    tips.push('🚨 Immediate: Set stop-losses on all AI/tech positions at -15%');
-    tips.push('💰 Take profits: Sell 50-70% of winners, secure capital');
-    tips.push('🛡️ Hedge: Consider inverse ETFs (SQQQ) or put options');
-    tips.push('📊 Cash is a position: Raise cash to 30-40% of portfolio');
+    tips.push('Immediate: Set stop-losses on all AI/tech positions at -15%');
+    tips.push('Take profits: Sell 50-70% of winners, secure capital');
+    tips.push('Hedge: Consider inverse ETFs (SQQQ) or put options');
+    tips.push('Cash is a position: Raise cash to 30-40% of portfolio');
   } else if (risk === 'MEDIUM') {
-    tips.push('⚖️ Rebalance: Trim winners to original allocation');
-    tips.push('🎯 Selective: Hold best quality names, exit speculative');
-    tips.push('📈 Stops: Set trailing stops at -10% to protect gains');
-    tips.push('👀 Watch: Monitor daily for deterioration');
+    tips.push('Rebalance: Trim winners to original allocation');
+    tips.push('Selective: Hold best quality names, exit speculative');
+    tips.push('Stops: Set trailing stops at -10% to protect gains');
+    tips.push('Watch: Monitor daily for deterioration');
   } else {
-    tips.push('✅ Stay invested: No bubble signals detected');
-    tips.push('💎 Accumulate: Good time to add to quality positions');
-    tips.push('📊 DCA: Dollar-cost average into favorites');
-    tips.push('🎯 Opportunistic: Buy dips in strong names');
+    tips.push('Stay invested: No bubble signals detected');
+    tips.push('Accumulate: Good time to add to quality positions');
+    tips.push('DCA: Dollar-cost average into favorites');
+    tips.push('Opportunistic: Buy dips in strong names');
   }
 
   if (factors.nvidiaOvervalued) {
-    tips.push('⚠️ NVIDIA: Reduce exposure, P/E too extended');
+    tips.push('NVIDIA: Reduce exposure, P/E too extended');
   }
   if (factors.nasdaqOvervalued) {
-    tips.push('⚠️ NASDAQ: Broad market overvalued, be cautious');
+    tips.push('NASDAQ: Broad market overvalued, be cautious');
   }
   if (factors.vixPersistent) {
-    tips.push('⚠️ VIX: Persistent fear = increased crash risk');
+    tips.push('VIX: Persistent fear = increased crash risk');
   }
 
   return tips.slice(0, 6); // Max 6 tips

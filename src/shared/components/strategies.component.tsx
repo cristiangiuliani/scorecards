@@ -1,6 +1,5 @@
 import {
-  Alert,
-  Box, Divider, Paper, Skeleton, Typography,
+  Alert, Divider, List, ListItem, ListItemText, Skeleton, Typography,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React from 'react';
@@ -26,47 +25,49 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
               sm: 6,
               md: 3,
             }}
+            sx={{
+              p: 1,
+              borderTop: '4px solid',
+              borderTopColor: `${item.color}.main`,
+              backgroundColor: 'grey.900',
+            }}
           >
-            <Paper
-              elevation={1}
-              sx={{
-                p: 2,
-                height: '100%',
-                borderTop: '4px solid',
-                borderTopColor: `${item.color}.main`,
-              }}
-            >
-              { item.isLoading ? (
-                <>
-                  <Skeleton height={50}  />
-                  <Skeleton height={65}  />
-                  <Skeleton height={65}  />
-                  <Skeleton height={65}  />
-                </>
-              )  :  item?.items?.length > 0 ? (
-                <>
-                  <Typography variant="subtitle1" gutterBottom fontWeight="bold">
-                    {item.title}
-                  </Typography>
-                  <Divider sx={{
-                    mb: 2,
-                  }}
-                  />
-                  {item.items.map((item) => (
-                    <Box key={item.label} mb={2}>
-                      <Typography variant="subtitle2" color="text.primary" fontWeight="medium" gutterBottom>
-                        {item.label}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.value}
-                      </Typography>
-                    </Box>
+
+            { item.isLoading ? (
+              <>
+                <Skeleton height={50}  />
+                <Skeleton height={65}  />
+                <Skeleton height={65}  />
+                <Skeleton height={65}  />
+              </>
+            )  :  item?.items?.length > 0 ? (
+              <>
+                <Typography variant="subtitle1" fontWeight="bold" sx={{ opacity: 0.4 }}>
+                  {item.title}
+                </Typography>
+                <List dense>
+                  {item.items.map((subItem) => (
+                    <React.Fragment key={subItem.label}>
+                      <Divider component="li" />
+                      <ListItem
+                        disableGutters
+                        sx={{
+                          py: 0.5,
+                          opacity: 0.6,
+                        }}
+                      >
+                        <ListItemText
+                          primary={subItem.label ? `${subItem.label} ${subItem.value}` : subItem.value}
+                          primaryTypographyProps={{ variant: 'body2' }}
+                        />
+                      </ListItem>
+                    </React.Fragment>
                   ))}
-                </>
-              ) : (
-                <Alert severity="warning">Component cannot retrieve strategies data. Try later.</Alert>
-              )}
-            </Paper>
+                </List>
+              </>
+            ) : (
+              <Alert severity="warning">Component cannot retrieve strategies data. Try later.</Alert>
+            )}
           </Grid>
         ))}
       </Grid>

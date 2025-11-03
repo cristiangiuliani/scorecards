@@ -23,7 +23,7 @@ export type TStrategiesListItem = {
   color?: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning' | 'default'
   isLoading?: boolean
   items: {
-    label: string
+    label?: string
     value: string
   }[]
 }

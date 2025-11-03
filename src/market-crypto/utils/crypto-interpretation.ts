@@ -120,41 +120,41 @@ export function getActionableTips(
   const tips: string[] = [];
 
   if (score > 5) {
-    tips.push('🎯 Start taking profits (25-50%)');
-    tips.push('📊 Set trailing stops at -10%');
+    tips.push('Start taking profits (25-50%)');
+    tips.push('Set trailing stops at -10%');
   } else if (score > 3) {
-    tips.push('⚖️ Rebalance: secure initial capital');
-    tips.push('📈 Let winners run with stops');
+    tips.push('Rebalance: secure initial capital');
+    tips.push('Let winners run with stops');
   } else if (score > 0) {
-    tips.push('✅ Good time to add positions');
-    tips.push('📊 Scale in gradually (DCA)');
+    tips.push('Good time to add positions');
+    tips.push('Scale in gradually (DCA)');
   } else if (score < -3) {
-    tips.push('💰 Strong accumulation zone');
-    tips.push('⏰ Be patient, bear markets = opportunity');
+    tips.push('Strong accumulation zone');
+    tips.push('Be patient, bear markets = opportunity');
   }
 
   if (rsi > 75) {
-    tips.push('⚠️ RSI overbought - prepare for pullback');
+    tips.push('RSI overbought - prepare for pullback');
   } else if (rsi < 30) {
-    tips.push('🟢 RSI oversold - buying opportunity');
+    tips.push('RSI oversold - buying opportunity');
   }
 
   if (athDistance > 98 && score > 3) {
-    tips.push('🚨 Near ATH - avoid FOMO, wait pullback');
+    tips.push('Near ATH - avoid FOMO, wait pullback');
   } else if (athDistance < 50) {
-    tips.push('💎 Far from ATH - good risk/reward');
+    tips.push('Far from ATH - good risk/reward');
   }
 
   if (dominance < 50) {
-    tips.push('🌟 Altseason active - rotate into alts');
+    tips.push('Altseason active - rotate into alts');
   } else if (dominance > 60) {
     tips.push('₿ BTC dominance high - focus on BTC');
   }
 
   if (fearGreed > 80) {
-    tips.push('😱 Extreme greed - market overheated');
+    tips.push('Extreme greed - market overheated');
   } else if (fearGreed < 25) {
-    tips.push('😨 Extreme fear - contrarian opportunity');
+    tips.push('Extreme fear - contrarian opportunity');
   }
 
   return tips.slice(0, 4); // Max 4 tips
