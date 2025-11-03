@@ -78,7 +78,7 @@ export const useNetlifyApi = <T = unknown>({
             (error as any).statusCode = response.status;
             throw error;
           }
-        } catch (parseError) {
+        } catch {
           // If parsing fails, throw generic HTTP error
           throw new Error(`HTTP error! status: ${response.status}`);
         }
