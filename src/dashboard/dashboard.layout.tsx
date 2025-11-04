@@ -5,6 +5,7 @@ import {
   BubbleChart,
   AccountBalance,
   TrendingUp,
+  Menu as MenuIcon,
 } from '@mui/icons-material';
 import {
   Box,
@@ -17,6 +18,11 @@ import {
   AppBar,
   Toolbar,
   Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
 import {
   createTheme, ThemeProvider,
@@ -48,6 +54,45 @@ const DashboardLayout: React.FC = () => {
     activeTab = GLOBALS.defaultActiveTab,
     updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+  const handleSelectMenuItem = (index: number) => {
+    updateDashboard({
+      activeTab: index,
+    });
+    handleCloseMenu();
+  };
+
+  const menuList = [
+    {
+      icon: <ShowChart />,
+      label: 'Stocks',
+    },
+    {
+      icon: <CurrencyBitcoin />,
+      label: 'Crypto',
+    },
+    {
+      icon: <AccountBalance />,
+      label: 'Bonds',
+    },
+    {
+      icon: <BubbleChart />,
+      label: 'AI Bubble',
+    },
+    {
+      icon: <TrendingUp />,
+      label: 'Capital Flows',
+    },
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -75,15 +120,24 @@ const DashboardLayout: React.FC = () => {
                   alignItems="center"
                   sx={{
                     display: {
-                      xs: 'none',
-                      sm: 'block',
+                      md: 'none',
+                      lg: 'block',
                     },
                   }}
                 >
-                  <Typography variant="h4" color="text.secondary" lineHeight={1} fontWeight="bold">
+                  <Typography
+                    variant='h4'
+                    color="text.secondary"
+                    lineHeight={1}
+                    fontWeight="bold"
+                  >
                     Market Scorecard
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" lineHeight={1}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    lineHeight={1}
+                  >
                     Automated market reversal analysis system
                   </Typography>
 
@@ -93,64 +147,74 @@ const DashboardLayout: React.FC = () => {
                   size="grow"
                   container
                   alignItems="center"
-                  justifyContent={{
-                    xs: 'center',
-                    sm: 'flex-end',
-                  }}
+                  justifyContent="flex-end"
                 >
                   <Tabs
                     value={activeTab}
-                    onChange={(_e, newValue) => updateDashboard({
-                      activeTab: newValue,
-                    })}
+                    onChange={(_e, newValue) => handleSelectMenuItem(newValue)}
+                    sx={{
+                      display: {
+                        sm: 'none',
+                        md: 'flex',
+                      },
+                    }}
                   >
-                    <Tab
-                      icon={<ShowChart />}
-                      label="Stocks"
-                      iconPosition="start"
-                      sx={{
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
-                    />
-                    <Tab
-                      icon={<CurrencyBitcoin />}
-                      label="Crypto"
-                      iconPosition="start"
-                      sx={{
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
-                    />
-                    <Tab
-                      icon={<AccountBalance />}
-                      label="Bonds"
-                      iconPosition="start"
-                      sx={{
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
-                    />
-                    <Tab
-                      icon={<BubbleChart />}
-                      label="AI Bubble"
-                      iconPosition="start"
-                      sx={{
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
-                    />
-                    <Tab
-                      icon={<TrendingUp />}
-                      label="Capital Flows"
-                      iconPosition="start"
-                      sx={{
-                        textTransform: 'none',
-                        fontWeight: 'medium',
-                      }}
-                    />
+                    { menuList.map((menuItem, index) => (
+                      <Tab
+                        key={index}
+                        icon={menuItem.icon}
+                        label={menuItem.label}
+                        iconPosition="start"
+                        sx={{
+                          textTransform: 'none',
+                          fontWeight: 'medium',
+                        }}
+                      />
+                    )) }
 
                   </Tabs>
+                </Grid>
+                <Grid size="auto">
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleClick}
+                    sx={{
+                      display: {
+                        md: 'none',
+                        sm: 'block',
+                      },
+                    }}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleCloseMenu}
+                    slotProps={{
+                      list: {
+                        'aria-labelledby': 'basic-button',
+                      },
+                    }}
+                  >
+                    { menuList.map((menuItem, index) => (
+                      <MenuItem
+                        key={index}
+                        onClick={() => handleSelectMenuItem(index)}
+                        selected={index === activeTab}
+                      >
+                        <ListItemIcon>
+                          {menuItem.icon}
+                        </ListItemIcon>
+                        <ListItemText>{menuItem.label}</ListItemText>
+                      </MenuItem>
+                    )) }
+
+                  </Menu>
                 </Grid>
               </Grid>
             </Toolbar>
