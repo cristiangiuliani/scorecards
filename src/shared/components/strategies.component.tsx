@@ -23,7 +23,7 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
             size={{
               xs: 12,
               sm: 6,
-              md: 3,
+              md: strategiesList.length > 3 ? 3 : 4,
             }}
             sx={{
               p: 1,
@@ -46,8 +46,8 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
                   {item.title}
                 </Typography>
                 <List dense>
-                  {item.items.map((subItem) => (
-                    <React.Fragment key={subItem.label}>
+                  {item.items.map((subItem, subIndex) => (
+                    <React.Fragment key={subItem.label || `strategy-item-${index}-${subIndex}`}>
                       <Divider component="li" />
                       <ListItem
                         disableGutters

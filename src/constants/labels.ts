@@ -82,3 +82,23 @@ export const TREASURY_BONDS_LABELS = {
   RiskAssessment: 'Risk Assessment',
   ActionItems: 'Action Items',
 };
+
+export const CAPITAL_FLOWS_LABELS = {
+  FedBalanceSheet: 'Fed Balance Sheet',
+  M2MoneySupply: 'M2 Money Supply',
+  DollarIndex: 'US Dollar Index',
+  HighYieldSpread: 'High Yield Spread',
+  Treasury10Y: '10Y Treasury Yield',
+  StablecoinAccumulation: 'Stablecoin Reserves',
+  CryptoMarketCap: 'Crypto Market Cap',
+  OverallScore: 'Capital Flows Score',
+  Description:
+    'Market sentiment based on capital flows, liquidity conditions, stablecoin accumulation, and institutional positioning across stocks, crypto, and safe haven assets.',
+  MarketSentimentPhase: 'Market Sentiment Phase',
+  LiquidityConditions: 'Liquidity Conditions',
+  RiskAppetite: 'Risk Appetite',
+  AssetAllocation: 'Recommended Allocation',
+  TimeHorizon: 'Time Horizon',
+  ActionItems: 'Action Items',
+  KeyMetric: 'Key Metric',
+};

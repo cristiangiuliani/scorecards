@@ -8,9 +8,15 @@ import fredBAMLMockData from '../_mocks/fredBAML.json';
 import fredDGS10MockData from '../_mocks/fredDGS10.json';
 import fredDGS2MockData from '../_mocks/fredDGS2.json';
 import fredDGS5MockData from '../_mocks/fredDGS5.json';
+import fredDollarIndexMockData from '../_mocks/fredDollarIndex.json';
+import fredGoldMockData from '../_mocks/fredGold.json';
+import fredM2MockData from '../_mocks/fredM2.json';
 import fredT10YIEMockData from '../_mocks/fredT10YIE.json';
+import fredWALCLMockData from '../_mocks/fredWALCL.json';
+import globalCryptoDataMockData from '../_mocks/globalCryptoData.json';
 import rsiSP500MockData from '../_mocks/rsiSp500.json';
 import sp500MockData from '../_mocks/sp500.json';
+import stablecoinsMockData from '../_mocks/stablecoins.json';
 import vixMockData from '../_mocks/vix.json';
 
 export interface IApiEndpoint {
@@ -78,5 +84,29 @@ export const API: Record<string, IApiEndpoint> = {
   fredT10YIE: {
     functionName: 'fetchFredT10YIE',
     mockData: fredT10YIEMockData,
+  },
+  fredWALCL: {
+    functionName: 'fetchFredWALCL',
+    mockData: fredWALCLMockData,
+  },
+  fredM2: {
+    functionName: 'fetchFredM2',
+    mockData: fredM2MockData,
+  },
+  fredDollarIndex: {
+    functionName: 'fetchFredDollarIndex',
+    mockData: fredDollarIndexMockData,
+  },
+  fredGold: {
+    functionName: 'fetchFredGold',
+    mockData: fredGoldMockData,
+  },
+  stablecoins: {
+    functionName: 'fetchStablecoins',
+    mockData: stablecoinsMockData,
+  },
+  globalCryptoData: {
+    functionName: 'fetchGlobalCryptoData',
+    mockData: globalCryptoDataMockData,
   },
 };

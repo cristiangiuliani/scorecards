@@ -4,6 +4,7 @@ import {
   CurrencyBitcoin,
   BubbleChart,
   AccountBalance,
+  TrendingUp,
 } from '@mui/icons-material';
 import {
   Box,
@@ -27,6 +28,7 @@ import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
 import MarketBubble from '../market-bubble/market-bubble';
+import MarketCapitalFlows from '../market-capital-flows/market-capital-flows';
 import MarketCrypto from '../market-crypto/market-crypto';
 import MarketStocks from '../market-stocks/market-stocks';
 import MarketTreasuryBonds from '../market-treasury-bonds/market-treasury-bonds';
@@ -138,6 +140,15 @@ const DashboardLayout: React.FC = () => {
                         fontWeight: 'medium',
                       }}
                     />
+                    <Tab
+                      icon={<TrendingUp />}
+                      label="Capital Flows"
+                      iconPosition="start"
+                      sx={{
+                        textTransform: 'none',
+                        fontWeight: 'medium',
+                      }}
+                    />
 
                   </Tabs>
                 </Grid>
@@ -154,6 +165,8 @@ const DashboardLayout: React.FC = () => {
           <MarketTreasuryBonds />
         ) : activeTab === 3 ? (
           <MarketBubble />
+        ) : activeTab === 4 ? (
+          <MarketCapitalFlows />
         ) : (
           <MarketStocks />
         )}

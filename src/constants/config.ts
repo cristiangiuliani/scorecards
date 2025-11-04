@@ -221,3 +221,59 @@ export const TREASURY_BONDS_RANGES = {
     maxLabel: 'High',
   },
 };
+
+export const CAPITAL_FLOWS_WEIGHTS = {
+  fedBalanceSheet: 1.5,
+  m2MoneySupply: 1.3,
+  dollarIndex: 1.1,
+  highYieldSpread: 1.2,
+  treasury10Y: 1.0,
+  stablecoinAccumulation: 1.4,
+  cryptoMarketCap: 1.2,
+  score: 0.35, // Scale to ±10 range
+};
+
+export const CAPITAL_FLOWS_RANGES = {
+  fedBalanceSheetGrowth: {
+    min: -3,
+    max: 3,
+    minLabel: 'QT',
+    maxLabel: 'QE',
+  },
+  m2Growth: {
+    min: -3,
+    max: 3,
+    minLabel: 'Contracting',
+    maxLabel: 'Expanding',
+  },
+  dollarIndex: {
+    min: 80,
+    max: 140,
+    minLabel: 'Weak',
+    maxLabel: 'Strong',
+  },
+  highYieldSpread: {
+    min: 0,
+    max: 15,
+    minLabel: 'Risk-On',
+    maxLabel: 'Risk-Off',
+  },
+  treasury10YChange: {
+    min: -0.5,
+    max: 0.5,
+    minLabel: 'Falling',
+    maxLabel: 'Rising',
+  },
+  stablecoinDominance: {
+    min: 0,
+    max: 10,
+    minLabel: 'Deployed',
+    maxLabel: 'Dry Powder',
+  },
+  cryptoMcapGrowth: {
+    min: -20,
+    max: 20,
+    minLabel: 'Outflows',
+    maxLabel: 'Inflows',
+  },
+};
