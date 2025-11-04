@@ -71,7 +71,7 @@ const MarketStocksComponent: React.FC = () => {
   const StocksIndexList: TIndicatorsListItem[] = [
     {
       label: STOCKS_LABELS.Vix,
-      description: STOCKS_LABELS.MarketVolatilityMeasure,
+      description: 'CBOE Volatility Index measuring market fear and uncertainty. Values below 15 indicate calm markets, 15-25 show normal volatility, above 30 signals high stress and potential market corrections.',
       weight: STOCKS_WEIGHTS.vix,
       value: vix,
       score: calculateVixScore(vix),
@@ -83,7 +83,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.RsiSP500,
-      description: STOCKS_LABELS.OverboughtOversold,
+      description: 'S&P 500 Relative Strength Index (14-day) measuring momentum. Above 70 indicates overbought conditions (potential pullback), below 30 shows oversold (potential rebound opportunity).',
       weight: STOCKS_WEIGHTS.rsi,
       value: rsiSP500,
       score: calculateRsiScore(rsiSP500),
@@ -95,7 +95,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.EurUsd,
-      description: STOCKS_LABELS.CurrencyStrength,
+      description: 'EUR/USD exchange rate indicating relative strength between Eurozone and US economies. Higher values favor European stocks, lower values benefit US exporters and dollar-denominated assets.',
       weight: STOCKS_WEIGHTS.eurUsd,
       value: eurUsd,
       score: calculateEurUsdScore(eurUsd),
@@ -108,7 +108,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.FearGreed,
-      description: STOCKS_LABELS.SentimentIndicator,
+      description: 'CNN Fear & Greed Index combining market momentum, volatility, put/call ratios, and breadth. Extreme Fear (<25) often signals buying opportunities, Extreme Greed (>75) suggests caution.',
       weight: STOCKS_WEIGHTS.fearGreed,
       value: fearGreed,
       score: calculateFearGreedScore(fearGreed),
@@ -120,7 +120,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.AthDistance,
-      description: STOCKS_LABELS.AthDistance,
+      description: 'S&P 500 distance from all-time high. Values above 95% indicate near peak levels (elevated risk), while lower values suggest better risk/reward ratio and accumulation opportunities.',
       weight: STOCKS_WEIGHTS.athDistance,
       value: athDistance,
       score: calculateAthDistanceScore(sp500Price, sp500ATH),
@@ -132,7 +132,7 @@ const MarketStocksComponent: React.FC = () => {
     },
     {
       label: STOCKS_LABELS.Momentum7D,
-      description: STOCKS_LABELS.Momentum7D,
+      description: 'S&P 500 7-day momentum measuring short-term trend strength. Positive values indicate bullish momentum, negative values show bearish pressure. Helps identify potential trend changes.',
       weight: STOCKS_WEIGHTS.momentum,
       value: momentum7d,
       score: calculateMomentumScore(sp500Prices),

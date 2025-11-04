@@ -75,7 +75,7 @@ const MarketBubbleComponent: React.FC = () => {
   const BubbleIndexList: TIndicatorsListItem[] = [
     {
       label: AI_BUBBLE_LABELS.nvidiaPE,
-      description: 'AI sector valuation proxy',
+      description: 'NVIDIA Price-to-Earnings ratio as AI sector valuation proxy. Historical avg ~40-60. Values above 80 indicate expensive valuations and potential bubble risk in AI stocks.',
       weight: 1.0,
       value: nvidiaPE,
       score: nvidiaScore,
@@ -87,7 +87,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.nasdaqPE,
-      description: 'Tech market valuation',
+      description: 'NASDAQ 100 Price-to-Earnings ratio measuring tech sector valuation. Historical avg ~25-30. Values above 35 suggest stretched valuations and elevated market risk.',
       weight: 1.0,
       value: nasdaqPE,
       score: nasdaqScore,
@@ -99,7 +99,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.nvdaNasdaqRatio,
-      description: 'AI vs tech valuation ratio',
+      description: 'NVIDIA PE / NASDAQ PE ratio showing AI sector premium over broader tech. Ratio above 2.0 indicates AI stocks trading at significant premium, suggesting sector-specific bubble risk.',
       weight: 1.0,
       value: nvdaNasdaqRatio,
       score: nvdaNasdaqRatioScore,
@@ -112,7 +112,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.vixPersistence,
-      description: 'Sustained market stress',
+      description: 'Number of days VIX stayed above 30 (high fear) in the last 5 days. Sustained high volatility signals market stress, potential correction or bubble deflation phase.',
       weight: 1.0,
       value: daysAbove30,
       score: vixPersistScore,
@@ -124,7 +124,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.fearGreed,
-      description: 'Market sentiment gauge',
+      description: 'Market sentiment combining volatility, momentum, and put/call ratios. Extreme Greed (>75) combined with high valuations suggests euphoric phase and bubble risk.',
       weight: 1.0,
       value: fearGreed,
       score: fearGreedScore,
@@ -136,7 +136,7 @@ const MarketBubbleComponent: React.FC = () => {
     },
     {
       label: AI_BUBBLE_LABELS.rsiSP500,
-      description: 'Overbought/oversold indicator',
+      description: 'S&P 500 Relative Strength Index (14-day). Values above 70 indicate overbought conditions. Combined with elevated valuations, suggests increased probability of market correction.',
       weight: 1.0,
       value: rsiSP500,
       score: rsiScore,
