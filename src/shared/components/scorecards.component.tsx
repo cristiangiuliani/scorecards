@@ -3,6 +3,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import UpdateIcon from '@mui/icons-material/Update';
 import {
   Alert,
+  Badge,
   Button,
   Card,
   CardActions,
@@ -255,15 +256,17 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
             arrow
             enterTouchDelay={0}
           >
-            <UpdateIcon
-              color="action"
-              sx={{
-                fontSize: 18,
-                opacity: 0.5,
-                cursor: 'help',
-                ':hover': { opacity: 0.7 },
-              }}
-            />
+            <Badge color="info" variant="dot" invisible={minutesRemaining === null || minutesRemaining > 0}>
+              <UpdateIcon
+                color="action"
+                sx={{
+                  fontSize: 18,
+                  opacity: 0.5,
+                  cursor: 'help',
+                  ':hover': { opacity: 0.7 },
+                }}
+              />
+            </Badge>
           </StyledBlackTooltip>
 
         </CardActions>

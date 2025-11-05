@@ -118,27 +118,25 @@ const DashboardLayout: React.FC = () => {
                 <Grid
                   size="auto"
                   alignItems="center"
-                  sx={{
-                    display: {
-                      md: 'none',
-                      lg: 'block',
-                    },
-                  }}
+
                 >
-                  <Typography
-                    variant='h4'
-                    color="text.secondary"
-                    lineHeight={1}
-                    fontWeight="bold"
-                  >
-                    Market Scorecard
-                  </Typography>
+                  <Box>
+                    <img
+                      src="assets/logo.png"
+                      alt="Scorecards Logo"
+                      style={{ height: 40 }}
+                    />
+                  </Box>
                   <Typography
                     variant="body2"
                     color="text.secondary"
                     lineHeight={1}
+                    sx={{
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.3px',
+                    }}
                   >
-                    Automated market reversal analysis system
+                    Simplified market analysis
                   </Typography>
 
                 </Grid>
@@ -168,6 +166,8 @@ const DashboardLayout: React.FC = () => {
                         sx={{
                           textTransform: 'none',
                           fontWeight: 'medium',
+                          padding: '0px 8px',
+
                         }}
                       />
                     )) }
