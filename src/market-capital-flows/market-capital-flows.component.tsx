@@ -100,7 +100,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
   const CapitalFlowsIndexList: TIndicatorsListItem[] = [
     {
       label: CAPITAL_FLOWS_LABELS.FedBalanceSheet,
-      description: 'Federal Reserve total assets. Expanding balance sheet (QE) injects liquidity into markets, bullish for risk assets. Contracting (QT) removes liquidity, bearish signal.',
+      description: CAPITAL_FLOWS_LABELS.FedBalanceSheetDescription,
       weight: CAPITAL_FLOWS_WEIGHTS.fedBalanceSheet,
       value: fedGrowthRate,
       score: fedScore,
@@ -112,7 +112,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
     },
     {
       label: CAPITAL_FLOWS_LABELS.M2MoneySupply,
-      description: 'M2 money supply measures total money in circulation. Growing M2 indicates increasing liquidity (bullish), while contraction suggests monetary tightening (bearish).',
+      description: CAPITAL_FLOWS_LABELS.M2MoneySupplyDescription,
       weight: CAPITAL_FLOWS_WEIGHTS.m2MoneySupply,
       value: m2GrowthRate,
       score: m2Score,
@@ -124,7 +124,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
     },
     {
       label: CAPITAL_FLOWS_LABELS.DollarIndex,
-      description: 'US Dollar strength index. Weak dollar (falling) is bullish for risk assets like crypto and stocks. Strong dollar (rising) indicates flight to safety, bearish for risk.',
+      description: CAPITAL_FLOWS_LABELS.DollarIndexDescription,
       weight: CAPITAL_FLOWS_WEIGHTS.dollarIndex,
       value: dollarIndex,
       score: dollarScore,
@@ -136,7 +136,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
     },
     {
       label: CAPITAL_FLOWS_LABELS.HighYieldSpread,
-      description: 'High yield bond spread measures risk premium. Narrow spreads (<4%) indicate high risk appetite (bullish). Wide spreads (>7%) show risk aversion (bearish).',
+      description: CAPITAL_FLOWS_LABELS.HighYieldSpreadDescription,
       weight: CAPITAL_FLOWS_WEIGHTS.highYieldSpread,
       value: highYieldSpread,
       score: hySpreadScore,
@@ -148,7 +148,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
     },
     {
       label: CAPITAL_FLOWS_LABELS.Treasury10Y,
-      description: '10-Year Treasury yield trend as safe haven indicator. Falling yields = flight to bonds/safety (bearish for risk). Rising yields = capital leaving bonds (bullish for risk).',
+      description: CAPITAL_FLOWS_LABELS.Treasury10YDescription,
       weight: CAPITAL_FLOWS_WEIGHTS.treasury10Y,
       value: treasury10YChange,
       score: treasury10YScore,
@@ -160,7 +160,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
     },
     {
       label: CAPITAL_FLOWS_LABELS.StablecoinAccumulation,
-      description: 'Stablecoin supply as % of total crypto market cap. High dominance (>6%) indicates dry powder ready to deploy (very bullish). Low (<3%) means money already deployed.',
+      description: CAPITAL_FLOWS_LABELS.StablecoinAccumulationDescription,
       weight: CAPITAL_FLOWS_WEIGHTS.stablecoinAccumulation,
       value: stablecoinDominance,
       score: stablecoinScore,
@@ -172,7 +172,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
     },
     // {
     //   label: CAPITAL_FLOWS_LABELS.CryptoMarketCap,
-    //   description: 'Total crypto market cap growth. Rapid growth (>10% in 4 weeks) shows strong capital inflows (bullish). Decline (<-10%) indicates capital flight (bearish).',
+    //   description: CAPITAL_FLOWS_LABELS.CryptoMarketCapDescription,
     //   weight: CAPITAL_FLOWS_WEIGHTS.cryptoMarketCap,
     //   value: cryptoMcapGrowthRate,
     //   score: cryptoMcapScore,

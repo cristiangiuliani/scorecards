@@ -65,7 +65,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
   const BondsIndexList: TIndicatorsListItem[] = [
     {
       label: TREASURY_BONDS_LABELS.Yield10Y,
-      description: '10-year US Treasury yield, benchmark for long-term rates. Higher yields (>4.5%) make bonds attractive vs stocks, lower yields (<3%) favor equities. Reflects long-term economic outlook.',
+      description: TREASURY_BONDS_LABELS.Yield10YDescription,
       weight: TREASURY_BONDS_WEIGHTS.yield10Y,
       value: yield10Y,
       score: calculateYield10YScore(yield10Y),
@@ -78,7 +78,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
     },
     {
       label: TREASURY_BONDS_LABELS.Yield5Y,
-      description: '5-year Treasury yield, mid-term rate indicator. Used for mortgage pricing and medium-duration bonds. Rising yields signal tightening conditions, falling yields suggest easing ahead.',
+      description: TREASURY_BONDS_LABELS.Yield5YDescription,
       weight: TREASURY_BONDS_WEIGHTS.yield5Y,
       value: yield5Y,
       score: calculateYield5YScore(yield5Y),
@@ -91,7 +91,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
     },
     {
       label: TREASURY_BONDS_LABELS.Yield2Y,
-      description: '2-year Treasury yield, sensitive to Fed policy. Closely tracks federal funds rate expectations. Rising 2Y yields indicate expected Fed tightening, falling suggests rate cuts ahead.',
+      description: TREASURY_BONDS_LABELS.Yield2YDescription,
       weight: TREASURY_BONDS_WEIGHTS.yield2Y,
       value: yield2Y,
       score: calculateYield2YScore(yield2Y),
@@ -104,7 +104,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
     },
     {
       label: TREASURY_BONDS_LABELS.YieldCurveSlope,
-      description: 'Yield curve slope (10Y - 2Y). Positive slope indicates healthy economy, negative (inverted) historically precedes recessions. Steepening favors long-duration bonds.',
+      description: TREASURY_BONDS_LABELS.YieldCurveSlopeDescription,
       weight: TREASURY_BONDS_WEIGHTS.yieldCurveSlope,
       value: yieldCurveSlope,
       score: calculateYieldCurveSlopeScore(yieldCurveSlope),
@@ -117,7 +117,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
     },
     {
       label: TREASURY_BONDS_LABELS.CreditSpreads,
-      description: 'Corporate bond spread over Treasuries in basis points. Widening spreads (>200 bps) indicate credit stress and flight to quality. Tight spreads (<100 bps) show investor confidence.',
+      description: TREASURY_BONDS_LABELS.CreditSpreadsDescription,
       weight: TREASURY_BONDS_WEIGHTS.creditSpreads,
       value: creditSpreads,
       score: calculateCreditSpreadsScore(creditSpreads),
@@ -130,7 +130,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
     },
     {
       label: TREASURY_BONDS_LABELS.Inflation,
-      description: 'Expected inflation rate from market-implied indicators. Higher inflation (>3%) erodes bond returns and favors TIPS. Lower inflation (<2%) benefits nominal bonds.',
+      description: TREASURY_BONDS_LABELS.InflationDescription,
       weight: TREASURY_BONDS_WEIGHTS.inflation,
       value: inflationExpectations,
       score: calculateInflationScore(inflationExpectations),
@@ -224,7 +224,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
             minLabel="Sell"
             maxLabel="Buy"
             label={TREASURY_BONDS_LABELS.OverallScore}
-            description="Overall treasury bonds sentiment based on yield curves, spreads, and economic indicators"
+            description={TREASURY_BONDS_LABELS.OverallScoreDescription}
           />
         </Grid>
         <Grid size={{

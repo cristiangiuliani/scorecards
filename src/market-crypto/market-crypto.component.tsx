@@ -75,7 +75,7 @@ const MarketCryptoComponent: React.FC = () => {
   const CryptoIndexList:TIndicatorsListItem[] = [
     {
       label: CRYPTO_LABELS.BtcDominance,
-      description: 'Bitcoin market share relative to total crypto market cap. Higher dominance (>60%) indicates capital flowing into BTC, while lower values (<50%) suggest altcoin season.',
+      description: CRYPTO_LABELS.BtcDominanceDescription,
       weight: CRYPTO_WEIGHTS.dominance,
       value: btcDominance,
       score: calculateBtcDominanceScore(btcDominance),
@@ -87,7 +87,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.BtcRsi,
-      description: 'Relative Strength Index (14-day) measures momentum. Values above 70 indicate overbought conditions (potential correction), while below 30 suggests oversold (potential buying opportunity).',
+      description: CRYPTO_LABELS.BtcRsiDescription,
       weight: CRYPTO_WEIGHTS.rsi,
       value: btcRsi,
       score: calculateBtcRsiScore(btcRsi),
@@ -99,7 +99,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.AltSeasonIndex,
-      description: 'Measures altcoin performance vs Bitcoin. Values above 75 indicate strong altcoin season, while below 25 shows Bitcoin outperformance. Based on top altcoins vs BTC performance.',
+      description: CRYPTO_LABELS.AltSeasonIndexDescription,
       weight: CRYPTO_WEIGHTS.altcoinSeason,
       value: altcoinSeasonIndex,
       score: calculateAltSeasonScore(altcoinSeasonIndex),
@@ -111,7 +111,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.BtcFearGreed,
-      description: 'Market sentiment indicator combining volatility, momentum, social media and surveys. Extreme Fear (<25) often presents buying opportunities, Extreme Greed (>75) suggests caution.',
+      description: CRYPTO_LABELS.BtcFearGreedDescription,
       weight: CRYPTO_WEIGHTS.fearGreed,
       value: btcFearGreed,
       score: calculateBtcFearGreedScore(btcFearGreed),
@@ -123,7 +123,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.AthDistance,
-      description: 'Shows how far Bitcoin is from its all-time high peak. Values above 95% indicate near ATH (high risk zone), while lower values suggest better risk/reward ratio for accumulation.',
+      description: CRYPTO_LABELS.AthDistanceDescription,
       weight: CRYPTO_WEIGHTS.athDistance,
       value: athDistance,
       score: calculateAthDistanceScore(currentPrice, ath),
@@ -135,7 +135,7 @@ const MarketCryptoComponent: React.FC = () => {
     },
     {
       label: CRYPTO_LABELS.Momentum7D,
-      description: '7-day price momentum showing short-term trend strength. Positive values indicate upward momentum, negative values show downward pressure. Helps identify trend reversals.',
+      description: CRYPTO_LABELS.Momentum7DDescription,
       weight: CRYPTO_WEIGHTS.momentum,
       value: momentum7d,
       score: calculateMomentumScore(prices),
