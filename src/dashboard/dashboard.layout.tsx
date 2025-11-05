@@ -6,6 +6,8 @@ import {
   AccountBalance,
   TrendingUp,
   Menu as MenuIcon,
+  GitHub,
+  Home,
 } from '@mui/icons-material';
 import {
   Box,
@@ -23,6 +25,8 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
+  Divider,
+  Button,
 } from '@mui/material';
 import {
   createTheme, ThemeProvider,
@@ -131,9 +135,10 @@ const DashboardLayout: React.FC = () => {
                     variant="body2"
                     color="text.secondary"
                     lineHeight={1}
+                    textAlign="center"
                     sx={{
                       fontSize: '0.75rem',
-                      letterSpacing: '0.3px',
+                      letterSpacing: '0.5px',
                     }}
                   >
                     Simplified market analysis
@@ -235,6 +240,65 @@ const DashboardLayout: React.FC = () => {
           <MarketStocks />
         )}
       </Container>
+      <Divider />
+
+      <Grid container mb={2}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 'grow',
+          }}
+          sx={{
+            textAlign: {
+              xs: 'center',
+              sm: 'left',
+            },
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            © {new Date().getFullYear()} Cristian Giuliani. All rights reserved.
+          </Typography>
+
+        </Grid>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 'auto',
+          }}
+          sx={{
+            textAlign: {
+              xs: 'center',
+              sm: 'right',
+            },
+
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            <Button
+              disableRipple
+              sx={{
+                fontSize: 'inherit',
+                textTransform: 'none',
+              }}
+              startIcon={<GitHub fontSize="inherit" />}
+              onClick={() => window.open('https://github.com/cristiangiuliani/scorecards', '_blank')}
+            >
+              GitHub Repository
+            </Button>&nbsp;|&nbsp;
+            <Button
+              disableRipple
+              sx={{
+                fontSize: 'inherit',
+                textTransform: 'none',
+              }}
+              startIcon={<Home fontSize="inherit" />}
+              onClick={() => window.open('https://www.cristiangiuliani.com', '_blank')}
+            >
+              Author Website
+            </Button>
+          </Typography>
+        </Grid>
+      </Grid>
       <DisclaimerComponent />
     </ThemeProvider>
   );

@@ -208,6 +208,8 @@ const MarketStocksComponent: React.FC = () => {
     },
   ];
 
+  const isLoading = isSp500Loading || isRsiLoading || isVixLoading || isFearGreedLoading || isEurUsdLoading;
+
   return (
     <>
       <Grid
@@ -230,7 +232,7 @@ const MarketStocksComponent: React.FC = () => {
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
             cacheExpiresAt={cacheExpiresAt}
-            isLoading={isSp500Loading && isRsiLoading && isVixLoading && isFearGreedLoading}
+            isLoading={isLoading}
             refetchAllData={refetchMarketStocksData}
             minLabel="Bearish"
             maxLabel="Bullish"

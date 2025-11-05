@@ -34,6 +34,7 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - **Cryptocurrency** - Bitcoin, BTC Dominance, Crypto Fear & Greed Index
   - **AI Bubble Indicators** - NVIDIA P/E, NASDAQ P/E ratios, VIX persistence
   - **Treasury Bonds** - 10Y/5Y/2Y yields, yield curve, credit spreads, inflation expectations
+  - **Capital Flows** - Fed balance sheet, M2 money supply, Dollar Index, stablecoin reserves, credit spreads
 
 - **Automated Scoring System**
   - Automated calculation of market reversal signals
@@ -42,7 +43,7 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - Visual scorecards with interpretation labels
   - Strategy recommendations based on market conditions
 
-- **Treasury Bonds Analysis** ⭐ NEW
+- **Treasury Bonds Analysis**
   - Real-time US Treasury yields (10Y, 5Y, 2Y)
   - Yield curve slope monitoring (inversion detection)
   - Corporate credit spreads (ICE BofA Index)
@@ -50,6 +51,17 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - Duration strategy recommendations
   - Sector allocation guidance
   - Powered by **free FRED API** (Federal Reserve Economic Data)
+
+- **Capital Flows Analysis** ⭐ NEW
+  - Federal Reserve balance sheet tracking (QE/QT monitoring)
+  - M2 money supply growth indicators
+  - US Dollar Index strength analysis
+  - High yield credit spreads (risk appetite gauge)
+  - 10-Year Treasury yield trends (safe haven flows)
+  - Stablecoin reserves as crypto dry powder indicator
+  - Liquidity conditions and market sentiment phases
+  - Cross-asset capital flow recommendations
+  - Powered by **FRED API** and **CoinGecko API**
 
 - **Technical Indicators**
   - Relative Strength Index (RSI)
@@ -116,7 +128,7 @@ Scorecards/
 │   ├── market-crypto/          # Cryptocurrency market analysis
 │   ├── market-stocks/          # Traditional market analysis
 │   ├── market-bubble/          # AI bubble indicators
-│   ├── market-treasury-bonds/  # Treasury bonds analysis ⭐ NEW
+│   ├── market-treasury-bonds/  # Treasury bonds analysis
 │   │   ├── utils/
 │   │   │   ├── bonds-formulas.ts       # Score calculations
 │   │   │   └── bonds-interpretation.ts # Strategy recommendations
@@ -125,6 +137,15 @@ Scorecards/
 │   │   ├── market-treasury-bonds.component.tsx
 │   │   ├── market-treasury-bonds.provider.tsx
 │   │   └── market-treasury-bonds.context.ts
+│   ├── market-capital-flows/   # Capital flows analysis ⭐ NEW
+│   │   ├── utils/
+│   │   │   ├── capital-flows-formulas.ts       # Score calculations
+│   │   │   └── capital-flows-interpretation.ts # Strategy recommendations
+│   │   ├── market-capital-flows.tsx
+│   │   ├── market-capital-flows.container.tsx
+│   │   ├── market-capital-flows.component.tsx
+│   │   ├── market-capital-flows.provider.tsx
+│   │   └── market-capital-flows.context.ts
 │   ├── shared/              # Shared components and hooks
 │   ├── error-handler/       # Error management system
 │   ├── constants/           # Configuration and API definitions
@@ -210,7 +231,7 @@ The application uses Netlify Functions as serverless API endpoints:
 - `/api/fetchBtcFearGreed` - Crypto Fear & Greed Index
 - `/api/fetchBtcRsi` - Bitcoin RSI calculation (CoinGecko)
 
-### Treasury Bonds Endpoints ⭐ NEW
+### Treasury Bonds Endpoints
 - `/api/fetchFredDGS10` - 10-Year Treasury Yield (FRED API)
 - `/api/fetchFredDGS5` - 5-Year Treasury Yield (FRED API)
 - `/api/fetchFredDGS2` - 2-Year Treasury Yield (FRED API)
@@ -223,6 +244,20 @@ The application uses Netlify Functions as serverless API endpoints:
 - `DGS2` - 2-Year Treasury Constant Maturity Rate
 - `BAMLC0A0CM` - ICE BofA US Corporate Index Option-Adjusted Spread
 - `T10YIE` - 10-Year Breakeven Inflation Rate
+
+### Capital Flows Endpoints ⭐ NEW
+- `/api/fetchFredWALCL` - Fed Total Assets / Balance Sheet (FRED API)
+- `/api/fetchFredM2` - M2 Money Supply (FRED API)
+- `/api/fetchFredDXY` - US Dollar Index (FRED API)
+- `/api/fetchFredBAMLH0A0HYM2` - High Yield Corporate Spreads (FRED API)
+- `/api/fetchStablecoinMarketCap` - Stablecoin Market Cap (CoinGecko API)
+- `/api/fetchCryptoTotalMarketCap` - Total Crypto Market Cap (CoinGecko API)
+
+**FRED Series Codes Used:**
+- `WALCL` - Federal Reserve Total Assets
+- `M2SL` - M2 Money Stock
+- `DTWEXBGS` - Trade Weighted U.S. Dollar Index: Broad, Goods and Services
+- `BAMLH0A0HYM2` - ICE BofA US High Yield Index Option-Adjusted Spread
 
 All endpoints support:
 - Automatic caching with configurable TTL (MongoDB)
@@ -281,11 +316,26 @@ Ensure these are set in your Netlify dashboard:
 
 ## License
 
-Private project - Version 0.2.0
+Private project - Version 0.3.0
 
 ## Recent Updates
 
-### v0.2.0 - Treasury Bonds Section ⭐ NEW
+### v0.3.0 - Capital Flows Section ⭐ NEW
+- **Added Capital Flows Analysis** - Complete new section for cross-asset liquidity monitoring
+  - Federal Reserve balance sheet tracking (QE/QT detection)
+  - M2 money supply growth rate analysis
+  - US Dollar Index strength monitoring
+  - High yield credit spreads (risk appetite indicator)
+  - 10-Year Treasury yield change tracking (safe haven flows)
+  - Stablecoin reserves as crypto market dry powder
+  - Market sentiment phase identification
+  - Liquidity conditions assessment
+  - Cross-asset allocation recommendations
+- **6 new FRED API integrations** - WALCL, M2SL, DTWEXBGS, BAMLH0A0HYM2, plus CoinGecko stablecoin data
+- **New scoring algorithm** - Weighted scoring combining macro liquidity and crypto-specific flows
+- **Strategy recommendations** - Asset allocation guidance based on capital flow conditions
+
+### v0.2.0 - Treasury Bonds Section
 - **Added Treasury Bonds Analysis** - Complete new section for US Treasury bonds market
   - Real-time yields for 10Y, 5Y, and 2Y treasuries
   - Yield curve slope monitoring with inversion detection

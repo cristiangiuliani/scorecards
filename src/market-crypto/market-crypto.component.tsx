@@ -224,6 +224,8 @@ const MarketCryptoComponent: React.FC = () => {
     ];
   };
 
+  const isLoading = isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading;
+
   return (
     <>
       <Grid
@@ -246,7 +248,7 @@ const MarketCryptoComponent: React.FC = () => {
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
             cacheExpiresAt={cacheExpiresAt}
-            isLoading={isBtcLoading || isBtcRsiLoading || isBtcDominanceLoading || isBtcFearGreedLoading}
+            isLoading={isLoading}
             refetchAllData={refetchMarketCryptoData}
             minLabel="Bearish"
             maxLabel="Bullish"

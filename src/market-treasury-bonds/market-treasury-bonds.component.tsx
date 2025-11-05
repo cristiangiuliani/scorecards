@@ -205,6 +205,8 @@ const MarketTreasuryBondsComponent: React.FC = () => {
     },
   ];
 
+  const isLoading = isYield10YLoading || isYield5YLoading || isYield2YLoading || isSpreadsLoading || isInflationLoading;
+
   return (
     <>
       <Grid container spacing={2} mb={2}>
@@ -219,7 +221,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
             cacheExpiresAt={cacheExpiresAt}
-            isLoading={isYield10YLoading && isYield5YLoading && isYield2YLoading}
+            isLoading={isLoading}
             refetchAllData={refetchMarketBondsData}
             minLabel="Sell"
             maxLabel="Buy"
