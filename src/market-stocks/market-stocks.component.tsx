@@ -223,7 +223,7 @@ const MarketStocksComponent: React.FC = () => {
       >
         <Grid size={{
           xs: 12,
-          sm: 6,
+          sm: 5,
           md: 4,
         }}
         >
@@ -242,7 +242,7 @@ const MarketStocksComponent: React.FC = () => {
         </Grid>
         <Grid size={{
           xs: 12,
-          sm: 6,
+          sm: 7,
           md: 8,
         }}
         >

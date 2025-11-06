@@ -4,6 +4,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import {
   Alert,
   Badge,
+  Box,
   Button,
   Card,
   CardActions,
@@ -225,28 +226,25 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                     variant="caption"
 
                   >
-                    Data fetched {lastUpdated}.<br />{ minutesRemaining <= 0
+                    Last updated {lastUpdated}.<br />{ minutesRemaining <= 0
                       ? (
-                        <Button
-                          variant="contained"
-                          size="small"
-                          onClick={refreshData}
-                          startIcon={<Update />}
-                          sx={{
-                            backgroundColor: '#fff',
-                            textTransform: 'none',
-
-                            opacity: 0.5,
-                            borderRadius: '4px',
-                            padding: '0px 8px',
-                            ':hover, :active, :focus, :link, :visited': {
-                              backgroundColor: '#fff',
-                              opacity: 0.6,
-                            },
-                          }}
+                        <Box sx={{
+                          display: 'block',
+                          margin: '0.5rem auto',
+                        }}
                         >
-                          Refresh now
-                        </Button>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            onClick={refreshData}
+                            startIcon={<Update />}
+                            sx={{
+                              borderRadius: '4px',
+                            }}
+                          >
+                            Refresh now
+                          </Button>
+                        </Box>
                       ) : `Updates in ${formatTimeRemaining(minutesRemaining)}` }
                   </Typography>
                 )}

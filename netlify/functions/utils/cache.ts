@@ -31,12 +31,12 @@ export class CacheService {
     }
   }
 
-  static async set(key: string, data: any, ttlSeconds = 3600): Promise<boolean> {
+  static async set(key: string, data: any, ttl = 3600): Promise<boolean> {
     try {
       const { db } = await connectToDatabase();
       const collection = db.collection<CacheDocument>('cache');
 
-      const expiresAt = new Date(Date.now() + ttlSeconds * 1000);
+      const expiresAt = new Date(Date.now() + ttl);
 
       await collection.updateOne(
         { key },
@@ -57,7 +57,7 @@ export class CacheService {
         { expireAfterSeconds: 0 }
       ).catch(() => {}); // Ignora se già esistente
 
-      console.log(`💾 Cache SET: ${key} (TTL: ${ttlSeconds}s, scade: ${expiresAt.toISOString()})`);
+      console.log(`💾 Cache SET: ${key} (TTL: ${ttl}s, scade: ${expiresAt.toISOString()})`);
       return true;
     } catch (error) {
       console.error('Errore cache set:', error);

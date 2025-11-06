@@ -157,6 +157,7 @@ const DashboardLayout: React.FC = () => {
                     onChange={(_e, newValue) => handleSelectMenuItem(newValue)}
                     sx={{
                       display: {
+                        xs: 'none',
                         sm: 'none',
                         md: 'flex',
                       },
