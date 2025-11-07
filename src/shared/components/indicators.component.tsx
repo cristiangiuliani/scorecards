@@ -1,5 +1,6 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import {
+  WarningOutlined, ErrorOutline, InfoOutlined,
+} from '@mui/icons-material';
 import {
   Alert,
   Box, Card, CardActions, CardContent, CardHeader, Skeleton, Typography,
@@ -96,7 +97,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                           {typeof item.value === 'number' && !isNaN(item.value) ?
                             item.value.toFixed(2)
                             : (
-                              <ErrorOutlineIcon color="error" fontSize="large" />
+                              <ErrorOutline color="error" fontSize="large" />
                             )}
                         </Typography>
 
@@ -120,7 +121,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                   arrow
                   enterTouchDelay={0}
                 >
-                  <InfoOutlinedIcon
+                  <InfoOutlined
                     color="action"
                     sx={{
                       fontSize: 14,
@@ -130,6 +131,24 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                     }}
                   />
                 </StyledBlackTooltip>
+                {item.alert && (
+                  <StyledBlackTooltip
+                    title={<Typography variant='caption'>{<>{item.alert}</>}</Typography>}
+                    placement="left"
+                    arrow
+                    enterTouchDelay={0}
+                  >
+                    <WarningOutlined
+                      color="action"
+                      sx={{
+                        fontSize: 14,
+                        opacity: 0.4,
+                        cursor: 'help',
+                        ':hover': { opacity: 0.6 },
+                      }}
+                    />
+                  </StyledBlackTooltip>
+                )}
               </CardActions>
             </Card>
           </Grid>

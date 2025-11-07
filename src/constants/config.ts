@@ -6,8 +6,8 @@ export const GLOBALS = {
 
 // no free api available for nasdaq pe ratio, hardcoding value
 export const NASDAQ_PE_RATIO = {
-  value: 39.88,
-  lastUpdated: '03-11-2025',
+  value: 37.25,
+  lastUpdated: '06-11-2025',
   source: 'GuruFocus',
 };
 
@@ -20,7 +20,7 @@ export const CRYPTO_WEIGHTS = {
   momentum: 1.5,
   ma: 1.2,
   volume: 0.9,
-  score: 0.35, // Ridotto da 0.5 per scala ±10
+  score: 0.35,
 };
 
 export const STOCKS_WEIGHTS = {
@@ -33,7 +33,7 @@ export const STOCKS_WEIGHTS = {
   ma: 1.2,
   putCall: 0.8,
   treasury10Y: 1.0,
-  score: 0.35, // Ridotto da 0.5 per scala ±10
+  score: 0.35,
 };
 
 export const STOCKS_SCOPE = {

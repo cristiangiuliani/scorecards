@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import React, { useContext } from 'react';
 
-import { BUBBLE_RANGES } from '../constants/config';
+import { BUBBLE_RANGES, NASDAQ_PE_RATIO } from '../constants/config';
 import { AI_BUBBLE_LABELS, COMMON_LABELS } from '../constants/labels';
 import type { IMarketBubbleContext } from '../interfaces/market-bubble';
 import IndicatorsComponent from '../shared/components/indicators.component';
@@ -96,6 +96,7 @@ const MarketBubbleComponent: React.FC = () => {
       max: BUBBLE_RANGES.nasdaqPE.max,
       minLabel: BUBBLE_RANGES.nasdaqPE.minLabel,
       maxLabel: BUBBLE_RANGES.nasdaqPE.maxLabel,
+      alert: COMMON_LABELS.StaticValue + NASDAQ_PE_RATIO.lastUpdated,
     },
     {
       label: AI_BUBBLE_LABELS.nvdaNasdaqRatio,

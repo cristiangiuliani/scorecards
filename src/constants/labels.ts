@@ -1,6 +1,7 @@
 
 export const COMMON_LABELS = {
   RiskLevel: 'Risk Level',
+  StaticValue: 'This value requires manual update. Last updated on ',
 };
 
 export const CRYPTO_LABELS = {

@@ -1,11 +1,7 @@
-import { Update } from '@mui/icons-material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import UpdateIcon from '@mui/icons-material/Update';
 import {
   Alert,
-  Badge,
-  Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -20,6 +16,7 @@ import React, { useState, useEffect } from 'react';
 import type { TInterpretation } from '../../types/data.type';
 
 import { ScoreGauge } from './score-gauge.component';
+import { StyledBlinkingBadge } from './styled-blinking-badge.component';
 import { StyledBlackTooltip } from './styled-dark-tooltip.component';
 
 const EXPIRES_INTERVAL = 60000; // 1 minute
@@ -126,6 +123,12 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
     }
   }, [cacheCreatedAt, userLocale]);
 
+  useEffect(() => {
+    if (minutesRemaining !== null && minutesRemaining <= 0) {
+      refreshData();
+    }
+  }, [minutesRemaining]);
+
   return (
     <>
 
@@ -226,26 +229,8 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                     variant="caption"
 
                   >
-                    Last updated {lastUpdated}.<br />{ minutesRemaining <= 0
-                      ? (
-                        <Box sx={{
-                          display: 'block',
-                          margin: '0.5rem auto',
-                        }}
-                        >
-                          <Button
-                            variant="contained"
-                            size="small"
-                            onClick={refreshData}
-                            startIcon={<Update />}
-                            sx={{
-                              borderRadius: '4px',
-                            }}
-                          >
-                            Refresh now
-                          </Button>
-                        </Box>
-                      ) : `Updates in ${formatTimeRemaining(minutesRemaining)}` }
+                    Last updated {lastUpdated}.<br />
+                    Updates in {formatTimeRemaining(minutesRemaining)}
                   </Typography>
                 )}
               </>
@@ -254,7 +239,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
             arrow
             enterTouchDelay={0}
           >
-            <Badge color="info" variant="dot" invisible={minutesRemaining === null || minutesRemaining > 0}>
+            <StyledBlinkingBadge color="info" variant="dot" invisible={minutesRemaining === null || minutesRemaining > 0}>
               <UpdateIcon
                 color="action"
                 sx={{
@@ -264,7 +249,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                   ':hover': { opacity: 0.7 },
                 }}
               />
-            </Badge>
+            </StyledBlinkingBadge>
           </StyledBlackTooltip>
 
         </CardActions>
