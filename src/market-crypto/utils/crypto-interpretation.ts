@@ -118,8 +118,9 @@ export function getActionableTips(
   dominance: number
 ): string[] {
   const tips: string[] = [];
+  console.log('score, rsi, fearGreed, athDistance, dominance', score, rsi, fearGreed, athDistance, dominance);
 
-  if (score > 5) {
+  if (score > 7) {
     tips.push('Start taking profits (25-50%)');
     tips.push('Set trailing stops at -10%');
   } else if (score > 3) {
@@ -128,12 +129,15 @@ export function getActionableTips(
   } else if (score > 0) {
     tips.push('Good time to add positions');
     tips.push('Scale in gradually (DCA)');
-  } else if (score < -3) {
+  } else if (score > -3) {
+    tips.push('Consolidation phase - wait for trend');
+    tips.push('Preserve capital, avoid overtrading');
+  } else if (score <= -3) {
     tips.push('Strong accumulation zone');
     tips.push('Be patient, bear markets = opportunity');
   }
 
-  if (rsi > 75) {
+  if (rsi > 70) {
     tips.push('RSI overbought - prepare for pullback');
   } else if (rsi < 30) {
     tips.push('RSI oversold - buying opportunity');
@@ -147,15 +151,16 @@ export function getActionableTips(
 
   if (dominance < 50) {
     tips.push('Altseason active - rotate into alts');
-  } else if (dominance > 60) {
+  } else if (dominance > 65) {
     tips.push('₿ BTC dominance high - focus on BTC');
   }
 
-  if (fearGreed > 80) {
+  if (fearGreed > 75) {
     tips.push('Extreme greed - market overheated');
-  } else if (fearGreed < 25) {
+  } else if (fearGreed < 30) {
     tips.push('Extreme fear - contrarian opportunity');
   }
+  console.log('Actionable Tips:', tips);
 
   return tips.slice(0, 4); // Max 4 tips
 }
