@@ -118,7 +118,6 @@ export function getActionableTips(
   dominance: number
 ): string[] {
   const tips: string[] = [];
-  console.log('score, rsi, fearGreed, athDistance, dominance', score, rsi, fearGreed, athDistance, dominance);
 
   if (score > 7) {
     tips.push('Start taking profits (25-50%)');
@@ -160,8 +159,6 @@ export function getActionableTips(
   } else if (fearGreed < 30) {
     tips.push('Extreme fear - contrarian opportunity');
   }
-  console.log('Actionable Tips:', tips);
-
   return tips.slice(0, 4); // Max 4 tips
 }
 
