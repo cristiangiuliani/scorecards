@@ -11,14 +11,14 @@ export const calculateVixScore = (value = 0): number => {
 };
 
 export const calculateRsiScore = (value = 0): number => {
-  if (value > 85) return -4;
-  if (value > 80) return -3;
-  if (value > 70) return -2;
-  if (value > 65) return -1;
-  if (value < 15) return 4;
-  if (value < 20) return 3;
-  if (value < 30) return 2;
-  if (value < 35) return 1;
+  if (value > 85) return 4;
+  if (value > 80) return 3;
+  if (value > 70) return 2;
+  if (value > 65) return 1;
+  if (value < 15) return -4;
+  if (value < 20) return -3;
+  if (value < 30) return -2;
+  if (value < 35) return -1;
   return 0;
 };
 
@@ -32,12 +32,12 @@ export const calculateEurUsdScore = (value = 0): number => {
 };
 
 export const calculateFearGreedScore = (value = 0): number => {
-  if (value < 15) return 4;
-  if (value < 25) return 3;
-  if (value < 40) return 1;
-  if (value > 85) return -4;
-  if (value > 75) return -3;
-  if (value > 60) return -1;
+  if (value < 15) return -4;
+  if (value < 25) return -3;
+  if (value < 40) return -1;
+  if (value > 85) return 4;
+  if (value > 75) return 3;
+  if (value > 60) return 1;
   return 0;
 };
 
@@ -53,6 +53,17 @@ export const calculateAthDistanceScore = (current: number, ath: number): number 
   if (distance < 80) return -2;
   if (distance < 85) return -1;
   return 0;
+};
+
+export const calculateMomentum7dScore = (momentum7d: number): number => {
+  let score = 0;
+
+  if (momentum7d > 5) score = 2;
+  else if (momentum7d > 2) score = 1;
+  else if (momentum7d < -5) score = -2;
+  else if (momentum7d < -2) score = -1;
+
+  return score;
 };
 
 export const calculateMomentumScore = (prices: number[]): number => {

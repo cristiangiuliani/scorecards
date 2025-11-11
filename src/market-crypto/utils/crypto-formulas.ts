@@ -2,23 +2,23 @@ import { CRYPTO_WEIGHTS } from '../../constants/config';
 import type { ICryptoData } from '../../interfaces/market-crypto';
 
 export const calculateBtcFearGreedScore = (value = 0):number => {
-  if (value < 10) return 4;
-  if (value < 25) return 3;
-  if (value < 45) return 1;
-  if (value > 90) return -4;
-  if (value > 75) return -3;
-  if (value > 55) return -1;
+  if (value < 10) return -4;
+  if (value < 25) return -3;
+  if (value < 45) return -1;
+  if (value > 90) return 4;
+  if (value > 75) return 3;
+  if (value > 55) return 1;
   return 0;
 };
 export const calculateBtcRsiScore = (value = 0):number => {
-  if (value > 85) return -4;
-  if (value > 80) return -3;
-  if (value < 15) return 4;
-  if (value < 20) return 3;
-  if (value < 30) return 2;
-  if (value < 35) return 1;
-  if (value > 75) return -2;
-  if (value > 70) return -1;
+  if (value > 85) return 4;
+  if (value > 80) return 3;
+  if (value < 15) return -4;
+  if (value < 20) return -3;
+  if (value < 30) return -2;
+  if (value < 35) return -1;
+  if (value > 75) return 2;
+  if (value > 70) return 1;
   return 0;
 };
 export const calculateBtcDominanceScore = (value = 0):number => {
@@ -48,6 +48,19 @@ export const calculateAthDistanceScore = (current: number | undefined, ath: numb
   if (distance < 50) return -2;
   if (distance < 60) return -1;
   return 0;
+};
+
+export const calculateMomentum7dScore = (momentum7d: number): number => {
+  let score = 0;
+
+  if (momentum7d > 15) score = 3;
+  else if (momentum7d > 10) score = 2;
+  else if (momentum7d > 5) score = 1;
+  else if (momentum7d < -15) score = -3;
+  else if (momentum7d < -10) score = -2;
+  else if (momentum7d < -5) score = -1;
+
+  return score;
 };
 
 export const calculateMomentumScore = (prices: number[]): number => {

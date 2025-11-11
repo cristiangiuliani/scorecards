@@ -6,8 +6,8 @@ export const GLOBALS = {
 
 // no free api available for nasdaq pe ratio, hardcoding value
 export const NASDAQ_PE_RATIO = {
-  value: 37.25,
-  lastUpdated: '06-11-2025',
+  value: 37.24,
+  lastUpdated: '11-11-2025',
   source: 'GuruFocus',
 };
 
@@ -54,8 +54,8 @@ export const STOCKS_RANGES = {
   rsi: {
     min: 0,
     max: 100,
-    minLabel: 'Oversold',
-    maxLabel: 'Overbought',
+    minLabel: 'Overbought',
+    maxLabel: 'Oversold',
   },
   eurUsd: {
     min: 0.90,
@@ -105,8 +105,8 @@ export const CRYPTO_RANGES = {
   rsi: {
     min: 0,
     max: 100,
-    minLabel: 'Oversold',
-    maxLabel: 'Overbought',
+    minLabel: 'Overbought',
+    maxLabel: 'Oversold',
   },
   dominance: {
     min: 40,
@@ -168,8 +168,8 @@ export const BUBBLE_RANGES = {
   rsi: {
     min: 0,
     max: 100,
-    minLabel: 'Oversold',
-    maxLabel: 'Overbought',
+    minLabel: 'Overbought',
+    maxLabel: 'Oversold',
   },
 };
 

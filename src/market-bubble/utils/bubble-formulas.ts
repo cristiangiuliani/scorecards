@@ -8,16 +8,20 @@ const VIX_PERSISTENCE_DAYS = 3;
 export function calculateNvidiaPEScore(nvidiaPE: number | undefined): number {
   if (!nvidiaPE) return 0;
 
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return -3.3;
+  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return -3.3; // High risk
   if (nvidiaPE > NVIDIA_PE_THRESHOLD * 0.9) return -1.7; // Warning zone (>58.5)
+  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.6) return 3.3; // Low risk (<39)
+  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.75) return 1.7; // Safe zone (<48.75)
   return 0;
 }
 
 export function calculateNasdaqPEScore(nasdaqPE: number | undefined): number {
   if (!nasdaqPE) return 0;
 
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return -3.3;
+  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return -3.3; // High risk
   if (nasdaqPE > NASDAQ_PE_THRESHOLD * 0.9) return -1.7; // Warning zone (>34.2)
+  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.6) return 3.3; // Low risk (<22.8)
+  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.75) return 1.7; // Safe zone (<28.5)
   return 0;
 }
 
@@ -25,10 +29,16 @@ export function calculateVixPersistenceScore(vixHistory: number[] | undefined): 
   if (!vixHistory || vixHistory.length < VIX_PERSISTENCE_DAYS) return 0;
 
   const isPersistent = isVixPersistent(vixHistory);
-  if (isPersistent) return -3.4;
+  if (isPersistent) return -3.4; // High risk
 
   const daysAboveThreshold = vixHistory.slice(-5).filter((v) => v > VIX_THRESHOLD).length;
-  if (daysAboveThreshold >= 2) return -1.7;
+  if (daysAboveThreshold >= 2) return -1.7; // Warning
+
+  // Check for low VIX (calm market = low risk)
+  const recentValues = vixHistory.slice(-5);
+  const avgVix = recentValues.reduce((a, b) => a + b, 0) / recentValues.length;
+  if (avgVix < 15) return 3.4; // Very low risk
+  if (avgVix < 20) return 1.7; // Low risk
 
   return 0;
 }
@@ -42,9 +52,12 @@ export function calculateNvdaNasdaqRatioScore(
   const ratio = nvidiaPE / nasdaqPE;
 
   // Ratio > 2.0 indicates NVIDIA is significantly overvalued vs NASDAQ
-  if (ratio > 2.0) return -2.0;
+  if (ratio > 2.0) return -2.0; // High risk
   // Ratio > 1.7 is warning zone
-  if (ratio > 1.7) return -1.0;
+  if (ratio > 1.7) return -1.0; // Warning
+  // Ratio < 1.2 indicates NVIDIA is fairly valued
+  if (ratio < 1.2) return 2.0; // Low risk
+  if (ratio < 1.4) return 1.0; // Safe zone
 
   return 0;
 }
@@ -53,9 +66,12 @@ export function calculateFearGreedScore(fearGreed: number | undefined): number {
   if (!fearGreed) return 0;
 
   // Extreme greed (>75) indicates bubble risk
-  if (fearGreed > 75) return -2.0;
+  if (fearGreed > 75) return -2.0; // High risk
   // Greed zone (>60)
-  if (fearGreed > 60) return -1.0;
+  if (fearGreed > 60) return -1.0; // Warning
+  // Fear zone (<40) indicates low bubble risk
+  if (fearGreed < 25) return 2.0; // Low risk
+  if (fearGreed < 40) return 1.0; // Safe zone
 
   return 0;
 }
@@ -64,9 +80,12 @@ export function calculateRsiScore(rsi: number | undefined): number {
   if (!rsi) return 0;
 
   // Severely overbought (>75) indicates correction risk
-  if (rsi > 75) return -2.0;
+  if (rsi > 75) return -2.0; // High risk
   // Overbought zone (>70)
-  if (rsi > 70) return -1.0;
+  if (rsi > 70) return -1.0; // Warning
+  // Oversold zone (<30) indicates low bubble risk
+  if (rsi < 30) return 2.0; // Low risk
+  if (rsi < 40) return 1.0; // Safe zone
 
   return 0;
 }
@@ -109,8 +128,12 @@ export function calculateBubbleRisk(data: IBubbleData): IBubbleIndicator {
     risk = 'HIGH';
   } else if (totalScore <= -4) {
     risk = 'MEDIUM';
-  } else {
+  } else if (totalScore >= 9) {
     risk = 'LOW';
+  } else if (totalScore >= 4) {
+    risk = 'LOW';
+  } else {
+    risk = 'MEDIUM';
   }
 
   return {

@@ -108,7 +108,16 @@ const DashboardLayout: React.FC = () => {
           minHeight: '100vh',
         }}
       >
-        <Box sx={{ flexGrow: 1 }} mb={8}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            mb: {
+              xs: 3,
+              sm: 8,
+            },
+          }}
+
+        >
           <AppBar position="fixed">
             <Toolbar>
 

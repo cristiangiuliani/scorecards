@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material';
+import Box from '@mui/system/Box';
 import {
   GaugeContainer,
   GaugeValueArc,
@@ -154,33 +156,58 @@ export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
   decimals = 1,
 }) => {
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      width: '100%',
-    }}
-    >
-      <GaugeContainer
-        width={width}
-        height={height}
-        startAngle={-110}
-        endAngle={110}
-        value={value}
-        valueMin={min}
-        valueMax={max}
+    <>
+      <Box  sx={{
+        display: {
+          xs: 'flex',
+          sm: 'none',
+        },
+        justifyContent: 'center',
+        width: '100%',
+      }}
       >
-        <GaugeReferenceArc />
-        <GaugeValueArc style={{ fill: 'rgba(255, 255, 255, 0.5)' }} />
-        <GaugePointer />
-        <GaugeText fontSize={fontSize} decimals={decimals} />
-        <GaugeScaleLabels
+        <Typography
+          variant="h5"
+          color="text.primary"
+          fontWeight="bold"
+          sx={{
+            opacity: '0.8',
+            fontSize,
+          }}
+        >{value.toFixed(decimals)}
+        </Typography>
+      </Box>
+      <Box  sx={{
+        display: {
+          xs: 'none',
+          sm: 'flex',
+        },
+        justifyContent: 'center',
+        width: '100%',
+      }}
+      >
+        <GaugeContainer
+          width={width}
+          height={height}
+          startAngle={-110}
+          endAngle={110}
+          value={value}
           valueMin={min}
           valueMax={max}
-          minLabel={minLabel}
-          maxLabel={maxLabel}
-          labelFontSize={labelFontSize}
-        />
-      </GaugeContainer>
-    </div>
+        >
+          <GaugeReferenceArc />
+          <GaugeValueArc style={{ fill: 'rgba(255, 255, 255, 0.5)' }} />
+          <GaugePointer />
+          <GaugeText fontSize={fontSize} decimals={decimals} />
+          <GaugeScaleLabels
+            valueMin={min}
+            valueMax={max}
+            minLabel={minLabel}
+            maxLabel={maxLabel}
+            labelFontSize={labelFontSize}
+          />
+        </GaugeContainer>
+      </Box>
+    </>
   );
 };

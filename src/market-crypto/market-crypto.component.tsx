@@ -27,7 +27,7 @@ import {
   calculateBtcRsiScore,
   calculateCryptoScore,
   calculateMomentum7d,
-  calculateMomentumScore,
+  calculateMomentum7dScore,
 } from './utils/crypto-formulas';
 import {
   getActionableTips, getBtcAltBalance, getCryptoInterpretation, getMarketPhase, getRiskLevel, getTimeHorizon,
@@ -138,7 +138,7 @@ const MarketCryptoComponent: React.FC = () => {
       description: CRYPTO_LABELS.Momentum7DDescription,
       weight: CRYPTO_WEIGHTS.momentum,
       value: momentum7d,
-      score: calculateMomentumScore(prices),
+      score: calculateMomentum7dScore(momentum7d),
       isLoading: isBtcRsiLoading,
       min: CRYPTO_RANGES.momentum.min,
       max: CRYPTO_RANGES.momentum.max,

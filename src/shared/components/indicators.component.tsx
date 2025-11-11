@@ -42,7 +42,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
           <Grid
             key={`indicator-${index}`}
             size={{
-              xs: 12,
+              xs: 6,
               sm: 6,
               md: 4,
             }}
@@ -117,7 +117,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
               >
                 <StyledBlackTooltip
                   title={<Typography variant='caption'>{item.description && <>{item.description}</>}</Typography>}
-                  placement="left"
+                  placement="bottom"
                   arrow
                   enterTouchDelay={0}
                 >
@@ -134,7 +134,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                 {item.alert && (
                   <StyledBlackTooltip
                     title={<Typography variant='caption'>{<>{item.alert}</>}</Typography>}
-                    placement="left"
+                    placement="bottom"
                     arrow
                     enterTouchDelay={0}
                   >
