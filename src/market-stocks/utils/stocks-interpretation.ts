@@ -117,6 +117,7 @@ export function getRiskLevel(
   let riskScore = 0;
 
   if (Math.abs(score) > 6) riskScore += 3;
+  else if (Math.abs(score) > 4) riskScore += 2;
   else if (Math.abs(score) > 3) riskScore += 1;
 
   if (vix > 30) riskScore += 2;
@@ -129,6 +130,7 @@ export function getRiskLevel(
   if (fearGreed > 80 || fearGreed < 20) riskScore += 2;
 
   if (score > 3 && athDistance > 98) riskScore += 2;
+  else if (score > 0 && athDistance > 98) riskScore += 1;
 
   if (riskScore >= 8) return 'EXTREME - Reduce exposure';
   if (riskScore >= 6) return 'Very High - Take profits';
@@ -155,7 +157,10 @@ export function getActionableTips(
   } else if (score > 0) {
     tips.push('Add to growth positions gradually');
     tips.push('Good time for DCA strategy');
-  } else if (score < -3) {
+  } else if (score > -3) {
+    tips.push('Neutral market - wait for trend');
+    tips.push('Preserve capital, avoid overtrading');
+  } else if (score <= -3) {
     tips.push('Accumulation zone - quality names');
     tips.push('Think 12+ months time horizon');
   }
