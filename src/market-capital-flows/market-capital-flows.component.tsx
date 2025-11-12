@@ -170,18 +170,6 @@ const MarketCapitalFlowsComponent: React.FC = () => {
       minLabel: CAPITAL_FLOWS_RANGES.stablecoinDominance.minLabel,
       maxLabel: CAPITAL_FLOWS_RANGES.stablecoinDominance.maxLabel,
     },
-    // {
-    //   label: CAPITAL_FLOWS_LABELS.CryptoMarketCap,
-    //   description: CAPITAL_FLOWS_LABELS.CryptoMarketCapDescription,
-    //   weight: CAPITAL_FLOWS_WEIGHTS.cryptoMarketCap,
-    //   value: cryptoMcapGrowthRate,
-    //   score: cryptoMcapScore,
-    //   isLoading: isTotalCryptoMarketCapLoading,
-    //   min: CAPITAL_FLOWS_RANGES.cryptoMcapGrowth.min,
-    //   max: CAPITAL_FLOWS_RANGES.cryptoMcapGrowth.max,
-    //   minLabel: CAPITAL_FLOWS_RANGES.cryptoMcapGrowth.minLabel,
-    //   maxLabel: CAPITAL_FLOWS_RANGES.cryptoMcapGrowth.maxLabel,
-    // },
   ];
 
   const interpretation = getCapitalFlowsInterpretation(capitalFlowsScore);
@@ -286,6 +274,8 @@ const MarketCapitalFlowsComponent: React.FC = () => {
             isLoading={isLoading}
             label={CAPITAL_FLOWS_LABELS.OverallScore}
             description={CAPITAL_FLOWS_LABELS.Description}
+            minLabel="Outflow"
+            maxLabel="Inflow"
             refetchAllData={refetchMarketCapitalFlowsData}
           />
         </Grid>

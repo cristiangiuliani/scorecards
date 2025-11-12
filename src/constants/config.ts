@@ -117,8 +117,8 @@ export const CRYPTO_RANGES = {
   altcoinSeason: {
     min: 0,
     max: 100,
-    minLabel: 'BTC Season',
-    maxLabel: 'Alt Season',
+    minLabel: 'BTC',
+    maxLabel: 'Altcoins',
   },
   athDistance: {
     min: 50,

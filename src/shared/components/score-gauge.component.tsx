@@ -91,13 +91,16 @@ const GaugeScaleLabels = ({
 
   const labelOffset = 25;
 
-  const startX = cx + (outerRadius + labelOffset) * Math.cos(startAngleRad + Math.PI / 3);
-  const startY = cy + (outerRadius + labelOffset) * Math.sin(startAngleRad + Math.PI / 1.39);
-  const endX = cx + (outerRadius + labelOffset) * Math.cos(endAngleRad + Math.PI / 1.49);
-  const endY = cy + (outerRadius + labelOffset) * Math.sin(endAngleRad + Math.PI / 3.6);
-
-  const displayMax = maxLabel || (valueMin < 0 ? `+${valueMax}` : valueMax);
+  const displayMax = maxLabel || valueMax;
   const displayMin = minLabel || valueMin;
+
+  const startOffset = String(displayMax).length >= 8 ? 3.3 : 3;
+  const endOffset = String(displayMin).length >= 8 ? 1.43 : 1.49;
+
+  const startX = cx + (outerRadius + labelOffset) * Math.cos(startAngleRad + Math.PI / startOffset);
+  const startY = cy + (outerRadius + labelOffset) * Math.sin(startAngleRad + Math.PI / 1.39);
+  const endX = cx + (outerRadius + labelOffset) * Math.cos(endAngleRad + Math.PI / endOffset);
+  const endY = cy + (outerRadius + labelOffset) * Math.sin(endAngleRad + Math.PI / 3.6);
 
   return (
     <g>
