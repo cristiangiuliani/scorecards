@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import React, { useContext } from 'react';
 
 import { TREASURY_BONDS_RANGES, TREASURY_BONDS_WEIGHTS } from '../constants/config';
-import { TREASURY_BONDS_LABELS } from '../constants/labels';
+import { COMMON_LABELS, TREASURY_BONDS_LABELS } from '../constants/labels';
 import type { IMarketTreasuryBondsContext } from '../interfaces/market-treasury-bonds';
 import IndicatorsComponent from '../shared/components/indicators.component';
 import ScoreCardsComponent from '../shared/components/scorecards.component';
@@ -227,6 +227,15 @@ const MarketTreasuryBondsComponent: React.FC = () => {
             maxLabel="Buy"
             label={TREASURY_BONDS_LABELS.OverallScore}
             description={TREASURY_BONDS_LABELS.OverallScoreDescription}
+            thresholds={[
+              `Score > 7: ${COMMON_LABELS.StrongBuy}`,
+              `Score 4 to 7: ${COMMON_LABELS.Buy}`,
+              `Score 1 to 4: ${COMMON_LABELS.ModerateBuy}`,
+              `Score -1 to 1: ${COMMON_LABELS.Neutral}`,
+              `Score -4 to -1: ${COMMON_LABELS.ModerateSell}`,
+              `Score -7 to -4: ${COMMON_LABELS.Sell}`,
+              `Score ≤ -7: ${COMMON_LABELS.StrongSell}`,
+            ]}
           />
         </Grid>
         <Grid size={{

@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import React, { useContext } from 'react';
 
 import { CAPITAL_FLOWS_WEIGHTS, CAPITAL_FLOWS_RANGES } from '../constants/config';
-import { CAPITAL_FLOWS_LABELS } from '../constants/labels';
+import { CAPITAL_FLOWS_LABELS, COMMON_LABELS } from '../constants/labels';
 import type { IMarketCapitalFlowsContext } from '../interfaces/market-capital-flows';
 import IndicatorsComponent from '../shared/components/indicators.component';
 import ScoreCardsComponent from '../shared/components/scorecards.component';
@@ -277,6 +277,13 @@ const MarketCapitalFlowsComponent: React.FC = () => {
             minLabel="Outflow"
             maxLabel="Inflow"
             refetchAllData={refetchMarketCapitalFlowsData}
+            thresholds={[
+              `Score > 7: ${COMMON_LABELS.StrongInflows}`,
+              `Score 3 to 7: ${COMMON_LABELS.Accumulation}`,
+              `Score -3 to 3: ${COMMON_LABELS.Neutral}`,
+              `Score -7 to -3: ${COMMON_LABELS.Outflows}`,
+              `Score ≤ -7: ${COMMON_LABELS.FlightToSafety}`,
+            ]}
           />
         </Grid>
         <Grid size={{

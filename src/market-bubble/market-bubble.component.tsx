@@ -227,7 +227,12 @@ const MarketBubbleComponent: React.FC = () => {
             maxLabel="Bubble"
             label={AI_BUBBLE_LABELS.OverallScore}
             description={AI_BUBBLE_LABELS.OverallScoreDescription}
-            thresholds={AI_BUBBLE_LABELS.OverallScoreThresholds}
+            thresholds={[
+              `Score ≥ 7: ${COMMON_LABELS.Critical}`,
+              `Score 3 to 7: ${COMMON_LABELS.HighRisk}`,
+              `Score -3 to 3: ${COMMON_LABELS.ModerateRisk}`,
+              `Score ≤ -3: ${COMMON_LABELS.LowRisk}`,
+            ]}
           />
         </Grid>
         <Grid size={{

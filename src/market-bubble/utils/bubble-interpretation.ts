@@ -1,3 +1,4 @@
+import { COMMON_LABELS } from '../../constants/labels';
 import type { IBubbleIndicator } from '../../interfaces/market-bubble';
 import type { TInterpretation } from '../../types/data.type';
 
@@ -13,7 +14,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
   if (score >= 7) {
     // CRITICAL BUBBLE RISK
     return {
-      text: 'CRITICAL',
+      text: COMMON_LABELS.Critical,
       color: 'error',
       severity: 'error',
     };
@@ -22,7 +23,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
   if (score >= 3) {
     // HIGH BUBBLE RISK
     return {
-      text: 'HIGH RISK',
+      text: COMMON_LABELS.HighRisk,
       color: 'error',
       severity: 'error',
     };
@@ -31,7 +32,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
   if (score > -3 && score < 3) {
     // MODERATE/NEUTRAL
     return {
-      text: 'MODERATE RISK',
+      text: COMMON_LABELS.ModerateRisk,
       color: 'default',
       severity: 'warning',
     };
@@ -40,7 +41,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
   if (score <= -7) {
     // VERY LOW RISK
     return {
-      text: '🚀 LOW RISK',
+      text: COMMON_LABELS.VeryLowRisk,
       color: 'success',
       severity: 'success',
     };
@@ -48,7 +49,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
 
   // LOW RISK
   return {
-    text: 'LOW RISK',
+    text: COMMON_LABELS.LowRisk,
     color: 'success',
     severity: 'success',
   };

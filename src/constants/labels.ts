@@ -2,13 +2,28 @@
 export const COMMON_LABELS = {
   RiskLevel: 'Risk Level',
   StaticValue: 'This value requires manual update. Last updated on ',
-  OverallThresholds: [
-    'Score > 7: STRONG BULL RUN',
-    'Score > 3: BULLISH',
-    'Score > -3: CRAB MARKET',
-    'Score > -7: BEARISH',
-    'Score ≤ -7: WINTER/HIGH RISK',
-  ],
+  StrongBullish: 'STRONG BULLISH',
+  Bullish: 'BULLISH',
+  CrabMarket: 'CRAB MARKET',
+  Bearish: 'BEARISH',
+  StrongBearish: 'STRONG BEARISH',
+  StrongBuy: 'STRONG BUY',
+  Buy: 'BUY',
+  ModerateBuy: 'MODERATE BUY',
+  Neutral: 'NEUTRAL',
+  ModerateSell: 'MODERATE SELL',
+  Sell: 'SELL',
+  StrongSell: 'STRONG SELL',
+  Inflows: 'INFLOWS',
+  Outflows: 'OUTFLOWS',
+  FlightToSafety: 'FLIGHT TO SAFETY',
+  Accumulation: 'ACCUMULATION',
+  StrongInflows: 'STRONG INFLOWS',
+  VeryLowRisk: '🚀 VERY LOW RISK',
+  LowRisk: '🟢 LOW RISK',
+  ModerateRisk: '🟡 MODERATE RISK',
+  HighRisk: '🔴 HIGH RISK',
+  Critical: '💥 CRITICAL',
 };
 
 export const CRYPTO_LABELS = {
@@ -94,12 +109,6 @@ export const AI_BUBBLE_LABELS = {
   action: 'Action',
   OverallScore: 'AI Bubble Risk Score',
   OverallScoreDescription: 'AI sector bubble risk assessment based on tech valuations (NVIDIA, NASDAQ), market sentiment (Fear & Greed, RSI), and volatility patterns (VIX).',
-  OverallScoreThresholds: [
-    'Score < 4: LOW RISK',
-    'Score 4-9: MODERATE RISK',
-    'Score > 9: HIGH RISK',
-    'Score = 12+: CRITICAL',
-  ],
 };
 
 export const TREASURY_BONDS_LABELS = {

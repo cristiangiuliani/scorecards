@@ -1,50 +1,51 @@
+import { COMMON_LABELS } from '../../constants/labels';
 import type { TInterpretation } from '../../types/data.type';
 
 export const getBondsInterpretation = (score: number): TInterpretation => {
   if (score > 7) {
     return {
-      text: 'STRONG BUY',
+      text: COMMON_LABELS.StrongBuy,
       color: 'success',
       severity: 'success',
     };
   }
   if (score > 4) {
     return {
-      text: 'BUY',
+      text: COMMON_LABELS.Buy,
       color: 'success',
       severity: 'info',
     };
   }
   if (score > 1) {
     return {
-      text: 'MODERATE BUY',
+      text: COMMON_LABELS.ModerateBuy,
       color: 'default',
       severity: 'info',
     };
   }
   if (score > -1) {
     return {
-      text: 'NEUTRAL',
+      text: COMMON_LABELS.Neutral,
       color: 'default',
       severity: 'info',
     };
   }
   if (score > -4) {
     return {
-      text: 'MODERATE SELL',
+      text: COMMON_LABELS.ModerateSell,
       color: 'warning',
       severity: 'warning',
     };
   }
   if (score > -7) {
     return {
-      text: 'SELL',
+      text: COMMON_LABELS.Sell,
       color: 'error',
       severity: 'warning',
     };
   }
   return {
-    text: 'STRONG SELL',
+    text: COMMON_LABELS.StrongSell,
     color: 'error',
     severity: 'error',
   };

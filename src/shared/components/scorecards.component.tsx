@@ -66,7 +66,13 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   isLoading = false,
   label = '',
   description = '',
-  thresholds = COMMON_LABELS.OverallThresholds,
+  thresholds = [
+    `Score > 7: ${COMMON_LABELS.StrongBullish}`,
+    `Score > 3: ${COMMON_LABELS.Bullish}`,
+    `Score > -3: ${COMMON_LABELS.CrabMarket}`,
+    `Score > -7: ${COMMON_LABELS.Bearish}`,
+    `Score ≤ -7: ${COMMON_LABELS.StrongBearish}`,
+  ],
   refetchAllData = () => {},
 }) => {
   const theme = useTheme();

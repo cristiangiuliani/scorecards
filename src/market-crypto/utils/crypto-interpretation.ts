@@ -1,30 +1,31 @@
+import { COMMON_LABELS } from '../../constants/labels';
 import type {
   TInterpretation,
 } from '../../types/data.type';
 
 export const getCryptoInterpretation = (score:number):TInterpretation => {
   if (score > 7) return {
-    text: 'STRONG BULL RUN',
+    text: COMMON_LABELS.StrongBullish,
     color: 'success',
     severity: 'success',
   };
   if (score > 3) return {
-    text: 'CRYPTO BULLISH',
+    text: COMMON_LABELS.Bullish,
     color: 'success',
     severity: 'info',
   };
   if (score > -3) return {
-    text: 'CRAB MARKET',
+    text: COMMON_LABELS.CrabMarket,
     color: 'default',
     severity: 'info',
   };
   if (score > -7) return {
-    text: 'CRYPTO BEARISH',
+    text: COMMON_LABELS.Bearish,
     color: 'warning',
     severity: 'warning',
   };
   return {
-    text: 'CRYPTO WINTER',
+    text: COMMON_LABELS.StrongBearish,
     color: 'error',
     severity: 'error',
   };

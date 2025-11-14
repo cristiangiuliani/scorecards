@@ -1,32 +1,33 @@
+import { COMMON_LABELS } from '../../constants/labels';
 import type { TInterpretation } from '../../types/data.type';
 
 export const getCapitalFlowsInterpretation = (score: number): TInterpretation => {
   if (score > 7)
     return {
-      text: 'STRONG INFLOWS',
+      text: COMMON_LABELS.StrongInflows,
       color: 'success',
       severity: 'success',
     };
   if (score > 3)
     return {
-      text: 'ACCUMULATION',
+      text: COMMON_LABELS.Accumulation,
       color: 'success',
       severity: 'info',
     };
   if (score > -3)
     return {
-      text: 'NEUTRAL FLOWS',
+      text: COMMON_LABELS.Neutral,
       color: 'default',
       severity: 'info',
     };
   if (score > -7)
     return {
-      text: 'OUTFLOWS',
+      text: COMMON_LABELS.Outflows,
       color: 'warning',
       severity: 'warning',
     };
   return {
-    text: 'FLIGHT TO SAFETY',
+    text: COMMON_LABELS.FlightToSafety,
     color: 'error',
     severity: 'error',
   };
