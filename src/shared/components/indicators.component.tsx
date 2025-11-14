@@ -26,9 +26,9 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
   const theme = useTheme();
 
   const getBackgroundColor = (score?:number) => {
-    if (score === undefined) return undefined;
-    if (score > 0) return theme.palette.success.dark;
-    if (score < 0) return theme.palette.error.dark;
+    if (score === undefined) return theme.palette.grey[900];
+    if (score > 2) return theme.palette.success.dark;
+    if (score < -2) return theme.palette.error.dark;
     return theme.palette.grey[700];
   };
 
