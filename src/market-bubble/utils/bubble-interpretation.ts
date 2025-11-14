@@ -55,102 +55,53 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
 }
 
 export function getPortfolioRecommendation(score: number): string {
-  // Determine risk level from score
-  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
   if (score >= 9) {
-    risk = 'HIGH';
-  } else if (score >= 4) {
-    risk = 'MEDIUM';
-  } else if (score <= -4) {
-    risk = 'LOW';
-  } else {
-    risk = 'MEDIUM';
+    return 'Reduce AI/tech exposure to 20-30%. Increase defensive positions and cash reserves.';
   }
-
-  switch (risk) {
-    case 'HIGH':
-      return 'Reduce AI/tech exposure to 20-30%. Increase defensive positions and cash reserves.';
-    case 'MEDIUM':
-      return 'Maintain 40-50% AI/tech exposure. Consider taking profits on winners. Set stop losses.';
-    case 'LOW':
-      return 'Standard diversified portfolio OK. AI/tech allocation can remain at 50-60%.';
+  if (score >= 4) {
+    return 'Maintain 40-50% AI/tech exposure. Consider taking profits on winners. Set stop losses.';
   }
+  return 'Standard diversified portfolio OK. AI/tech allocation can remain at 50-60%.';
 }
 
 export function getSectorRecommendation(score: number): string {
-  // Determine risk level from score
-  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
   if (score >= 9) {
-    risk = 'HIGH';
-  } else if (score >= 4) {
-    risk = 'MEDIUM';
-  } else if (score <= -4) {
-    risk = 'LOW';
-  } else {
-    risk = 'MEDIUM';
+    return 'Rotate to: Healthcare, Utilities, Consumer Staples, Cash';
   }
-
-  switch (risk) {
-    case 'HIGH':
-      return 'Rotate to: Healthcare, Utilities, Consumer Staples, Cash';
-    case 'MEDIUM':
-      return 'Balance: 50% Tech + 50% Defensive (Healthcare, Industrials)';
-    case 'LOW':
-      return 'Tech-focused OK: Semiconductors, Software, AI Infrastructure';
+  if (score >= 4) {
+    return 'Balance: 50% Tech + 50% Defensive (Healthcare, Industrials)';
   }
+  return 'Tech-focused OK: Semiconductors, Software, AI Infrastructure';
 }
 
 export function getTimingRecommendation(score: number): string {
-  // Determine risk level from score
-  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
   if (score >= 9) {
-    risk = 'HIGH';
-  } else if (score >= 4) {
-    risk = 'MEDIUM';
-  } else if (score <= -4) {
-    risk = 'LOW';
-  } else {
-    risk = 'MEDIUM';
+    return 'SELL or heavily trim positions NOW. Wait for correction before re-entry.';
   }
-
-  switch (risk) {
-    case 'HIGH':
-      return 'SELL or heavily trim positions NOW. Wait for correction before re-entry.';
-    case 'MEDIUM':
-      return 'HOLD winners with tight stops. Pause new entries. Wait for clarity.';
-    case 'LOW':
-      return 'BUY opportunistically on dips. Good risk/reward for new positions.';
+  if (score >= 4) {
+    return 'HOLD winners with tight stops. Pause new entries. Wait for clarity.';
   }
+  return 'BUY opportunistically on dips. Good risk/reward for new positions.';
 }
 
 export function getActionableTips(indicator: IBubbleIndicator): string[] {
   const { score, factors } = indicator;
-
-  // Determine risk level from score
-  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
-  if (score >= 9) {
-    risk = 'HIGH';
-  } else if (score >= 4) {
-    risk = 'MEDIUM';
-  } else if (score <= -4) {
-    risk = 'LOW';
-  } else {
-    risk = 'MEDIUM';
-  }
-
   const tips: string[] = [];
 
-  if (risk === 'HIGH') {
+  if (score >= 9) {
+    // HIGH RISK
     tips.push('Immediate: Set stop-losses on all AI/tech positions at -15%');
     tips.push('Take profits: Sell 50-70% of winners, secure capital');
     tips.push('Hedge: Consider inverse ETFs (SQQQ) or put options');
     tips.push('Cash is a position: Raise cash to 30-40% of portfolio');
-  } else if (risk === 'MEDIUM') {
+  } else if (score >= 4) {
+    // MEDIUM RISK
     tips.push('Rebalance: Trim winners to original allocation');
     tips.push('Selective: Hold best quality names, exit speculative');
     tips.push('Stops: Set trailing stops at -10% to protect gains');
     tips.push('Watch: Monitor daily for deterioration');
   } else {
+    // LOW RISK
     tips.push('Stay invested: No bubble signals detected');
     tips.push('Accumulate: Good time to add to quality positions');
     tips.push('DCA: Dollar-cost average into favorites');
