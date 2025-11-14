@@ -26,8 +26,7 @@ export interface IMarketBubbleProvider extends IBubbleDataStatus {
 }
 
 export interface IBubbleIndicator {
-  risk: 'LOW' | 'MEDIUM' | 'HIGH';
-  score: number; // 0-3
+  score: number;
   factors: {
     nvidiaOvervalued: boolean;
     nasdaqOvervalued: boolean;

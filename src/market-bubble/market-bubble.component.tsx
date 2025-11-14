@@ -157,11 +157,11 @@ const MarketBubbleComponent: React.FC = () => {
       items: [
         {
           label: COMMON_LABELS.RiskLevel,
-          value: `${bubbleIndicator.risk} RISK (${Math.abs(bubbleIndicator.score).toFixed(1)}/10)`,
+          value: `${interpretation.text} (${Math.abs(bubbleIndicator.score).toFixed(1)}/16)`,
         },
         {
           label: AI_BUBBLE_LABELS.recommendation,
-          value: getPortfolioRecommendation(bubbleIndicator.risk),
+          value: getPortfolioRecommendation(bubbleIndicator.score),
         },
       ],
     },
@@ -172,7 +172,7 @@ const MarketBubbleComponent: React.FC = () => {
       items: [
         {
           label: AI_BUBBLE_LABELS.recommendedSectors,
-          value: getSectorRecommendation(bubbleIndicator.risk),
+          value: getSectorRecommendation(bubbleIndicator.score),
         },
       ],
     },
@@ -183,7 +183,7 @@ const MarketBubbleComponent: React.FC = () => {
       items: [
         {
           label: AI_BUBBLE_LABELS.action,
-          value: getTimingRecommendation(bubbleIndicator.risk),
+          value: getTimingRecommendation(bubbleIndicator.score),
         },
       ],
     },

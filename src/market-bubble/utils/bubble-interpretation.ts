@@ -54,7 +54,19 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
   };
 }
 
-export function getPortfolioRecommendation(risk: 'LOW' | 'MEDIUM' | 'HIGH'): string {
+export function getPortfolioRecommendation(score: number): string {
+  // Determine risk level from score
+  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
+  if (score >= 9) {
+    risk = 'HIGH';
+  } else if (score >= 4) {
+    risk = 'MEDIUM';
+  } else if (score <= -4) {
+    risk = 'LOW';
+  } else {
+    risk = 'MEDIUM';
+  }
+
   switch (risk) {
     case 'HIGH':
       return 'Reduce AI/tech exposure to 20-30%. Increase defensive positions and cash reserves.';
@@ -65,7 +77,19 @@ export function getPortfolioRecommendation(risk: 'LOW' | 'MEDIUM' | 'HIGH'): str
   }
 }
 
-export function getSectorRecommendation(risk: 'LOW' | 'MEDIUM' | 'HIGH'): string {
+export function getSectorRecommendation(score: number): string {
+  // Determine risk level from score
+  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
+  if (score >= 9) {
+    risk = 'HIGH';
+  } else if (score >= 4) {
+    risk = 'MEDIUM';
+  } else if (score <= -4) {
+    risk = 'LOW';
+  } else {
+    risk = 'MEDIUM';
+  }
+
   switch (risk) {
     case 'HIGH':
       return 'Rotate to: Healthcare, Utilities, Consumer Staples, Cash';
@@ -76,7 +100,19 @@ export function getSectorRecommendation(risk: 'LOW' | 'MEDIUM' | 'HIGH'): string
   }
 }
 
-export function getTimingRecommendation(risk: 'LOW' | 'MEDIUM' | 'HIGH'): string {
+export function getTimingRecommendation(score: number): string {
+  // Determine risk level from score
+  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
+  if (score >= 9) {
+    risk = 'HIGH';
+  } else if (score >= 4) {
+    risk = 'MEDIUM';
+  } else if (score <= -4) {
+    risk = 'LOW';
+  } else {
+    risk = 'MEDIUM';
+  }
+
   switch (risk) {
     case 'HIGH':
       return 'SELL or heavily trim positions NOW. Wait for correction before re-entry.';
@@ -88,7 +124,20 @@ export function getTimingRecommendation(risk: 'LOW' | 'MEDIUM' | 'HIGH'): string
 }
 
 export function getActionableTips(indicator: IBubbleIndicator): string[] {
-  const { risk, factors } = indicator;
+  const { score, factors } = indicator;
+
+  // Determine risk level from score
+  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
+  if (score >= 9) {
+    risk = 'HIGH';
+  } else if (score >= 4) {
+    risk = 'MEDIUM';
+  } else if (score <= -4) {
+    risk = 'LOW';
+  } else {
+    risk = 'MEDIUM';
+  }
+
   const tips: string[] = [];
 
   if (risk === 'HIGH') {

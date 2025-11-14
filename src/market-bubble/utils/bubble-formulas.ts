@@ -123,23 +123,7 @@ export function calculateBubbleRisk(data: IBubbleData): IBubbleIndicator {
   const nasdaqOvervalued = (data.nasdaqPE ?? 0) > NASDAQ_PE_THRESHOLD;
   const vixPersistent = data.vixHistory ? isVixPersistent(data.vixHistory) : false;
 
-  // Negative score = LOW bubble risk (healthy market)
-  // Positive score = HIGH bubble risk (warning signs)
-  let risk: 'LOW' | 'MEDIUM' | 'HIGH';
-  if (totalScore >= 9) {
-    risk = 'HIGH'; // Strong bubble signals
-  } else if (totalScore >= 4) {
-    risk = 'MEDIUM'; // Some bubble warnings
-  } else if (totalScore <= -9) {
-    risk = 'LOW'; // Very healthy market
-  } else if (totalScore <= -4) {
-    risk = 'LOW'; // Healthy market
-  } else {
-    risk = 'MEDIUM'; // Neutral zone
-  }
-
   return {
-    risk,
     score: totalScore,
     factors: {
       nvidiaOvervalued,
