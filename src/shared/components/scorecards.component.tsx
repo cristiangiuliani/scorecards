@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
+import { COMMON_LABELS } from '../../constants/labels';
 import type { TInterpretation } from '../../types/data.type';
 
 import { ScoreGauge } from './score-gauge.component';
@@ -65,13 +66,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   isLoading = false,
   label = '',
   description = '',
-  thresholds = [
-    'Score > 7: STRONG BULL RUN',
-    'Score > 3: BULLISH',
-    'Score > -3: CRAB MARKET',
-    'Score > -7: BEARISH',
-    'Score ≤ -7: WINTER/HIGH RISK',
-  ],
+  thresholds = COMMON_LABELS.OverallThresholds,
   refetchAllData = () => {},
 }) => {
   const theme = useTheme();
@@ -80,7 +75,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   const userLocale = navigator.language || 'nl-NL';
 
   const getBackgroundColor = () => {
-    if (!interpretation?.color) return undefined;
+    if (!interpretation?.color) return theme.palette.grey[700];
     if (interpretation.color === 'default') return theme.palette.grey[700];
     return theme.palette[interpretation.color].dark;
   };

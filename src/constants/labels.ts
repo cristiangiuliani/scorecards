@@ -2,6 +2,13 @@
 export const COMMON_LABELS = {
   RiskLevel: 'Risk Level',
   StaticValue: 'This value requires manual update. Last updated on ',
+  OverallThresholds: [
+    'Score > 7: STRONG BULL RUN',
+    'Score > 3: BULLISH',
+    'Score > -3: CRAB MARKET',
+    'Score > -7: BEARISH',
+    'Score ≤ -7: WINTER/HIGH RISK',
+  ],
 };
 
 export const CRYPTO_LABELS = {
