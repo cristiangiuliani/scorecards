@@ -148,5 +148,8 @@ export function calculateBubbleRisk(data: IBubbleData): IBubbleIndicator {
 }
 
 export const displayScoreRisk = (bubbleIndicator: IBubbleIndicator): number => {
-  return Math.abs(bubbleIndicator.score);
+  // Normalize score from [-16, +16] range to [-10, +10] range
+  // Clamp to ensure we stay within bounds
+  const normalizedScore = Math.max(-10, Math.min(10, bubbleIndicator.score * (10 / 16)));
+  return normalizedScore;
 };

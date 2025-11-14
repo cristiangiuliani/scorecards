@@ -6,15 +6,21 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     score,
   } = indicator;
 
-  if (score <= -7) {
-    // STRONG BEARISH/HIGH RISK
-    if (score === -10) {
-      return {
-        text: 'CRITICAL',
-        color: 'error',
-        severity: 'error',
-      };
-    }
+  // Score is now normalized to [-10, +10] range
+  // Negative scores = LOW risk (good)
+  // Positive scores = HIGH risk (bubble warning)
+
+  if (score >= 7) {
+    // CRITICAL BUBBLE RISK
+    return {
+      text: 'CRITICAL',
+      color: 'error',
+      severity: 'error',
+    };
+  }
+
+  if (score >= 3) {
+    // HIGH BUBBLE RISK
     return {
       text: 'HIGH RISK',
       color: 'error',
@@ -22,7 +28,8 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     };
   }
 
-  if (score <= -3) {
+  if (score > -3 && score < 3) {
+    // MODERATE/NEUTRAL
     return {
       text: 'MODERATE RISK',
       color: 'default',
@@ -30,16 +37,18 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     };
   }
 
-  if (score > -3) {
+  if (score <= -7) {
+    // VERY LOW RISK
     return {
-      text: 'LOW RISK',
+      text: '🚀 LOW RISK',
       color: 'success',
       severity: 'success',
     };
   }
 
+  // LOW RISK
   return {
-    text: '🚀 LOW RISK',
+    text: 'LOW RISK',
     color: 'success',
     severity: 'success',
   };

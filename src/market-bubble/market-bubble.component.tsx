@@ -216,7 +216,7 @@ const MarketBubbleComponent: React.FC = () => {
         >
           <ScoreCardsComponent
             score={displayScore}
-            min={0}
+            min={-10}
             max={10}
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
