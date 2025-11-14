@@ -47,7 +47,7 @@ export const CRYPTO_SCOPES = {
 export const STOCKS_RANGES = {
   vix: {
     min: 0,
-    max: 80,
+    max: 50,
     minLabel: 'Low',
     maxLabel: 'High',
   },
