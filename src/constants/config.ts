@@ -277,3 +277,45 @@ export const CAPITAL_FLOWS_RANGES = {
     maxLabel: 'Inflows',
   },
 };
+
+export const FED_POLICY_WEIGHTS = {
+  cpiInflation: 2.0,
+  corePce: 2.2,
+  unemploymentRate: 1.5,
+  averageHourlyEarnings: 1.3,
+  federalFundsRate: 1.0,
+  score: 0.35,
+};
+
+export const FED_POLICY_RANGES = {
+  cpiInflation: {
+    min: 1,
+    max: 5,
+    minLabel: 'Dovish',
+    maxLabel: 'Hawkish',
+  },
+  corePce: {
+    min: 1,
+    max: 4,
+    minLabel: 'Dovish',
+    maxLabel: 'Hawkish',
+  },
+  unemploymentRate: {
+    min: 3.5,
+    max: 5.5,
+    minLabel: 'Hawkish',
+    maxLabel: 'Dovish',
+  },
+  averageHourlyEarnings: {
+    min: 2,
+    max: 5,
+    minLabel: 'Dovish',
+    maxLabel: 'Hawkish',
+  },
+  federalFundsRate: {
+    min: 0,
+    max: 5.5,
+    minLabel: 'Dovish',
+    maxLabel: 'Hawkish',
+  },
+};

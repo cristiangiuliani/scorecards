@@ -8,6 +8,7 @@ import {
   Menu as MenuIcon,
   GitHub,
   Home,
+  Gavel,
 } from '@mui/icons-material';
 import {
   Box,
@@ -34,6 +35,7 @@ import {
 import React, { useContext } from 'react';
 
 import { GLOBALS } from '../constants/config';
+import FedPolicy from '../fed-policy/fed-policy';
 import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
@@ -94,6 +96,10 @@ const DashboardLayout: React.FC = () => {
     {
       icon: <TrendingUp />,
       label: 'Capital Flows',
+    },
+    {
+      icon: <Gavel />,
+      label: 'Fed Policy',
     },
   ];
 
@@ -246,6 +252,8 @@ const DashboardLayout: React.FC = () => {
           <MarketBubble />
         ) : activeTab === 4 ? (
           <MarketCapitalFlows />
+        ) : activeTab === 5 ? (
+          <FedPolicy />
         ) : (
           <MarketStocks />
         )}

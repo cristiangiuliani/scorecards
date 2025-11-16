@@ -5,13 +5,18 @@ import btcRsiMockData from '../_mocks/btcRsi.json';
 import eurUsdMockData from '../_mocks/eurUsd.json';
 import fearGreedMockData from '../_mocks/fearGreed.json';
 import fredBAMLMockData from '../_mocks/fredBAML.json';
+import fredCPIMockData from '../_mocks/fredCPI.json';
 import fredDGS10MockData from '../_mocks/fredDGS10.json';
 import fredDGS2MockData from '../_mocks/fredDGS2.json';
 import fredDGS5MockData from '../_mocks/fredDGS5.json';
 import fredDollarIndexMockData from '../_mocks/fredDollarIndex.json';
+import fredFedFundsMockData from '../_mocks/fredFedFunds.json';
 import fredGoldMockData from '../_mocks/fredGold.json';
 import fredM2MockData from '../_mocks/fredM2.json';
+import fredPCEMockData from '../_mocks/fredPCE.json';
 import fredT10YIEMockData from '../_mocks/fredT10YIE.json';
+import fredUnemploymentMockData from '../_mocks/fredUnemployment.json';
+import fredWagesMockData from '../_mocks/fredWages.json';
 import fredWALCLMockData from '../_mocks/fredWALCL.json';
 import globalCryptoDataMockData from '../_mocks/globalCryptoData.json';
 import rsiSP500MockData from '../_mocks/rsiSp500.json';
@@ -108,5 +113,25 @@ export const API: Record<string, IApiEndpoint> = {
   globalCryptoData: {
     functionName: 'fetchGlobalCryptoData',
     mockData: globalCryptoDataMockData,
+  },
+  fredCPI: {
+    functionName: 'fetchFredCPI',
+    mockData: fredCPIMockData,
+  },
+  fredPCE: {
+    functionName: 'fetchFredPCE',
+    mockData: fredPCEMockData,
+  },
+  fredUnemployment: {
+    functionName: 'fetchFredUnemployment',
+    mockData: fredUnemploymentMockData,
+  },
+  fredWages: {
+    functionName: 'fetchFredWages',
+    mockData: fredWagesMockData,
+  },
+  fredFedFunds: {
+    functionName: 'fetchFredFedFunds',
+    mockData: fredFedFundsMockData,
   },
 };

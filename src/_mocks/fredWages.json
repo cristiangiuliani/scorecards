@@ -1,0 +1,94 @@
+{
+    "realtime_start": "2025-11-10",
+    "realtime_end": "2025-11-10",
+    "observation_start": "1600-01-01",
+    "observation_end": "9999-12-31",
+    "units": "lin",
+    "output_type": 1,
+    "file_type": "json",
+    "order_by": "observation_date",
+    "sort_order": "desc",
+    "count": 234,
+    "offset": 0,
+    "limit": 13,
+    "observations": [
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-08-01",
+            "value": "36.53"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-07-01",
+            "value": "36.43"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-06-01",
+            "value": "36.31"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-05-01",
+            "value": "36.23"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-04-01",
+            "value": "36.08"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-03-01",
+            "value": "36.02"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-02-01",
+            "value": "35.90"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2025-01-01",
+            "value": "35.83"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2024-12-01",
+            "value": "35.68"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2024-11-01",
+            "value": "35.61"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2024-10-01",
+            "value": "35.48"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2024-09-01",
+            "value": "35.33"
+        },
+        {
+            "realtime_start": "2025-11-10",
+            "realtime_end": "2025-11-10",
+            "date": "2024-08-01",
+            "value": "35.23"
+        }
+    ]
+}
