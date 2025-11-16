@@ -56,13 +56,13 @@ export const calculateCreditSpreadsScore = (value = 0): number => {
   // Lower spreads = less risk = better for bonds
   if (value >= 400) return -4; // Very wide spreads - high risk
   if (value >= 300) return -3;
-  if (value >= 200) return -2;
-  if (value >= 150) return -1;
-  if (value >= 120) return 0;
-  if (value >= 100) return 1;
-  if (value >= 80) return 2;
-  if (value >= 60) return 3; // Tight spreads - low risk
-  return 4;
+  if (value >= 250) return -2;
+  if (value >= 200) return -1;
+  if (value <= 80) return 4; // Very tight spreads - very low risk
+  if (value <= 100) return 3; // Tight spreads - low risk
+  if (value <= 130) return 2;
+  if (value <= 160) return 1;
+  return 0; // Normal spreads (160-200 bp)
 };
 
 export const calculateInflationScore = (value = 0): number => {

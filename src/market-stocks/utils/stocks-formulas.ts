@@ -46,10 +46,12 @@ export const calculateAthDistanceScore = (current: number, ath: number): number 
 
   const distance = (current / ath) * 100;
 
-  if (distance > 99) return 3;
-  if (distance > 95) return 2;
-  if (distance > 90) return 1;
-  if (distance < 70) return -3;
+  if (distance >= 98) return 4;
+  if (distance >= 95) return 3;
+  if (distance >= 90) return 2;
+  if (distance >= 85) return 1;
+  if (distance < 70) return -4;
+  if (distance < 75) return -3;
   if (distance < 80) return -2;
   if (distance < 85) return -1;
   return 0;

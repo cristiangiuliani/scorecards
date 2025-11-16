@@ -8,20 +8,20 @@ const VIX_PERSISTENCE_DAYS = 3;
 export function calculateNvidiaPEScore(nvidiaPE: number | undefined): number {
   if (!nvidiaPE) return 0;
 
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return -3.3; // High risk
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD * 0.9) return -1.7; // Warning zone (>58.5)
-  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.6) return 3.3; // Low risk (<39)
-  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.75) return 1.7; // Safe zone (<48.75)
+  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return -4; // High risk
+  if (nvidiaPE > NVIDIA_PE_THRESHOLD * 0.9) return -2.5; // Warning zone (>58.5)
+  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.6) return 4; // Low risk (<39)
+  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.75) return 2; // Safe zone (<48.75)
   return 0;
 }
 
 export function calculateNasdaqPEScore(nasdaqPE: number | undefined): number {
   if (!nasdaqPE) return 0;
 
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return -3.3; // High risk
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD * 0.9) return -1.7; // Warning zone (>34.2)
-  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.6) return 3.3; // Low risk (<22.8)
-  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.75) return 1.7; // Safe zone (<28.5)
+  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return -4; // High risk
+  if (nasdaqPE > NASDAQ_PE_THRESHOLD * 0.9) return -2.5; // Warning zone (>34.2)
+  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.6) return 4; // Low risk (<22.8)
+  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.75) return 2; // Safe zone (<28.5)
   return 0;
 }
 
@@ -66,12 +66,13 @@ export function calculateFearGreedScore(fearGreed: number | undefined): number {
   if (!fearGreed) return 0;
 
   // Extreme greed (>75) indicates bubble risk
-  if (fearGreed > 75) return -2.0; // High risk
-  // Greed zone (>60)
-  if (fearGreed > 60) return -1.0; // Warning
+  if (fearGreed > 85) return -4; // Very high risk
+  if (fearGreed > 75) return -3; // High risk
+  if (fearGreed > 60) return -1; // Warning
   // Fear zone (<40) indicates low bubble risk
-  if (fearGreed < 25) return 2.0; // Low risk
-  if (fearGreed < 40) return 1.0; // Safe zone
+  if (fearGreed < 15) return 4; // Very low risk
+  if (fearGreed < 25) return 3; // Low risk
+  if (fearGreed < 40) return 1; // Safe zone
 
   return 0;
 }
@@ -79,13 +80,14 @@ export function calculateFearGreedScore(fearGreed: number | undefined): number {
 export function calculateRsiScore(rsi: number | undefined): number {
   if (!rsi) return 0;
 
-  // Severely overbought (>75) indicates correction risk
-  if (rsi > 75) return -2.0; // High risk
-  // Overbought zone (>70)
-  if (rsi > 70) return -1.0; // Warning
-  // Oversold zone (<30) indicates low bubble risk
-  if (rsi < 30) return 2.0; // Low risk
-  if (rsi < 40) return 1.0; // Safe zone
+  // Severely overbought indicates correction risk
+  if (rsi > 80) return -4; // Very high risk
+  if (rsi > 75) return -3; // High risk
+  if (rsi > 70) return -2; // Warning
+  // Oversold zone indicates low bubble risk
+  if (rsi < 20) return 4; // Very low risk
+  if (rsi < 30) return 3; // Low risk
+  if (rsi < 40) return 1; // Safe zone
 
   return 0;
 }

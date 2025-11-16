@@ -13,12 +13,12 @@ export const calculateBtcFearGreedScore = (value = 0):number => {
 export const calculateBtcRsiScore = (value = 0):number => {
   if (value > 85) return 4;
   if (value > 80) return 3;
+  if (value > 70) return 2;
+  if (value > 65) return 1;
   if (value < 15) return -4;
   if (value < 20) return -3;
   if (value < 30) return -2;
   if (value < 35) return -1;
-  if (value > 75) return 2;
-  if (value > 70) return 1;
   return 0;
 };
 export const calculateBtcDominanceScore = (value = 0):number => {
@@ -41,12 +41,14 @@ export const calculateAthDistanceScore = (current: number | undefined, ath: numb
 
   const distance = (current / ath) * 100;
 
-  if (distance > 98) return 3;
-  if (distance > 90) return 2;
-  if (distance > 80) return 1;
-  if (distance < 40) return -3;
-  if (distance < 50) return -2;
-  if (distance < 60) return -1;
+  if (distance >= 98) return 4;
+  if (distance >= 95) return 3;
+  if (distance >= 90) return 2;
+  if (distance >= 85) return 1;
+  if (distance < 50) return -4;
+  if (distance < 60) return -3;
+  if (distance < 70) return -2;
+  if (distance < 80) return -1;
   return 0;
 };
 
