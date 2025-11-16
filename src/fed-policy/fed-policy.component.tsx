@@ -216,6 +216,13 @@ const FedPolicyComponent: React.FC = () => {
             maxLabel="Hawkish"
             label={FED_POLICY_LABELS.OverallScore}
             description={FED_POLICY_LABELS.Description}
+            thresholds={
+              [`Score ≥ 6: ${FED_POLICY_LABELS.Hawkish}`,
+                `Score 2 to 6: ${FED_POLICY_LABELS.ModerateHawkish}`,
+                `Score -2 to 2: ${FED_POLICY_LABELS.Neutral}`,
+                `Score -6 to -2: ${FED_POLICY_LABELS.ModerateDovish}`,
+                `Score < -6: ${FED_POLICY_LABELS.Dovish}`]
+            }
           />
         </Grid>
         <Grid size={{

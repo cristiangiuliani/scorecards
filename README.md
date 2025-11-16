@@ -35,6 +35,7 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - **AI Bubble Indicators** - NVIDIA P/E, NASDAQ P/E ratios, VIX persistence
   - **Treasury Bonds** - 10Y/5Y/2Y yields, yield curve, credit spreads, inflation expectations
   - **Capital Flows** - Fed balance sheet, M2 money supply, Dollar Index, stablecoin reserves, credit spreads
+  - **Fed Policy Outlook** - CPI inflation, Core PCE, unemployment, wage growth, Fed Funds rate ⭐ NEW
 
 - **Automated Scoring System**
   - Automated calculation of market reversal signals
@@ -62,6 +63,17 @@ Scorecards is a React-based web application that analyzes market indicators and 
   - Liquidity conditions and market sentiment phases
   - Cross-asset capital flow recommendations
   - Powered by **FRED API** and **CoinGecko API**
+
+- **Fed Policy Outlook** ⭐ NEW
+  - CPI inflation year-over-year tracking
+  - Core PCE (Fed's preferred inflation gauge)
+  - Unemployment rate monitoring
+  - Average hourly earnings (wage growth)
+  - Federal Funds effective rate
+  - Hawkish vs Dovish policy stance prediction
+  - Next Fed move expectations (rate hikes/cuts/hold)
+  - Market implications based on Fed policy outlook
+  - Powered by **FRED API** (Federal Reserve Economic Data)
 
 - **Technical Indicators**
   - Relative Strength Index (RSI)
@@ -146,6 +158,15 @@ Scorecards/
 │   │   ├── market-capital-flows.component.tsx
 │   │   ├── market-capital-flows.provider.tsx
 │   │   └── market-capital-flows.context.ts
+│   ├── fed-policy/             # Fed Policy outlook ⭐ NEW
+│   │   ├── utils/
+│   │   │   ├── fed-formulas.ts              # Score calculations
+│   │   │   └── fed-interpretation.ts        # Policy predictions
+│   │   ├── fed-policy.tsx
+│   │   ├── fed-policy.container.tsx
+│   │   ├── fed-policy.component.tsx
+│   │   ├── fed-policy.provider.tsx
+│   │   └── fed-policy.context.ts
 │   ├── shared/              # Shared components and hooks
 │   ├── error-handler/       # Error management system
 │   ├── constants/           # Configuration and API definitions
@@ -259,6 +280,20 @@ The application uses Netlify Functions as serverless API endpoints:
 - `DTWEXBGS` - Trade Weighted U.S. Dollar Index: Broad, Goods and Services
 - `BAMLH0A0HYM2` - ICE BofA US High Yield Index Option-Adjusted Spread
 
+### Fed Policy Outlook Endpoints ⭐ NEW
+- `/api/fetchFredCPI` - Consumer Price Index (FRED API)
+- `/api/fetchFredPCE` - Core PCE Price Index (FRED API)
+- `/api/fetchFredUnemployment` - Unemployment Rate (FRED API)
+- `/api/fetchFredWages` - Average Hourly Earnings (FRED API)
+- `/api/fetchFredFedFunds` - Federal Funds Effective Rate (FRED API)
+
+**FRED Series Codes Used:**
+- `CPIAUCSL` - Consumer Price Index for All Urban Consumers
+- `PCEPILFE` - Personal Consumption Expenditures Excluding Food and Energy (Core PCE)
+- `UNRATE` - Unemployment Rate
+- `CES0500000003` - Average Hourly Earnings of All Employees
+- `FEDFUNDS` - Federal Funds Effective Rate
+
 All endpoints support:
 - Automatic caching with configurable TTL (MongoDB)
 - Force refresh via `?refresh=true` query parameter
@@ -320,7 +355,23 @@ Private project - Version 0.3.0
 
 ## Recent Updates
 
-### v0.3.0 - Capital Flows Section ⭐ NEW
+### v0.4.0 - Fed Policy Outlook Section ⭐ NEW
+- **Added Fed Policy Outlook Analysis** - Complete new section for Federal Reserve monetary policy monitoring
+  - CPI inflation year-over-year tracking
+  - Core PCE (Fed's preferred inflation metric) monitoring
+  - Unemployment rate analysis
+  - Average hourly earnings (wage growth indicator)
+  - Federal Funds effective rate tracking
+  - Hawkish vs Dovish policy stance scoring (-10 to +10 scale)
+  - Next Fed move predictions (rate hikes, cuts, or hold)
+  - Inflation pressure assessment
+  - Labor market status evaluation
+  - Market implications based on policy outlook
+- **5 new FRED API integrations** - CPIAUCSL, PCEPILFE, UNRATE, CES0500000003, FEDFUNDS
+- **New scoring algorithm** - Weighted scoring combining inflation, employment, and rate data
+- **Policy predictions** - Data-driven predictions for Fed's next policy moves
+
+### v0.3.0 - Capital Flows Section
 - **Added Capital Flows Analysis** - Complete new section for cross-asset liquidity monitoring
   - Federal Reserve balance sheet tracking (QE/QT detection)
   - M2 money supply growth rate analysis
