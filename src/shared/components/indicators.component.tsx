@@ -116,7 +116,17 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
               }}
               >
                 <StyledBlackTooltip
-                  title={<Typography variant='caption'>{item.description && <>{item.description}</>}</Typography>}
+                  title={(
+                    <Typography variant='caption'>
+                      {item.description && <>{item.description}</>}
+                      {item.score !== undefined && (
+                        <>
+                          <br /><br />
+                          <strong>Score: {item.score.toFixed(2)}</strong>
+                        </>
+                      )}
+                    </Typography>
+                  )}
                   placement="top"
                   arrow
                   enterTouchDelay={0}
