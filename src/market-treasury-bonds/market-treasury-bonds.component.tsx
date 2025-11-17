@@ -75,6 +75,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
       max: TREASURY_BONDS_RANGES.yield10Y.max,
       minLabel: TREASURY_BONDS_RANGES.yield10Y.minLabel,
       maxLabel: TREASURY_BONDS_RANGES.yield10Y.maxLabel,
+      suffix: '%',
     },
     {
       label: TREASURY_BONDS_LABELS.Yield5Y,
@@ -88,6 +89,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
       max: TREASURY_BONDS_RANGES.yield5Y.max,
       minLabel: TREASURY_BONDS_RANGES.yield5Y.minLabel,
       maxLabel: TREASURY_BONDS_RANGES.yield5Y.maxLabel,
+      suffix: '%',
     },
     {
       label: TREASURY_BONDS_LABELS.Yield2Y,
@@ -101,6 +103,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
       max: TREASURY_BONDS_RANGES.yield2Y.max,
       minLabel: TREASURY_BONDS_RANGES.yield2Y.minLabel,
       maxLabel: TREASURY_BONDS_RANGES.yield2Y.maxLabel,
+      suffix: '%',
     },
     {
       label: TREASURY_BONDS_LABELS.YieldCurveSlope,
@@ -127,6 +130,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
       max: TREASURY_BONDS_RANGES.creditSpreads.max,
       minLabel: TREASURY_BONDS_RANGES.creditSpreads.minLabel,
       maxLabel: TREASURY_BONDS_RANGES.creditSpreads.maxLabel,
+      suffix: 'bps',
     },
     {
       label: TREASURY_BONDS_LABELS.Inflation,
@@ -140,6 +144,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
       max: TREASURY_BONDS_RANGES.inflation.max,
       minLabel: TREASURY_BONDS_RANGES.inflation.minLabel,
       maxLabel: TREASURY_BONDS_RANGES.inflation.maxLabel,
+      suffix: '%',
     },
   ];
 

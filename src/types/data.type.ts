@@ -17,6 +17,8 @@ export type TIndicatorsListItem = {
   minLabel?: string;
   maxLabel?: string;
   alert?: string;
+  suffix?: string;
+  prefix?: string;
 };
 
 export type TStrategiesListItem = {

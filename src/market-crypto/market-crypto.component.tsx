@@ -84,6 +84,7 @@ const MarketCryptoComponent: React.FC = () => {
       max: CRYPTO_RANGES.dominance.max,
       minLabel: CRYPTO_RANGES.dominance.minLabel,
       maxLabel: CRYPTO_RANGES.dominance.maxLabel,
+      suffix: '%',
     },
     {
       label: CRYPTO_LABELS.BtcRsi,
@@ -132,6 +133,7 @@ const MarketCryptoComponent: React.FC = () => {
       max: CRYPTO_RANGES.athDistance.max,
       minLabel: CRYPTO_RANGES.athDistance.minLabel,
       maxLabel: CRYPTO_RANGES.athDistance.maxLabel,
+      suffix: '%',
     },
     {
       label: CRYPTO_LABELS.Momentum7D,

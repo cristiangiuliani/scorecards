@@ -157,6 +157,8 @@ export const CAPITAL_FLOWS_LABELS = {
   TimeHorizon: 'Time Horizon',
   ActionItems: 'Action Items',
   KeyMetric: 'Key Metric',
+  PortfolioStrategy: 'Portfolio Strategy',
+  LiquiditySentiment: 'Liquidity & Sentiment',
 };
 
 export const FED_POLICY_LABELS = {

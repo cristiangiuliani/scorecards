@@ -88,6 +88,8 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                           minLabel={item.minLabel}
                           maxLabel={item.maxLabel}
                           labelFontSize={10}
+                          suffix={item.suffix}
+                          prefix={item.prefix}
                         />
 
                       </Box>
@@ -95,7 +97,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       <>
                         <Typography variant="h5" component="div" fontWeight="bold" mb={1}>
                           {typeof item.value === 'number' && !isNaN(item.value) ?
-                            item.value.toFixed(2)
+                            (item.prefix || '') + item.value.toFixed(2) + (item.suffix || '')
                             : (
                               <ErrorOutline color="error" fontSize="large" />
                             )}
@@ -122,7 +124,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       {item.score !== undefined && (
                         <>
                           <br /><br />
-                          <strong>Score: {item.score.toFixed(2)}</strong>
+                          <strong>Score: {item.prefix || ''}{item.score.toFixed(2)}{item.suffix || ''}</strong>
                         </>
                       )}
                     </Typography>

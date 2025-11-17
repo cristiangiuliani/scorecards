@@ -70,6 +70,7 @@ const FedPolicyComponent: React.FC = () => {
       max: FED_POLICY_RANGES.cpiInflation.max,
       minLabel: FED_POLICY_RANGES.cpiInflation.minLabel,
       maxLabel: FED_POLICY_RANGES.cpiInflation.maxLabel,
+      suffix: '%',
     },
     {
       label: FED_POLICY_LABELS.CorePce,
@@ -82,6 +83,7 @@ const FedPolicyComponent: React.FC = () => {
       max: FED_POLICY_RANGES.corePce.max,
       minLabel: FED_POLICY_RANGES.corePce.minLabel,
       maxLabel: FED_POLICY_RANGES.corePce.maxLabel,
+      suffix: '%',
     },
     {
       label: FED_POLICY_LABELS.UnemploymentRate,
@@ -94,6 +96,7 @@ const FedPolicyComponent: React.FC = () => {
       max: FED_POLICY_RANGES.unemploymentRate.max,
       minLabel: FED_POLICY_RANGES.unemploymentRate.minLabel,
       maxLabel: FED_POLICY_RANGES.unemploymentRate.maxLabel,
+      suffix: '%',
     },
     {
       label: FED_POLICY_LABELS.AverageHourlyEarnings,
@@ -106,6 +109,7 @@ const FedPolicyComponent: React.FC = () => {
       max: FED_POLICY_RANGES.averageHourlyEarnings.max,
       minLabel: FED_POLICY_RANGES.averageHourlyEarnings.minLabel,
       maxLabel: FED_POLICY_RANGES.averageHourlyEarnings.maxLabel,
+      suffix: '%',
     },
     {
       label: FED_POLICY_LABELS.FederalFundsRate,

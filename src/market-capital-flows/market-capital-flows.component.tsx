@@ -145,6 +145,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
       max: CAPITAL_FLOWS_RANGES.highYieldSpread.max,
       minLabel: CAPITAL_FLOWS_RANGES.highYieldSpread.minLabel,
       maxLabel: CAPITAL_FLOWS_RANGES.highYieldSpread.maxLabel,
+      suffix: 'bps',
     },
     {
       label: CAPITAL_FLOWS_LABELS.Treasury10Y,
@@ -157,6 +158,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
       max: CAPITAL_FLOWS_RANGES.treasury10YChange.max,
       minLabel: CAPITAL_FLOWS_RANGES.treasury10YChange.minLabel,
       maxLabel: CAPITAL_FLOWS_RANGES.treasury10YChange.maxLabel,
+      suffix: '%',
     },
     {
       label: CAPITAL_FLOWS_LABELS.StablecoinAccumulation,
@@ -169,6 +171,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
       max: CAPITAL_FLOWS_RANGES.stablecoinDominance.max,
       minLabel: CAPITAL_FLOWS_RANGES.stablecoinDominance.minLabel,
       maxLabel: CAPITAL_FLOWS_RANGES.stablecoinDominance.maxLabel,
+      suffix: '%',
     },
   ];
 
@@ -193,7 +196,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
 
     return [
       {
-        title: '💧 Liquidity & Sentiment',
+        title: CAPITAL_FLOWS_LABELS.LiquiditySentiment,
         color: interpretation.color,
         isLoading,
         items: [
@@ -212,7 +215,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
         ],
       },
       {
-        title: '💼 Portfolio Strategy',
+        title: CAPITAL_FLOWS_LABELS.PortfolioStrategy,
         color: interpretation.color,
         isLoading,
         items: [
@@ -227,7 +230,7 @@ const MarketCapitalFlowsComponent: React.FC = () => {
         ],
       },
       {
-        title: `✅ ${CAPITAL_FLOWS_LABELS.ActionItems}`,
+        title: CAPITAL_FLOWS_LABELS.ActionItems,
         color: interpretation.color,
         isLoading,
         items: actionableTips.map((tip) => ({

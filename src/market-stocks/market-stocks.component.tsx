@@ -105,6 +105,7 @@ const MarketStocksComponent: React.FC = () => {
       max: STOCKS_RANGES.eurUsd.max,
       minLabel: STOCKS_RANGES.eurUsd.minLabel,
       maxLabel: STOCKS_RANGES.eurUsd.maxLabel,
+      prefix: '$',
     },
     {
       label: STOCKS_LABELS.FearGreed,
@@ -129,6 +130,7 @@ const MarketStocksComponent: React.FC = () => {
       max: STOCKS_RANGES.athDistance.max,
       minLabel: STOCKS_RANGES.athDistance.minLabel,
       maxLabel: STOCKS_RANGES.athDistance.maxLabel,
+      suffix: '%',
     },
     {
       label: STOCKS_LABELS.Momentum7D,
