@@ -53,16 +53,15 @@ export const calculateAthDistanceScore = (current: number | undefined, ath: numb
 };
 
 export const calculateMomentum7dScore = (momentum7d: number): number => {
-  let score = 0;
-
-  if (momentum7d > 15) score = 3;
-  else if (momentum7d > 10) score = 2;
-  else if (momentum7d > 5) score = 1;
-  else if (momentum7d < -15) score = -3;
-  else if (momentum7d < -10) score = -2;
-  else if (momentum7d < -5) score = -1;
-
-  return score;
+  if (momentum7d > 15) return 4;
+  if (momentum7d > 10) return 3;
+  if (momentum7d > 5) return 2;
+  if (momentum7d > 2) return 1;
+  if (momentum7d < -15) return -4;
+  if (momentum7d < -10) return -3;
+  if (momentum7d < -5) return -2;
+  if (momentum7d < -2) return -1;
+  return 0;
 };
 
 export const calculateMomentumScore = (prices: number[]): number => {
@@ -77,15 +76,19 @@ export const calculateMomentumScore = (prices: number[]): number => {
 
   let score = 0;
 
-  if (momentum7d > 15) score += 3;
-  else if (momentum7d > 10) score += 2;
-  else if (momentum7d > 5) score += 1;
-  else if (momentum7d < -15) score -= 3;
-  else if (momentum7d < -10) score -= 2;
-  else if (momentum7d < -5) score -= 1;
+  if (momentum7d > 15) score += 4;
+  else if (momentum7d > 10) score += 3;
+  else if (momentum7d > 5) score += 2;
+  else if (momentum7d > 2) score += 1;
+  else if (momentum7d < -15) score -= 4;
+  else if (momentum7d < -10) score -= 3;
+  else if (momentum7d < -5) score -= 2;
+  else if (momentum7d < -2) score -= 1;
 
-  if (momentum30d > 20) score += 2;
+  if (momentum30d > 30) score += 3;
+  else if (momentum30d > 20) score += 2;
   else if (momentum30d > 10) score += 1;
+  else if (momentum30d < -30) score -= 3;
   else if (momentum30d < -20) score -= 2;
   else if (momentum30d < -10) score -= 1;
 
