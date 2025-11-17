@@ -2,38 +2,42 @@ import { CRYPTO_WEIGHTS } from '../../constants/config';
 import type { ICryptoData } from '../../interfaces/market-crypto';
 
 export const calculateBtcFearGreedScore = (value = 0):number => {
-  if (value < 10) return -4;
-  if (value < 25) return -3;
-  if (value < 45) return -1;
-  if (value > 90) return 4;
-  if (value > 75) return 3;
-  if (value > 55) return 1;
-  return 0;
+  // Range: 0-100, Extreme Fear < 25, Fear < 45, Greed > 55, Extreme Greed > 75
+  if (value >= 90) return 4;
+  if (value >= 75) return 3 + ((value - 75) / 15); // 3 to 4
+  if (value >= 55) return 1 + ((value - 55) / 20) * 2; // 1 to 3
+  if (value >= 45) return (value - 45) / 10; // 0 to 1
+  if (value >= 25) return -1 + ((value - 25) / 20); // -1 to 0
+  if (value >= 10) return -3 + ((value - 10) / 15) * 2; // -3 to -1
+  return -4;
 };
 export const calculateBtcRsiScore = (value = 0):number => {
-  if (value > 85) return 4;
-  if (value > 80) return 3;
-  if (value > 70) return 2;
-  if (value > 65) return 1;
-  if (value < 15) return -4;
-  if (value < 20) return -3;
-  if (value < 30) return -2;
-  if (value < 35) return -1;
-  return 0;
+  // Overbought zones: 65-70-80-85+, Oversold zones: 35-30-20-15-
+  if (value >= 85) return 4;
+  if (value >= 80) return 3 + ((value - 80) / 5); // 3 to 4
+  if (value >= 70) return 2 + ((value - 70) / 10); // 2 to 3
+  if (value >= 65) return 1 + ((value - 65) / 5); // 1 to 2
+  if (value > 35) return 0;
+  if (value >= 30) return -1 - ((35 - value) / 5); // 0 to -1
+  if (value >= 20) return -2 - ((30 - value) / 10); // -1 to -2
+  if (value >= 15) return -3 - ((20 - value) / 5); // -2 to -3
+  return -4;
 };
 export const calculateBtcDominanceScore = (value = 0):number => {
-  if (value < 35) return -2;
-  if (value < 40) return -1;
-  if (value > 65) return 2;
-  if (value > 60) return 1;
-  return 0;
+  // High dominance (>60) = BTC strength, Low dominance (<40) = Alt strength
+  if (value >= 65) return 2;
+  if (value >= 60) return 1 + ((value - 60) / 5); // 1 to 2
+  if (value > 40) return (value - 40) / 20; // 0 to 1
+  if (value >= 35) return -1 + ((value - 35) / 5); // -1 to 0
+  return -2;
 };
 export const calculateAltSeasonScore = (value = 0):number => {
-  if (value > 80) return -2;
-  if (value > 60) return -1;
-  if (value < 20) return 2;
-  if (value < 40) return 1;
-  return 0;
+  // Altseason index: low = BTC dominance (good), high = altseason (risky)
+  if (value >= 80) return -2;
+  if (value >= 60) return -1 - ((value - 60) / 20); // -1 to -2
+  if (value > 40) return -((value - 40) / 20); // 0 to -1
+  if (value >= 20) return 1 - ((value - 20) / 20); // 1 to 0
+  return 2;
 };
 
 export const calculateAthDistanceScore = (current: number | undefined, ath: number | undefined): number => {
@@ -41,27 +45,29 @@ export const calculateAthDistanceScore = (current: number | undefined, ath: numb
 
   const distance = (current / ath) * 100;
 
+  // Very close to ATH (98%+) = max bullish, far from ATH (<50%) = max bearish
   if (distance >= 98) return 4;
-  if (distance >= 95) return 3;
-  if (distance >= 90) return 2;
-  if (distance >= 85) return 1;
-  if (distance < 50) return -4;
-  if (distance < 60) return -3;
-  if (distance < 70) return -2;
-  if (distance < 80) return -1;
-  return 0;
+  if (distance >= 95) return 3 + ((distance - 95) / 3); // 3 to 4
+  if (distance >= 90) return 2 + ((distance - 90) / 5); // 2 to 3
+  if (distance >= 85) return 1 + ((distance - 85) / 5); // 1 to 2
+  if (distance >= 80) return (distance - 80) / 5; // 0 to 1
+  if (distance >= 70) return -1 + ((distance - 70) / 10); // -1 to 0
+  if (distance >= 60) return -2 + ((distance - 60) / 10); // -2 to -1
+  if (distance >= 50) return -3 + ((distance - 50) / 10); // -3 to -2
+  return -4;
 };
 
 export const calculateMomentum7dScore = (momentum7d: number): number => {
-  if (momentum7d > 15) return 4;
-  if (momentum7d > 10) return 3;
-  if (momentum7d > 5) return 2;
-  if (momentum7d > 2) return 1;
-  if (momentum7d < -15) return -4;
-  if (momentum7d < -10) return -3;
-  if (momentum7d < -5) return -2;
-  if (momentum7d < -2) return -1;
-  return 0;
+  // Momentum percentage: >15% very bullish, <-15% very bearish
+  if (momentum7d >= 15) return 4;
+  if (momentum7d >= 10) return 3 + ((momentum7d - 10) / 5); // 3 to 4
+  if (momentum7d >= 5) return 2 + ((momentum7d - 5) / 5); // 2 to 3
+  if (momentum7d >= 2) return 1 + ((momentum7d - 2) / 3); // 1 to 2
+  if (momentum7d > -2) return momentum7d / 2; // -1 to 1
+  if (momentum7d >= -5) return -1 - ((-2 - momentum7d) / 3); // -1 to -2
+  if (momentum7d >= -10) return -2 - ((-5 - momentum7d) / 5); // -2 to -3
+  if (momentum7d >= -15) return -3 - ((-10 - momentum7d) / 5); // -3 to -4
+  return -4;
 };
 
 export const calculateMomentumScore = (prices: number[]): number => {

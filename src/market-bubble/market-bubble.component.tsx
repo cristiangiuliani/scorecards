@@ -56,13 +56,18 @@ const MarketBubbleComponent: React.FC = () => {
     rsiSP500,
   });
 
-  const interpretation = getBubbleInterpretation(bubbleIndicator);
+  const displayScore = displayScoreRisk(bubbleIndicator);
+
+  // Use normalized score for interpretation
+  const normalizedIndicator = {
+    ...bubbleIndicator,
+    score: displayScore,
+  };
+  const interpretation = getBubbleInterpretation(normalizedIndicator);
 
   const daysAbove30 = vixHistory && vixHistory.length > 0
     ? vixHistory.slice(-5).filter((v) => v > 30).length
     : 0;
-
-  const displayScore = displayScoreRisk(bubbleIndicator);
 
   const nvdaNasdaqRatio = nvidiaPE && nasdaqPE ? nvidiaPE / nasdaqPE : 0;
   const nvidiaScore = calculateNvidiaPEScore(nvidiaPE);

@@ -8,21 +8,25 @@ const VIX_PERSISTENCE_DAYS = 3;
 export function calculateNvidiaPEScore(nvidiaPE: number | undefined): number {
   if (!nvidiaPE) return 0;
 
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD) return -4; // High risk
-  if (nvidiaPE > NVIDIA_PE_THRESHOLD * 0.9) return -2.5; // Warning zone (>58.5)
-  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.6) return 4; // Low risk (<39)
-  if (nvidiaPE < NVIDIA_PE_THRESHOLD * 0.75) return 2; // Safe zone (<48.75)
-  return 0;
+  const threshold = NVIDIA_PE_THRESHOLD; // 65
+  // High P/E = high risk (negative score), Low P/E = low risk (positive score)
+  if (nvidiaPE >= threshold) return -4;
+  if (nvidiaPE >= threshold * 0.9) return -2.5 - ((nvidiaPE - threshold * 0.9) / (threshold * 0.1)) * 1.5; // -2.5 to -4
+  if (nvidiaPE > threshold * 0.75) return ((threshold * 0.9 - nvidiaPE) / (threshold * 0.15)) * 2.5; // 0 to -2.5
+  if (nvidiaPE >= threshold * 0.6) return 2 + ((threshold * 0.75 - nvidiaPE) / (threshold * 0.15)) * 2; // 2 to 0
+  return 4 - Math.min(2, (threshold * 0.6 - nvidiaPE) / (threshold * 0.2) * 2); // 2 to 4
 }
 
 export function calculateNasdaqPEScore(nasdaqPE: number | undefined): number {
   if (!nasdaqPE) return 0;
 
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD) return -4; // High risk
-  if (nasdaqPE > NASDAQ_PE_THRESHOLD * 0.9) return -2.5; // Warning zone (>34.2)
-  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.6) return 4; // Low risk (<22.8)
-  if (nasdaqPE < NASDAQ_PE_THRESHOLD * 0.75) return 2; // Safe zone (<28.5)
-  return 0;
+  const threshold = NASDAQ_PE_THRESHOLD; // 38
+  // High P/E = high risk (negative score), Low P/E = low risk (positive score)
+  if (nasdaqPE >= threshold) return -4;
+  if (nasdaqPE >= threshold * 0.9) return -2.5 - ((nasdaqPE - threshold * 0.9) / (threshold * 0.1)) * 1.5; // -2.5 to -4
+  if (nasdaqPE > threshold * 0.75) return ((threshold * 0.9 - nasdaqPE) / (threshold * 0.15)) * 2.5; // 0 to -2.5
+  if (nasdaqPE >= threshold * 0.6) return 2 + ((threshold * 0.75 - nasdaqPE) / (threshold * 0.15)) * 2; // 2 to 0
+  return 4 - Math.min(2, (threshold * 0.6 - nasdaqPE) / (threshold * 0.2) * 2); // 2 to 4
 }
 
 export function calculateVixPersistenceScore(vixHistory: number[] | undefined): number {
@@ -51,15 +55,12 @@ export function calculateNvdaNasdaqRatioScore(
 
   const ratio = nvidiaPE / nasdaqPE;
 
-  // Ratio > 2.0 indicates NVIDIA is significantly overvalued vs NASDAQ
-  if (ratio > 2.0) return -2.0; // High risk
-  // Ratio > 1.7 is warning zone
-  if (ratio > 1.7) return -1.0; // Warning
-  // Ratio < 1.2 indicates NVIDIA is fairly valued
-  if (ratio < 1.2) return 2.0; // Low risk
-  if (ratio < 1.4) return 1.0; // Safe zone
-
-  return 0;
+  // Ratio > 2.0 = NVIDIA significantly overvalued vs NASDAQ (high risk)
+  if (ratio >= 2.0) return -2;
+  if (ratio >= 1.7) return -1 - ((ratio - 1.7) / 0.3); // -1 to -2
+  if (ratio > 1.4) return (1.7 - ratio) / 0.3; // 0 to -1
+  if (ratio >= 1.2) return 1 - ((1.4 - ratio) / 0.2); // 1 to 0
+  return 2 - Math.min(1, (1.2 - ratio) / 0.4); // 1 to 2
 }
 
 export function calculateFearGreedScore(fearGreed: number | undefined): number {
