@@ -33,17 +33,15 @@ import {
   createTheme, ThemeProvider,
 } from '@mui/material/styles';
 import React, { useContext } from 'react';
+import {
+  useNavigate,
+  useLocation,
+  Outlet,
+} from 'react-router-dom';
 
-import { GLOBALS } from '../constants/config';
-import FedPolicy from '../fed-policy/fed-policy';
 import type {
   IDashboardContext,
 } from '../interfaces/dashboard';
-import MarketBubble from '../market-bubble/market-bubble';
-import MarketCapitalFlows from '../market-capital-flows/market-capital-flows';
-import MarketCrypto from '../market-crypto/market-crypto';
-import MarketStocks from '../market-stocks/market-stocks';
-import MarketTreasuryBonds from '../market-treasury-bonds/market-treasury-bonds';
 import { DisclaimerComponent } from '../shared/components/disclaimer.component';
 import { ErrorDisplay } from '../shared/components/error-display';
 
@@ -57,8 +55,6 @@ const theme = createTheme({
 const DashboardLayout: React.FC = () => {
   const {
     isDemo,
-    activeTab = GLOBALS.defaultActiveTab,
-    updateDashboard,
   } = useContext<IDashboardContext>(DashboardContext);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -70,38 +66,48 @@ const DashboardLayout: React.FC = () => {
     setAnchorEl(null);
   };
   const handleSelectMenuItem = (index: number) => {
-    updateDashboard({
-      activeTab: index,
-    });
+    navigate(menuList[index].path);
     handleCloseMenu();
   };
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuList = [
     {
       icon: <ShowChart />,
       label: 'Stocks',
+      path: '/stocks-bullish-bearish',
     },
     {
       icon: <CurrencyBitcoin />,
       label: 'Crypto',
+      path: '/crypto-bullish-bearish',
     },
     {
       icon: <AccountBalance />,
       label: 'Bonds',
+      path: '/treasury-bullish-bearish',
     },
     {
       icon: <BubbleChart />,
       label: 'AI Bubble',
+      path: '/ai-bubble',
     },
     {
       icon: <TrendingUp />,
       label: 'Capital Flows',
+      path: '/capital-flow',
     },
     {
       icon: <Gavel />,
       label: 'Fed Policy',
+      path: '/fed-dovish-hawkish',
     },
   ];
+
+  const currentTabIndex = menuList.findIndex((item) => item.path === location.pathname);
+  const activeTabValue = currentTabIndex >= 0 ? currentTabIndex : 0;
 
   return (
     <ThemeProvider theme={theme}>
@@ -168,7 +174,7 @@ const DashboardLayout: React.FC = () => {
                   justifyContent="flex-end"
                 >
                   <Tabs
-                    value={activeTab}
+                    value={activeTabValue}
                     onChange={(_e, newValue) => handleSelectMenuItem(newValue)}
                     sx={{
                       display: {
@@ -226,7 +232,7 @@ const DashboardLayout: React.FC = () => {
                       <MenuItem
                         key={index}
                         onClick={() => handleSelectMenuItem(index)}
-                        selected={index === activeTab}
+                        selected={index === activeTabValue}
                       >
                         <ListItemIcon>
                           {menuItem.icon}
@@ -244,19 +250,7 @@ const DashboardLayout: React.FC = () => {
 
         { isDemo && <Alert severity="warning">DEMO MODE: Scorecards is using demo MOCK data.</Alert>}
 
-        { activeTab === 1 ? (
-          <MarketCrypto />
-        ) : activeTab === 2 ? (
-          <MarketTreasuryBonds />
-        ) : activeTab === 3 ? (
-          <MarketBubble />
-        ) : activeTab === 4 ? (
-          <MarketCapitalFlows />
-        ) : activeTab === 5 ? (
-          <FedPolicy />
-        ) : (
-          <MarketStocks />
-        )}
+        <Outlet />
       </Container>
       <Divider />
 

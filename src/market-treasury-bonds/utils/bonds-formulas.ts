@@ -3,6 +3,37 @@ import type { IBondsData } from '../../interfaces/market-treasury-bonds';
 
 export const calculateYield10YScore = (value = 0): number => {
   // 10Y Yield: lower rates = better for bonds
+  // Adjusted for current rate environment (neutral ~4.25%)
+  if (value >= 5.5) return -4;
+  if (value >= 5.0) return -3 - ((value - 5.0) / 0.5); // -3 to -4
+  if (value >= 4.5) return -2 - ((value - 4.5) / 0.5); // -2 to -3
+  if (value >= 4.0) return -1 - ((value - 4.0) / 0.5); // -1 to -2
+  if (value >= 3.5) return ((4.0 - value) / 0.5) - 1; // 0 to -1
+  if (value >= 3.0) return 1 - ((3.5 - value) / 0.5); // 1 to 0
+  if (value >= 2.5) return 2 - ((3.0 - value) / 0.5); // 2 to 1
+  if (value >= 2.0) return 3 - ((2.5 - value) / 0.5); // 3 to 2
+  if (value < 2.0) return 4 - Math.min(1, (2.0 - value) / 0.5); // 3 to 4
+  return 4;
+};
+
+export const calculateYield5YScore = (value = 0): number => {
+  // 5Y Yield: lower rates = better for bonds
+  // Adjusted for current rate environment (neutral ~4.05%)
+  if (value >= 5.3) return -4;
+  if (value >= 4.8) return -3 - ((value - 4.8) / 0.5); // -3 to -4
+  if (value >= 4.3) return -2 - ((value - 4.3) / 0.5); // -2 to -3
+  if (value >= 3.8) return -1 - ((value - 3.8) / 0.5); // -1 to -2
+  if (value >= 3.3) return ((3.8 - value) / 0.5) - 1; // 0 to -1
+  if (value >= 2.8) return 1 - ((3.3 - value) / 0.5); // 1 to 0
+  if (value >= 2.3) return 2 - ((2.8 - value) / 0.5); // 2 to 1
+  if (value >= 1.8) return 3 - ((2.3 - value) / 0.5); // 3 to 2
+  if (value < 1.8) return 4 - Math.min(1, (1.8 - value) / 0.5); // 3 to 4
+  return 4;
+};
+
+export const calculateYield2YScore = (value = 0): number => {
+  // 2Y Yield: lower rates = better for bonds
+  // Adjusted for current rate environment (neutral ~3.75%)
   if (value >= 5.0) return -4;
   if (value >= 4.5) return -3 - ((value - 4.5) / 0.5); // -3 to -4
   if (value >= 4.0) return -2 - ((value - 4.0) / 0.5); // -2 to -3
@@ -12,34 +43,6 @@ export const calculateYield10YScore = (value = 0): number => {
   if (value >= 2.0) return 2 - ((2.5 - value) / 0.5); // 2 to 1
   if (value >= 1.5) return 3 - ((2.0 - value) / 0.5); // 3 to 2
   if (value < 1.5) return 4 - Math.min(1, (1.5 - value) / 0.5); // 3 to 4
-  return 4;
-};
-
-export const calculateYield5YScore = (value = 0): number => {
-  // 5Y Yield: lower rates = better for bonds
-  if (value >= 4.8) return -4;
-  if (value >= 4.3) return -3 - ((value - 4.3) / 0.5); // -3 to -4
-  if (value >= 3.8) return -2 - ((value - 3.8) / 0.5); // -2 to -3
-  if (value >= 3.3) return -1 - ((value - 3.3) / 0.5); // -1 to -2
-  if (value >= 2.8) return ((3.3 - value) / 0.5) - 1; // 0 to -1
-  if (value >= 2.3) return 1 - ((2.8 - value) / 0.5); // 1 to 0
-  if (value >= 1.8) return 2 - ((2.3 - value) / 0.5); // 2 to 1
-  if (value >= 1.3) return 3 - ((1.8 - value) / 0.5); // 3 to 2
-  if (value < 1.3) return 4 - Math.min(1, (1.3 - value) / 0.5); // 3 to 4
-  return 4;
-};
-
-export const calculateYield2YScore = (value = 0): number => {
-  // 2Y Yield: lower rates = better for bonds
-  if (value >= 4.5) return -4;
-  if (value >= 4.0) return -3 - ((value - 4.0) / 0.5); // -3 to -4
-  if (value >= 3.5) return -2 - ((value - 3.5) / 0.5); // -2 to -3
-  if (value >= 3.0) return -1 - ((value - 3.0) / 0.5); // -1 to -2
-  if (value >= 2.5) return ((3.0 - value) / 0.5) - 1; // 0 to -1
-  if (value >= 2.0) return 1 - ((2.5 - value) / 0.5); // 1 to 0
-  if (value >= 1.5) return 2 - ((2.0 - value) / 0.5); // 2 to 1
-  if (value >= 1.0) return 3 - ((1.5 - value) / 0.5); // 3 to 2
-  if (value < 1.0) return 4 - Math.min(1, (1.0 - value) / 0.5); // 3 to 4
   return 4;
 };
 
