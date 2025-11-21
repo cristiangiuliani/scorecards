@@ -108,7 +108,7 @@ export const AI_BUBBLE_LABELS = {
   recommendedSectors: 'Recommended Sectors',
   action: 'Action',
   OverallScore: 'AI Bubble Risk Score',
-  OverallScoreDescription: 'AI sector bubble risk assessment based on tech valuations (NVIDIA, NASDAQ), market sentiment (Fear & Greed, RSI), and volatility patterns (VIX).',
+  OverallScoreDescription: 'AI sector bubble risk assessment based on tech valuations (NVIDIA, NASDAQ), market sentiment (Fear & Greed, RSI), and volatility patterns (VIX). Positive scores indicate high bubble risk, negative scores indicate low risk.',
 };
 
 export const TREASURY_BONDS_LABELS = {

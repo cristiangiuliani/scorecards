@@ -6,9 +6,9 @@ import {
 
 describe('Bubble Interpretation', () => {
   describe('getBubbleInterpretation', () => {
-    it('should return "Critical" for score >= 7 (extreme bubble)', () => {
+    it('should return "Critical" for score <= -7 (extreme bubble)', () => {
       const indicator: IBubbleIndicator = {
-        score: 8,
+        score: -8,
         factors: {
           nvidiaOvervalued: true,
           nasdaqOvervalued: true,
@@ -21,9 +21,9 @@ describe('Bubble Interpretation', () => {
       expect(result.severity).toBe('error');
     });
 
-    it('should return "High Risk" for score 3-7 (high bubble)', () => {
+    it('should return "High Risk" for score -7 to -3 (high bubble)', () => {
       const indicator: IBubbleIndicator = {
-        score: 5,
+        score: -5,
         factors: {
           nvidiaOvervalued: false,
           nasdaqOvervalued: true,
@@ -51,9 +51,9 @@ describe('Bubble Interpretation', () => {
       expect(result.severity).toBe('warning');
     });
 
-    it('should return "Low Risk" for score -7 to -3', () => {
+    it('should return "Low Risk" for score 3 to 7', () => {
       const indicator: IBubbleIndicator = {
-        score: -5,
+        score: 5,
         factors: {
           nvidiaOvervalued: false,
           nasdaqOvervalued: false,
@@ -66,9 +66,9 @@ describe('Bubble Interpretation', () => {
       expect(result.severity).toBe('success');
     });
 
-    it('should return "Very Low Risk" for score <= -7', () => {
+    it('should return "Very Low Risk" for score >= 7', () => {
       const indicator: IBubbleIndicator = {
-        score: -8,
+        score: 8,
         factors: {
           nvidiaOvervalued: false,
           nasdaqOvervalued: false,
@@ -83,14 +83,14 @@ describe('Bubble Interpretation', () => {
   });
 
   describe('getPortfolioRecommendation', () => {
-    it('should recommend reducing AI/tech for extreme bubble (score >= 9)', () => {
-      const recommendation = getPortfolioRecommendation(9);
+    it('should recommend reducing AI/tech for extreme bubble (score <= -9)', () => {
+      const recommendation = getPortfolioRecommendation(-9);
       expect(recommendation).toContain('Reduce');
       expect(recommendation).toContain('20-30%');
     });
 
     it('should recommend caution for high bubble risk', () => {
-      const recommendation = getPortfolioRecommendation(6);
+      const recommendation = getPortfolioRecommendation(-6);
       expect(recommendation).toContain('50%');
     });
 
@@ -100,36 +100,36 @@ describe('Bubble Interpretation', () => {
     });
 
     it('should recommend standard allocation for low risk', () => {
-      const recommendation = getPortfolioRecommendation(-6);
+      const recommendation = getPortfolioRecommendation(6);
       expect(recommendation).toContain('Standard diversified');
     });
   });
 
   describe('Bubble Logic Inversion', () => {
-    it('should treat high scores as negative (bubble warning)', () => {
+    it('should treat high positive scores as low risk (good)', () => {
       const highScore: IBubbleIndicator = {
         score: 8,
-        factors: {
-          nvidiaOvervalued: true,
-          nasdaqOvervalued: true,
-          vixPersistent: false,
-        },
-      };
-      const result = getBubbleInterpretation(highScore);
-      expect(result.severity).toBe('error');
-    });
-
-    it('should treat low scores as positive (low risk)', () => {
-      const lowScore: IBubbleIndicator = {
-        score: -8,
         factors: {
           nvidiaOvervalued: false,
           nasdaqOvervalued: false,
           vixPersistent: false,
         },
       };
-      const result = getBubbleInterpretation(lowScore);
+      const result = getBubbleInterpretation(highScore);
       expect(result.severity).toBe('success');
+    });
+
+    it('should treat negative scores as high risk (bubble warning)', () => {
+      const lowScore: IBubbleIndicator = {
+        score: -8,
+        factors: {
+          nvidiaOvervalued: true,
+          nasdaqOvervalued: true,
+          vixPersistent: false,
+        },
+      };
+      const result = getBubbleInterpretation(lowScore);
+      expect(result.severity).toBe('error');
     });
   });
 
@@ -141,9 +141,9 @@ describe('Bubble Interpretation', () => {
         const indicator: IBubbleIndicator = {
           score: scoreValue,
           factors: {
-            nvidiaOvervalued: scoreValue > 0,
-            nasdaqOvervalued: scoreValue > 3,
-            vixPersistent: scoreValue > 5,
+            nvidiaOvervalued: scoreValue < 0,
+            nasdaqOvervalued: scoreValue < -3,
+            vixPersistent: scoreValue < -5,
           },
         };
         const result = getBubbleInterpretation(indicator);
@@ -164,9 +164,9 @@ describe('Bubble Interpretation', () => {
         const indicator: IBubbleIndicator = {
           score: scoreValue,
           factors: {
-            nvidiaOvervalued: scoreValue > 0,
-            nasdaqOvervalued: scoreValue > 3,
-            vixPersistent: scoreValue > 5,
+            nvidiaOvervalued: scoreValue < 0,
+            nasdaqOvervalued: scoreValue < -3,
+            vixPersistent: scoreValue < -5,
           },
         };
         const result = getBubbleInterpretation(indicator);

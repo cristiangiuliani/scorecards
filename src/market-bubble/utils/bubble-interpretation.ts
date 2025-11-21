@@ -7,11 +7,11 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     score,
   } = indicator;
 
-  // Score is now normalized to [-10, +10] range
-  // Negative scores = LOW risk (good)
-  // Positive scores = HIGH risk (bubble warning)
+  // Score is now inverted and normalized to [-10, +10] range
+  // Positive scores = LOW risk (good) - right side of gauge
+  // Negative scores = HIGH risk (bubble warning) - left side of gauge
 
-  if (score >= 7) {
+  if (score <= -7) {
     // CRITICAL BUBBLE RISK
     return {
       text: COMMON_LABELS.Critical,
@@ -20,7 +20,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     };
   }
 
-  if (score >= 3) {
+  if (score <= -3) {
     // HIGH BUBBLE RISK
     return {
       text: COMMON_LABELS.HighRisk,
@@ -38,7 +38,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     };
   }
 
-  if (score <= -7) {
+  if (score >= 7) {
     // VERY LOW RISK
     return {
       text: COMMON_LABELS.VeryLowRisk,
@@ -56,30 +56,30 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
 }
 
 export function getPortfolioRecommendation(score: number): string {
-  if (score >= 9) {
+  if (score <= -9) {
     return 'Reduce AI/tech exposure to 20-30%. Increase defensive positions and cash reserves.';
   }
-  if (score >= 4) {
+  if (score <= -4) {
     return 'Maintain 40-50% AI/tech exposure. Consider taking profits on winners. Set stop losses.';
   }
   return 'Standard diversified portfolio OK. AI/tech allocation can remain at 50-60%.';
 }
 
 export function getSectorRecommendation(score: number): string {
-  if (score >= 9) {
+  if (score <= -9) {
     return 'Rotate to: Healthcare, Utilities, Consumer Staples, Cash';
   }
-  if (score >= 4) {
+  if (score <= -4) {
     return 'Balance: 50% Tech + 50% Defensive (Healthcare, Industrials)';
   }
   return 'Tech-focused OK: Semiconductors, Software, AI Infrastructure';
 }
 
 export function getTimingRecommendation(score: number): string {
-  if (score >= 9) {
+  if (score <= -9) {
     return 'SELL or heavily trim positions NOW. Wait for correction before re-entry.';
   }
-  if (score >= 4) {
+  if (score <= -4) {
     return 'HOLD winners with tight stops. Pause new entries. Wait for clarity.';
   }
   return 'BUY opportunistically on dips. Good risk/reward for new positions.';
@@ -89,13 +89,13 @@ export function getActionableTips(indicator: IBubbleIndicator): string[] {
   const { score, factors } = indicator;
   const tips: string[] = [];
 
-  if (score >= 9) {
+  if (score <= -9) {
     // HIGH RISK
     tips.push('Immediate: Set stop-losses on all AI/tech positions at -15%');
     tips.push('Take profits: Sell 50-70% of winners, secure capital');
     tips.push('Hedge: Consider inverse ETFs (SQQQ) or put options');
     tips.push('Cash is a position: Raise cash to 30-40% of portfolio');
-  } else if (score >= 4) {
+  } else if (score <= -4) {
     // MEDIUM RISK
     tips.push('Rebalance: Trim winners to original allocation');
     tips.push('Selective: Hold best quality names, exit speculative');
