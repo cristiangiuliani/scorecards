@@ -1,5 +1,9 @@
 # Scorecards
 
+[![Tests](https://github.com/cristiangiuliani/scorecards/actions/workflows/test.yml/badge.svg)](https://github.com/cristiangiuliani/scorecards/actions/workflows/test.yml)
+[![Build](https://github.com/cristiangiuliani/scorecards/actions/workflows/netifly-hosting.yml/badge.svg)](https://github.com/cristiangiuliani/scorecards/actions/workflows/netifly-hosting.yml)
+[![codecov](https://codecov.io/gh/cristiangiuliani/scorecards/branch/main/graph/badge.svg)](https://codecov.io/gh/cristiangiuliani/scorecards)
+
 An automated market reversal analysis system that provides real-time scoring and analysis for stocks, cryptocurrency, AI bubble indicators, and US Treasury bonds markets.
 
 **Live Demo:** https://scorecards.cristiangiuliani.com/
@@ -115,6 +119,14 @@ Scorecards is a React-based web application that analyzes market indicators and 
 - **React Router** - Navigation
 - **Vite** - Build tool and dev server
 - **Technical Indicators** - Market calculation library
+- **Jest** - Unit testing framework with TypeScript support
+
+### Testing
+- **Jest + ts-jest** - Unit testing with TypeScript
+- **227 unit tests** covering all formulas and interpretations
+- **Coverage**: 75%+ (170/227 tests passing)
+- **CI/CD Integration** - Automated testing on every PR and push
+- See [TESTING.md](./TESTING.md) for detailed testing documentation
 
 ### Backend
 - **Netlify Functions** - Serverless API endpoints
