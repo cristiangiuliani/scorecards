@@ -77,32 +77,32 @@ const DashboardLayout: React.FC = () => {
     {
       icon: <ShowChart />,
       label: 'Stocks',
-      path: '/stocks-bullish-bearish',
+      path: '/stocks-bullish-bearish-indicator',
     },
     {
       icon: <CurrencyBitcoin />,
       label: 'Crypto',
-      path: '/crypto-bullish-bearish',
+      path: '/crypto-bullish-bearish-indicator',
     },
     {
       icon: <AccountBalance />,
       label: 'Bonds',
-      path: '/treasury-bullish-bearish',
+      path: '/treasury-bonds-buy-sell-indicator',
     },
     {
       icon: <BubbleChart />,
       label: 'AI Bubble',
-      path: '/ai-bubble',
+      path: '/ai-bubble-risk-indicator',
     },
     {
       icon: <TrendingUp />,
       label: 'Capital Flows',
-      path: '/capital-flow',
+      path: '/capital-inflow-outflow-indicator',
     },
     {
       icon: <Gavel />,
       label: 'Fed Policy',
-      path: '/fed-dovish-hawkish',
+      path: '/fed-dovish-hawkish-indicator',
     },
   ];
 

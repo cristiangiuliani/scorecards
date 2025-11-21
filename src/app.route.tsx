@@ -18,13 +18,13 @@ export const AppRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />}>
-        <Route index element={<Navigate to="/stocks-bullish-bearish" replace />} />
-        <Route path="/stocks-bullish-bearish" element={<MarketStocks />} />
-        <Route path="/crypto-bullish-bearish" element={<MarketCrypto />} />
-        <Route path="/treasury-bullish-bearish" element={<MarketTreasuryBonds />} />
-        <Route path="/ai-bubble" element={<MarketBubble />} />
-        <Route path="/capital-flow" element={<MarketCapitalFlows />} />
-        <Route path="/fed-dovish-hawkish" element={<FedPolicy />} />
+        <Route index element={<Navigate to="/stocks-bullish-bearish-indicator" replace />} />
+        <Route path="/stocks-bullish-bearish-indicator" element={<MarketStocks />} />
+        <Route path="/crypto-bullish-bearish-indicator" element={<MarketCrypto />} />
+        <Route path="/treasury-bonds-buy-sell-indicator" element={<MarketTreasuryBonds />} />
+        <Route path="/ai-bubble-risk-indicator" element={<MarketBubble />} />
+        <Route path="/capital-inflow-outflow-indicator" element={<MarketCapitalFlows />} />
+        <Route path="/fed-dovish-hawkish-indicator" element={<FedPolicy />} />
       </Route>
       <Route path="*" element={<NoMatchPage />} />
     </Routes>
