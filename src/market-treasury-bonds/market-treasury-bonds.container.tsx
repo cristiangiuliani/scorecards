@@ -31,7 +31,7 @@ const MarketTreasuryBondsContainer: React.FC = () => {
       cacheCreatedAt,
     });
     if (data?.observations && data.observations.length > 0) {
-      const latestObservation = data.observations[data.observations.length - 1];
+      const latestObservation = data.observations[0];
       updateMarketTreasuryBonds({
         yield10Y: parseFloat(latestObservation.value),
       });
@@ -50,7 +50,7 @@ const MarketTreasuryBondsContainer: React.FC = () => {
     const { data, loading } = yield5YData;
     updateMarketTreasuryBonds({ isYield5YLoading: loading });
     if (data?.observations && data.observations.length > 0) {
-      const latestObservation = data.observations[data.observations.length - 1];
+      const latestObservation = data.observations[0];
       updateMarketTreasuryBonds({
         yield5Y: parseFloat(latestObservation.value),
       });
@@ -69,7 +69,7 @@ const MarketTreasuryBondsContainer: React.FC = () => {
     const { data, loading } = yield2YData;
     updateMarketTreasuryBonds({ isYield2YLoading: loading });
     if (data?.observations && data.observations.length > 0) {
-      const latestObservation = data.observations[data.observations.length - 1];
+      const latestObservation = data.observations[0];
       updateMarketTreasuryBonds({
         yield2Y: parseFloat(latestObservation.value),
       });
@@ -88,7 +88,7 @@ const MarketTreasuryBondsContainer: React.FC = () => {
     const { data, loading } = creditSpreadsData;
     updateMarketTreasuryBonds({ isSpreadsLoading: loading });
     if (data?.observations && data.observations.length > 0) {
-      const latestObservation = data.observations[data.observations.length - 1];
+      const latestObservation = data.observations[0];
       // FRED returns percentage, convert to basis points (multiply by 100)
       updateMarketTreasuryBonds({
         creditSpreads: parseFloat(latestObservation.value) * 100,
@@ -108,7 +108,7 @@ const MarketTreasuryBondsContainer: React.FC = () => {
     const { data, loading } = inflationData;
     updateMarketTreasuryBonds({ isInflationLoading: loading });
     if (data?.observations && data.observations.length > 0) {
-      const latestObservation = data.observations[data.observations.length - 1];
+      const latestObservation = data.observations[0];
       updateMarketTreasuryBonds({
         inflationExpectations: parseFloat(latestObservation.value),
       });
