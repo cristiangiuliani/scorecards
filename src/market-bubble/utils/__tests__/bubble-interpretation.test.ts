@@ -6,7 +6,7 @@ import {
 
 describe('Bubble Interpretation', () => {
   describe('getBubbleInterpretation', () => {
-    it('should return "Critical" for score <= -7 (extreme bubble)', () => {
+    it('should return "Very Low Risk" for score <= -7 (very low bubble risk)', () => {
       const indicator: IBubbleIndicator = {
         score: -8,
         factors: {
@@ -16,12 +16,12 @@ describe('Bubble Interpretation', () => {
         },
       };
       const result = getBubbleInterpretation(indicator);
-      expect(result.text).toBe('CRITICAL');
-      expect(result.color).toBe('error');
-      expect(result.severity).toBe('error');
+      expect(result.text).toBe('🚀 VERY LOW RISK');
+      expect(result.color).toBe('success');
+      expect(result.severity).toBe('success');
     });
 
-    it('should return "High Risk" for score -7 to -3 (high bubble)', () => {
+    it('should return "Low Risk" for score -7 to -3 (low bubble risk)', () => {
       const indicator: IBubbleIndicator = {
         score: -5,
         factors: {
@@ -31,9 +31,9 @@ describe('Bubble Interpretation', () => {
         },
       };
       const result = getBubbleInterpretation(indicator);
-      expect(result.text).toBe('HIGH RISK');
-      expect(result.color).toBe('error');
-      expect(result.severity).toBe('error');
+      expect(result.text).toBe('LOW RISK');
+      expect(result.color).toBe('success');
+      expect(result.severity).toBe('success');
     });
 
     it('should return "Moderate Risk" for score -3 to 3', () => {
@@ -51,7 +51,7 @@ describe('Bubble Interpretation', () => {
       expect(result.severity).toBe('warning');
     });
 
-    it('should return "Low Risk" for score 3 to 7', () => {
+    it('should return "High Risk" for score 3 to 7', () => {
       const indicator: IBubbleIndicator = {
         score: 5,
         factors: {
@@ -61,12 +61,12 @@ describe('Bubble Interpretation', () => {
         },
       };
       const result = getBubbleInterpretation(indicator);
-      expect(result.text).toBe('LOW RISK');
-      expect(result.color).toBe('success');
-      expect(result.severity).toBe('success');
+      expect(result.text).toBe('HIGH RISK');
+      expect(result.color).toBe('error');
+      expect(result.severity).toBe('error');
     });
 
-    it('should return "Very Low Risk" for score >= 7', () => {
+    it('should return "Critical" for score >= 7', () => {
       const indicator: IBubbleIndicator = {
         score: 8,
         factors: {
@@ -76,9 +76,9 @@ describe('Bubble Interpretation', () => {
         },
       };
       const result = getBubbleInterpretation(indicator);
-      expect(result.text).toBe('🚀 VERY LOW RISK');
-      expect(result.color).toBe('success');
-      expect(result.severity).toBe('success');
+      expect(result.text).toBe('CRITICAL');
+      expect(result.color).toBe('error');
+      expect(result.severity).toBe('error');
     });
   });
 
@@ -106,7 +106,7 @@ describe('Bubble Interpretation', () => {
   });
 
   describe('Bubble Logic Inversion', () => {
-    it('should treat high positive scores as low risk (good)', () => {
+    it('should treat high positive scores as high risk (bubble warning)', () => {
       const highScore: IBubbleIndicator = {
         score: 8,
         factors: {
@@ -116,10 +116,10 @@ describe('Bubble Interpretation', () => {
         },
       };
       const result = getBubbleInterpretation(highScore);
-      expect(result.severity).toBe('success');
+      expect(result.severity).toBe('error');
     });
 
-    it('should treat negative scores as high risk (bubble warning)', () => {
+    it('should treat negative scores as low risk (good)', () => {
       const lowScore: IBubbleIndicator = {
         score: -8,
         factors: {
@@ -129,7 +129,7 @@ describe('Bubble Interpretation', () => {
         },
       };
       const result = getBubbleInterpretation(lowScore);
-      expect(result.severity).toBe('error');
+      expect(result.severity).toBe('success');
     });
   });
 

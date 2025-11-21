@@ -7,11 +7,11 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     score,
   } = indicator;
 
-  // Score is now inverted and normalized to [-10, +10] range
-  // Positive scores = LOW risk (good) - right side of gauge
-  // Negative scores = HIGH risk (bubble warning) - left side of gauge
+  // Score has been inverted in displayScoreRisk:
+  // Negative values = LOW risk (good) - left side of gauge
+  // Positive values = HIGH risk (bubble warning) - right side of gauge
 
-  if (score <= -7) {
+  if (score >= 7) {
     // CRITICAL BUBBLE RISK
     return {
       text: COMMON_LABELS.Critical,
@@ -20,7 +20,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     };
   }
 
-  if (score <= -3) {
+  if (score >= 3) {
     // HIGH BUBBLE RISK
     return {
       text: COMMON_LABELS.HighRisk,
@@ -38,7 +38,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     };
   }
 
-  if (score >= 7) {
+  if (score <= -7) {
     // VERY LOW RISK
     return {
       text: COMMON_LABELS.VeryLowRisk,
