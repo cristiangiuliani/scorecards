@@ -1,7 +1,6 @@
 import {
   calculateYield10YScore,
   calculateYield2YScore,
-  calculateYield5YScore,
   calculateYieldCurveSlopeScore,
   calculateCreditSpreadsScore,
   calculateInflationScore,

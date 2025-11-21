@@ -150,7 +150,6 @@ describe('Capital Flows Formulas', () => {
 
     it('should return neutral for moderate dominance (5-6%)', () => {
       const score = calculateStablecoinAccumulationScore(183, 3520); // ~5.2% dominance
-      const score2 = calculateStablecoinAccumulationScore(259, 3520); // ~7.35% dominance
       expect(score).toBeGreaterThan(-1);
     });
   });
