@@ -3,6 +3,7 @@ import {
   Stack,
   useTheme,
 } from '@mui/material';
+import { blue } from '@mui/material/colors';
 import React from 'react';
 
 const DISCLAIMER_STORAGE_KEY = 'disclaimer-dismissed';
@@ -38,10 +39,12 @@ export const DisclaimerComponent = () => {
       >
         <Alert
           variant="filled"
+          severity="info"
           sx={{
-            opacity: 0.90,
-            backgroundColor: theme.palette.info.main,
+            opacity: 0.85,
+            backgroundColor: `linear-gradient(to bottom, ${blue[500]}, ${blue[800]})`,
             color: theme.palette.text.primary,
+            background: `linear-gradient(to bottom, ${blue[300]}, ${blue[500]})`,
           }}
           onClose={closeBanner}
           icon="⚠️"

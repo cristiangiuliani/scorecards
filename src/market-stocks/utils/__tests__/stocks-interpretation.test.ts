@@ -23,7 +23,7 @@ describe('Stocks Interpretation', () => {
     it('should return "Crab Market" for score -3 to 3', () => {
       const result = getStockInterpretation(0);
       expect(result.text).toBe('CRAB MARKET');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('info');
     });
 
@@ -111,7 +111,7 @@ describe('Stocks Interpretation', () => {
     });
 
     it('should use consistent color palette', () => {
-      const validColors = ['success', 'error', 'warning', 'default'];
+      const validColors = ['success', 'error', 'warning', 'info'];
       const scores = [-10, -5, 0, 5, 10];
 
       scores.forEach((score) => {

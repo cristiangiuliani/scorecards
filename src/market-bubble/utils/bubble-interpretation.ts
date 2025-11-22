@@ -33,7 +33,7 @@ export function getBubbleInterpretation(indicator: IBubbleIndicator): TInterpret
     // MODERATE/NEUTRAL
     return {
       text: COMMON_LABELS.ModerateRisk,
-      color: 'default',
+      color: 'info',
       severity: 'warning',
     };
   }

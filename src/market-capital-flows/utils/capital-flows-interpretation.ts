@@ -17,7 +17,7 @@ export const getCapitalFlowsInterpretation = (score: number): TInterpretation =>
   if (score > -3)
     return {
       text: COMMON_LABELS.Neutral,
-      color: 'default',
+      color: 'info',
       severity: 'info',
     };
   if (score > -7)

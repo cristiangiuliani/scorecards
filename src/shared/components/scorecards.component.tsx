@@ -81,9 +81,13 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
   const userLocale = navigator.language || 'nl-NL';
 
   const getBackgroundColor = () => {
-    if (!interpretation?.color) return theme.palette.grey[700];
-    if (interpretation.color === 'default') return theme.palette.grey[700];
-    return theme.palette[interpretation.color].dark;
+    const color = interpretation?.color ? interpretation.color : 'info';
+    return theme.palette[color].gradient;
+  };
+
+  const getTextColor = () => {
+    const color = interpretation?.color ? interpretation.color : 'info';
+    return theme.palette[color].dark;
   };
 
   const updateMinutesRemaining = () => {
@@ -139,7 +143,8 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: getBackgroundColor(),
+          background: getBackgroundColor(),
+          borderRadius: 0,
         }}
       >
         <CardHeader title={label} sx={{ opacity: 0.7 }} />
@@ -169,7 +174,7 @@ const ScoreCardsComponent: React.FC<TScoreCardsComponentProps> = ({
                   fontWeight: 'bold',
                   mb: 2,
                   backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  color: getBackgroundColor(),
+                  color: getTextColor(),
                   maxWidth: '200px',
                   margin: '0.5rem auto',
                 }}

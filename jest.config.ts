@@ -29,7 +29,7 @@ const config: Config = {
   },
   coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
   reporters: [
-    'default',
+    'info',
     [
       'jest-junit',
       {

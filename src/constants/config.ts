@@ -1,7 +1,6 @@
 export const GLOBALS = {
   defaultActiveTab: 0,
   ApiBaseUrl: '/scorecards/api',
-  useMockData: false,
 };
 
 // no free api available for nasdaq pe ratio, hardcoding value

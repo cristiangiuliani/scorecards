@@ -1,6 +1,6 @@
 export type TInterpretation = {
   text: string;
-  color: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning' | 'default';
+  color: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning';
     severity: 'success' | 'warning' | 'error' | 'info';
 };
 
@@ -23,7 +23,7 @@ export type TIndicatorsListItem = {
 
 export type TStrategiesListItem = {
   title?: string
-  color?: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning' | 'default'
+  color?: 'secondary' | 'primary' | 'info' | 'error' | 'success' | 'warning'
   isLoading?: boolean
   items: {
     label?: string

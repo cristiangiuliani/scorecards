@@ -16,7 +16,6 @@ import {
   Tabs,
   Tab,
   Container,
-  Alert,
   CssBaseline,
   AppBar,
   Toolbar,
@@ -30,33 +29,66 @@ import {
   Button,
 } from '@mui/material';
 import {
+  green, grey, orange, red,
+} from '@mui/material/colors';
+import {
   createTheme, ThemeProvider,
 } from '@mui/material/styles';
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   useNavigate,
   useLocation,
   Outlet,
 } from 'react-router-dom';
 
-import type {
-  IDashboardContext,
-} from '../interfaces/dashboard';
 import { DisclaimerComponent } from '../shared/components/disclaimer.component';
 import { ErrorDisplay } from '../shared/components/error-display';
 
-import DashboardContext from './dashboard.context';
+declare module '@mui/material/styles' {
+  interface PaletteColor {
+    gradient?: string;
+    darkGradient?: string;
+  }
+  interface SimplePaletteColorOptions {
+    gradient?: string;
+    darkGradient?: string;
+  }
+}
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
+    success: {
+      main: green[500],
+      dark: green[700],
+      light: green[300],
+      gradient: `linear-gradient(to bottom, ${green[500]}, ${green[900]})`,
+      darkGradient: `linear-gradient(to bottom, ${green[900]}, transparent)`,
+    },
+    error: {
+      main: red[500],
+      dark: red[700],
+      light: red[300],
+      gradient: `linear-gradient(to bottom, ${red[500]}, ${red[800]})`,
+      darkGradient: `linear-gradient(to bottom, ${red[900]}, transparent)`,
+    },
+    warning: {
+      main: orange[500],
+      dark: orange[700],
+      light: orange[300],
+      gradient: `linear-gradient(to bottom, ${orange[500]}, ${orange[800]})`,
+      darkGradient: `linear-gradient(to bottom, ${orange[900]}, transparent)`,
+    },
+    info: {
+      main: grey[500],
+      dark: grey[700],
+      light: grey[300],
+      gradient: `linear-gradient(to bottom, ${grey[500]}, ${grey[800]})`,
+      darkGradient: `linear-gradient(to bottom, ${grey[800]}, transparent)`,
+    },
   },
 });
 const DashboardLayout: React.FC = () => {
-  const {
-    isDemo,
-  } = useContext<IDashboardContext>(DashboardContext);
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -116,7 +148,7 @@ const DashboardLayout: React.FC = () => {
       <Container
         maxWidth="lg"
         sx={{
-          py: 4,
+          py: 2,
           minHeight: '100vh',
         }}
       >
@@ -247,9 +279,6 @@ const DashboardLayout: React.FC = () => {
             </Toolbar>
           </AppBar>
         </Box>
-
-        { isDemo && <Alert severity="warning">DEMO MODE: Scorecards is using demo MOCK data.</Alert>}
-
         <Outlet />
       </Container>
       <Divider />

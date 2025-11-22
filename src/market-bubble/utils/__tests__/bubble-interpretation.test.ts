@@ -47,7 +47,7 @@ describe('Bubble Interpretation', () => {
       };
       const result = getBubbleInterpretation(indicator);
       expect(result.text).toBe('MODERATE RISK');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('warning');
     });
 
@@ -157,7 +157,7 @@ describe('Bubble Interpretation', () => {
     });
 
     it('should use consistent color palette', () => {
-      const validColors = ['success', 'error', 'warning', 'default'];
+      const validColors = ['success', 'error', 'warning', 'info'];
       const scores = [-10, -5, 0, 5, 10];
 
       scores.forEach((scoreValue) => {

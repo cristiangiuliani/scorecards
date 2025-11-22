@@ -214,7 +214,7 @@ const MarketTreasuryBondsComponent: React.FC = () => {
 
   return (
     <>
-      <Grid container spacing={2} mb={2}>
+      <Grid container>
         <Grid size={{
           xs: 12,
           sm: 6,

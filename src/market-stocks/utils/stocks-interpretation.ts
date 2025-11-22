@@ -14,7 +14,7 @@ export const getStockInterpretation = (score: number): TInterpretation => {
   };
   if (score > -3) return {
     text: COMMON_LABELS.CrabMarket,
-    color: 'default',
+    color: 'info',
     severity: 'info',
   };
   if (score > -7) return {

@@ -17,21 +17,21 @@ describe('Fed Policy Interpretation', () => {
     it('should return "Moderate Hawkish" for score 2-5', () => {
       const result = getFedPolicyInterpretation(3);
       expect(result.text).toBe('MODERATE HAWKISH');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('warning');
     });
 
     it('should return "Neutral" for score -2 to 2', () => {
       const result = getFedPolicyInterpretation(0);
       expect(result.text).toBe('NEUTRAL');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('info');
     });
 
     it('should return "Moderate Dovish" for score -5 to -2', () => {
       const result = getFedPolicyInterpretation(-3);
       expect(result.text).toBe('MODERATE DOVISH');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('warning');
     });
 
@@ -153,7 +153,7 @@ describe('Fed Policy Interpretation', () => {
     });
 
     it('should use consistent color palette', () => {
-      const validColors = ['success', 'error', 'warning', 'default'];
+      const validColors = ['success', 'error', 'warning', 'info'];
       const scores = [-10, -5, 0, 5, 10];
 
       scores.forEach((score) => {

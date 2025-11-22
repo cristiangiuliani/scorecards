@@ -8,7 +8,6 @@ export type IDashboardContext = IDashboardProvider & {
 
 export interface IDashboardProvider {
     isLoading?: boolean;
-    isDemo?: boolean;
     stocksData?: IStocksData
     cryptoData?: ICryptoData
     activeTab?: number;

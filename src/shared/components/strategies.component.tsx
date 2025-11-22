@@ -1,5 +1,6 @@
 import {
   Alert, Divider, List, ListItem, ListItemText, Skeleton, Typography,
+  useTheme,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import React from 'react';
@@ -13,23 +14,28 @@ type TStrategiesComponentProps = {
 const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
   strategiesList = [],
 }) => {
+  const theme = useTheme();
+
+  const getBackgroundColor = (item: TStrategiesListItem) => {
+    const color = item?.color ? item.color : 'info';
+    return theme.palette[color].darkGradient;
+  };
   return (
     <>
 
-      <Grid container spacing={2}>
+      <Grid container>
         {strategiesList.map((item, index) => (
           <Grid
             key={`strategy-list-${index}`}
+            p={2}
             size={{
               xs: 12,
               sm: 6,
               md: strategiesList.length > 3 ? 3 : 4,
             }}
             sx={{
-              p: 1,
-              borderTop: '4px solid',
-              borderTopColor: `${item.color}.main`,
-              backgroundColor: 'grey.900',
+              background: getBackgroundColor(item),
+              opacity: 0.6,
             }}
           >
 
@@ -42,7 +48,13 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
               </>
             )  :  item?.items?.length > 0 ? (
               <>
-                <Typography variant="subtitle1" fontWeight="bold" sx={{ opacity: 0.4 }}>
+                <Typography
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  sx={{
+                    opacity: 0.9,
+                  }}
+                >
                   {item.title}
                 </Typography>
                 <List dense>
@@ -53,7 +65,7 @@ const StrategiesComponent: React.FC<TStrategiesComponentProps> = ({
                         disableGutters
                         sx={{
                           py: 0.5,
-                          opacity: 0.6,
+                          opacity: 0.8,
                         }}
                       >
                         <ListItemText

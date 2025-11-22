@@ -19,14 +19,14 @@ export const getBondsInterpretation = (score: number): TInterpretation => {
   if (score > 1) {
     return {
       text: COMMON_LABELS.ModerateBuy,
-      color: 'default',
+      color: 'info',
       severity: 'info',
     };
   }
   if (score > -1) {
     return {
       text: COMMON_LABELS.Neutral,
-      color: 'default',
+      color: 'info',
       severity: 'info',
     };
   }

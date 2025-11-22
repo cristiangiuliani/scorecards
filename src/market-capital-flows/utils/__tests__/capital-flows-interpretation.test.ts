@@ -24,7 +24,7 @@ describe('Capital Flows Interpretation', () => {
     it('should return "Neutral" for score -3 to 3', () => {
       const result = getCapitalFlowsInterpretation(0);
       expect(result.text).toBe('NEUTRAL');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('info');
     });
 
@@ -148,7 +148,7 @@ describe('Capital Flows Interpretation', () => {
     });
 
     it('should use consistent color palette', () => {
-      const validColors = ['success', 'error', 'warning', 'default'];
+      const validColors = ['success', 'error', 'warning', 'info'];
       const scores = [-10, -5, 0, 5, 10];
 
       scores.forEach((score) => {

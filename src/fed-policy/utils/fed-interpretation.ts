@@ -13,21 +13,21 @@ export const getFedPolicyInterpretation = (score: number): TInterpretation => {
   if (score >= 2) {
     return {
       text: FED_POLICY_LABELS.ModerateHawkish,
-      color: 'default',
+      color: 'info',
       severity: 'warning',
     };
   }
   if (score >= -2) {
     return {
       text: FED_POLICY_LABELS.Neutral,
-      color: 'default',
+      color: 'info',
       severity: 'info',
     };
   }
   if (score >= -6) {
     return {
       text: FED_POLICY_LABELS.ModerateDovish,
-      color: 'default',
+      color: 'info',
       severity: 'warning',
     };
   }

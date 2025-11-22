@@ -196,8 +196,6 @@ const FedPolicyComponent: React.FC = () => {
     <>
       <Grid
         container
-        spacing={2}
-        mb={2}
         sx={{
           justifyContent: 'flex-start',
           alignItems: 'stretch',

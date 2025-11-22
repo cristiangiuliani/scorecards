@@ -117,7 +117,7 @@ describe('My Interpretation', () => {
   });
 
   it('should use valid color palette', () => {
-    const validColors = ['success', 'error', 'warning', 'default'];
+    const validColors = ['success', 'error', 'warning', 'info'];
     const result = getMyInterpretation(0);
     
     expect(validColors).toContain(result.color);

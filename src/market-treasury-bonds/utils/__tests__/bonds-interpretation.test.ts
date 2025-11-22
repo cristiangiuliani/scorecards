@@ -22,14 +22,14 @@ describe('Bonds Interpretation', () => {
     it('should return "Moderate Buy" for score 1-4', () => {
       const result = getBondsInterpretation(2);
       expect(result.text).toBe('MODERATE BUY');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('info');
     });
 
     it('should return "Neutral" for score -1 to 1', () => {
       const result = getBondsInterpretation(0);
       expect(result.text).toBe('NEUTRAL');
-      expect(result.color).toBe('default');
+      expect(result.color).toBe('info');
       expect(result.severity).toBe('info');
     });
 
@@ -102,7 +102,7 @@ describe('Bonds Interpretation', () => {
     });
 
     it('should use consistent color palette', () => {
-      const validColors = ['success', 'error', 'warning', 'default'];
+      const validColors = ['success', 'error', 'warning', 'info'];
       const scores = [-10, -5, 0, 5, 10];
 
       scores.forEach((score) => {

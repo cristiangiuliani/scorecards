@@ -216,18 +216,21 @@ const MarketStocksComponent: React.FC = () => {
     <>
       <Grid
         container
-        spacing={2}
-        mb={2}
         sx={{
           justifyContent: 'flex-start',
           alignItems: 'stretch',
         }}
       >
-        <Grid size={{
-          xs: 12,
-          sm: 5,
-          md: 4,
-        }}
+        <Grid
+          size={{
+            xs: 12,
+            sm: 5,
+            md: 4,
+          }}
+          sx={{
+            margin: 0,
+            padding: 0,
+          }}
         >
           <ScoreCardsComponent
             score={stocksScore}
@@ -242,11 +245,12 @@ const MarketStocksComponent: React.FC = () => {
             description={STOCKS_LABELS.Description}
           />
         </Grid>
-        <Grid size={{
-          xs: 12,
-          sm: 7,
-          md: 8,
-        }}
+        <Grid
+          size={{
+            xs: 12,
+            sm: 7,
+            md: 8,
+          }}
         >
           <IndicatorsComponent
             indexList={StocksIndexList}
