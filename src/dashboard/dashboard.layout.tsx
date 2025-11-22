@@ -25,7 +25,6 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
-  Divider,
   Button,
 } from '@mui/material';
 import {
@@ -148,26 +147,21 @@ const DashboardLayout: React.FC = () => {
       <Container
         maxWidth="lg"
         sx={{
-          py: 2,
           minHeight: '100vh',
         }}
       >
         <Box
           sx={{
             flexGrow: 1,
-            mb: {
-              xs: 3,
-              sm: 8,
-            },
+
           }}
 
         >
-          <AppBar position="fixed">
+          <AppBar position="static" color="transparent" elevation={0}>
             <Toolbar>
 
               <Grid
                 container
-                spacing={2}
                 alignItems="center"
                 justifyContent="flex-start"
                 size="grow"
@@ -215,6 +209,14 @@ const DashboardLayout: React.FC = () => {
                         md: 'flex',
                       },
                     }}
+                    slotProps={{
+
+                      indicator: {
+                        sx: {
+                          display: 'none',
+                        },
+                      },
+                    }}
                   >
                     { menuList.map((menuItem, index) => (
                       <Tab
@@ -226,7 +228,6 @@ const DashboardLayout: React.FC = () => {
                           textTransform: 'none',
                           fontWeight: 'medium',
                           padding: '0px 8px',
-
                         }}
                       />
                     )) }
@@ -280,66 +281,69 @@ const DashboardLayout: React.FC = () => {
           </AppBar>
         </Box>
         <Outlet />
+        <Grid container mb={2} sx={{ opacity: 0.7 }}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 'grow',
+            }}
+            sx={{
+              textAlign: {
+                xs: 'center',
+                sm: 'left',
+              },
+            }}
+          >
+            <Typography variant="caption" color="text.secondary">
+              © {new Date().getFullYear()} Cristian Giuliani. All rights reserved.
+            </Typography>
+
+          </Grid>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 'auto',
+            }}
+            sx={{
+              textAlign: {
+                xs: 'center',
+                sm: 'right',
+              },
+
+            }}
+          >
+            <Typography variant="caption" color="text.secondary">
+              <Button
+                variant="text"
+                disableRipple
+                sx={{
+                  fontSize: 'inherit',
+                  textTransform: 'none',
+                  color: 'inherit',
+                }}
+                startIcon={<GitHub fontSize="inherit" />}
+                onClick={() => window.open('https://github.com/cristiangiuliani/scorecards', '_blank')}
+              >
+                GitHub Repository
+              </Button>&nbsp;|&nbsp;
+              <Button
+                variant="text"
+                disableRipple
+                sx={{
+                  fontSize: 'inherit',
+                  textTransform: 'none',
+                  color: 'inherit',
+                }}
+                startIcon={<Home fontSize="inherit" />}
+                onClick={() => window.open('https://www.cristiangiuliani.com', '_blank')}
+              >
+                Author Website
+              </Button>
+            </Typography>
+          </Grid>
+        </Grid>
       </Container>
-      <Divider />
 
-      <Grid container mb={2}>
-        <Grid
-          size={{
-            xs: 12,
-            sm: 'grow',
-          }}
-          sx={{
-            textAlign: {
-              xs: 'center',
-              sm: 'left',
-            },
-          }}
-        >
-          <Typography variant="caption" color="text.secondary">
-            © {new Date().getFullYear()} Cristian Giuliani. All rights reserved.
-          </Typography>
-
-        </Grid>
-        <Grid
-          size={{
-            xs: 12,
-            sm: 'auto',
-          }}
-          sx={{
-            textAlign: {
-              xs: 'center',
-              sm: 'right',
-            },
-
-          }}
-        >
-          <Typography variant="caption" color="text.secondary">
-            <Button
-              disableRipple
-              sx={{
-                fontSize: 'inherit',
-                textTransform: 'none',
-              }}
-              startIcon={<GitHub fontSize="inherit" />}
-              onClick={() => window.open('https://github.com/cristiangiuliani/scorecards', '_blank')}
-            >
-              GitHub Repository
-            </Button>&nbsp;|&nbsp;
-            <Button
-              disableRipple
-              sx={{
-                fontSize: 'inherit',
-                textTransform: 'none',
-              }}
-              startIcon={<Home fontSize="inherit" />}
-              onClick={() => window.open('https://www.cristiangiuliani.com', '_blank')}
-            >
-              Author Website
-            </Button>
-          </Typography>
-        </Grid>
-      </Grid>
       <DisclaimerComponent />
     </ThemeProvider>
   );
