@@ -148,6 +148,10 @@ const DashboardLayout: React.FC = () => {
         maxWidth="lg"
         sx={{
           minHeight: '100vh',
+          padding: {
+            xs: 0,
+            sm: '0 1rem',
+          },
         }}
       >
         <Box

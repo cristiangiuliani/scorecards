@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import Box from '@mui/system/Box';
 import {
   GaugeContainer,
@@ -166,31 +165,9 @@ export const ScoreGauge: React.FC<ScoreGaugeProps> = ({
 }) => {
   return (
     <>
+
       <Box  sx={{
-        display: {
-          xs: 'flex',
-          sm: 'none',
-        },
-        justifyContent: 'center',
-        width: '100%',
-      }}
-      >
-        <Typography
-          variant="h5"
-          color="text.primary"
-          fontWeight="bold"
-          sx={{
-            opacity: '0.8',
-            fontSize,
-          }}
-        >{value.toFixed(decimals)}
-        </Typography>
-      </Box>
-      <Box  sx={{
-        display: {
-          xs: 'none',
-          sm: 'flex',
-        },
+        display: 'flex',
         justifyContent: 'center',
         width: '100%',
       }}
