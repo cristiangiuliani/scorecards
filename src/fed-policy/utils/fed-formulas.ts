@@ -90,6 +90,66 @@ export const calculateFedFundsScore = (fedFundsRate: number): number => {
   return convertScoreToIndicatorRange(rawScore);
 };
 
+// Calculate Fed Rate Cut Probability (0-100%)
+// Simulates CME FedWatch Tool using Fed dual mandate metrics
+export const calculateRateCutProbability = (
+  fedFundsRate: number,
+  cpiInflation: number,
+  corePce: number,
+  unemploymentRate: number
+): number => {
+  // Media inflazione (YoY %)
+  const avgInflation = (cpiInflation + corePce) / 2;
+
+  // Calcolo probabilità base (50% = neutrale)
+  let probability = 50;
+
+  // 1. INFLAZIONE: Sotto target favorisce tagli, sopra favorisce hold/rialzi
+  // Se inflazione è sotto 2.5% → favorisce tagli
+  // Se inflazione è sopra 3% → sfavorisce tagli
+  if (avgInflation < 2.5) {
+    probability += (2.5 - avgInflation) * 20; // +20% per ogni punto sotto 2.5%
+  } else if (avgInflation > 3.0) {
+    probability -= (avgInflation - 3.0) * 25; // -25% per ogni punto sopra 3%
+  }
+
+  // 2. DISOCCUPAZIONE: Alta favorisce tagli, bassa è neutrale/sfavorisce
+  // Se cresce sopra 4.5% → segnale recessivo, Fed taglia
+  if (unemploymentRate > 4.5) {
+    probability += (unemploymentRate - 4.5) * 30; // +30% per ogni punto sopra 4.5%
+  } else if (unemploymentRate < 3.8) {
+    probability -= (3.8 - unemploymentRate) * 10; // -10% se mercato troppo tight
+  }
+
+  // 3. LIVELLO TASSI: Tassi alti favoriscono tagli (c'è spazio)
+  // Se tassi > 4.5% → molto spazio per tagliare
+  if (fedFundsRate > 4.5) {
+    probability += (fedFundsRate - 4.5) * 15; // +15% per ogni punto sopra 4.5%
+  } else if (fedFundsRate < 2.0) {
+    probability -= (2.0 - fedFundsRate) * 20; // Poco spazio per tagliare
+  }
+
+  // 4. CONTESTO: Se tassi sono molto sopra inflazione (politica restrittiva)
+  const realRate = fedFundsRate - avgInflation;
+  if (realRate > 2.0) {
+    // Tassi reali molto alti → probabilmente taglieranno
+    probability += (realRate - 2.0) * 10;
+  }
+
+  // Limita tra 0 e 100
+  return Math.max(0, Math.min(100, Math.round(probability)));
+};
+
+// Calculate Rate Cut Probability Score for overall Fed Policy Score
+// Convert 0-100 probability to -4 to +4 score
+export const calculateRateCutProbabilityScore = (probability: number): number => {
+  // 0% probability (rate hike likely) = +4 hawkish
+  // 50% probability (neutral) = 0
+  // 100% probability (rate cut likely) = -4 dovish
+  const rawScore = 100 - probability; // Invert: low probability = hawkish
+  return convertScoreToIndicatorRange(rawScore);
+};
+
 // Calculate overall Fed Policy score (-10 to +10)
 // Negative = Dovish (rate cuts likely), Positive = Hawkish (rate hikes likely)
 export const calculateFedPolicyScore = (data: IFedPolicyData): number => {
@@ -108,13 +168,23 @@ export const calculateFedPolicyScore = (data: IFedPolicyData): number => {
   const wageScore = calculateWageGrowthScore(averageHourlyEarnings);
   const fundsScore = calculateFedFundsScore(federalFundsRate);
 
-  // Weighted sum (following crypto pattern)
+  // Calculate rate cut probability
+  const rateCutProb = calculateRateCutProbability(
+    federalFundsRate,
+    cpiInflation,
+    corePce,
+    unemploymentRate
+  );
+  const rateCutProbScore = calculateRateCutProbabilityScore(rateCutProb);
+
+  // Weighted sum
   const weightedScore =
     (cpiScore * FED_POLICY_WEIGHTS.cpiInflation) +
     (pceScore * FED_POLICY_WEIGHTS.corePce) +
     (unemploymentScore * FED_POLICY_WEIGHTS.unemploymentRate) +
     (wageScore * FED_POLICY_WEIGHTS.averageHourlyEarnings) +
-    (fundsScore * FED_POLICY_WEIGHTS.federalFundsRate);
+    (fundsScore * FED_POLICY_WEIGHTS.federalFundsRate) +
+    (rateCutProbScore * FED_POLICY_WEIGHTS.rateCutProbability);
 
   // Apply final score weight
   return weightedScore * FED_POLICY_WEIGHTS.score;

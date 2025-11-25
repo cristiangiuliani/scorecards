@@ -20,6 +20,8 @@ import {
   calculateCorePceScore,
   calculateFedFundsScore,
   calculateFedPolicyScore,
+  calculateRateCutProbability,
+  calculateRateCutProbabilityScore,
   calculateUnemploymentScore,
   calculateWageGrowthScore,
 } from './utils/fed-formulas';
@@ -57,6 +59,14 @@ const FedPolicyComponent: React.FC = () => {
     averageHourlyEarnings,
     federalFundsRate,
   });
+
+  // Calculate Rate Cut Probability
+  const rateCutProbability = calculateRateCutProbability(
+    federalFundsRate,
+    cpiInflation,
+    corePce,
+    unemploymentRate
+  );
 
   const fedIndexList: TIndicatorsListItem[] = [
     {
@@ -122,6 +132,19 @@ const FedPolicyComponent: React.FC = () => {
       max: FED_POLICY_RANGES.federalFundsRate.max,
       minLabel: FED_POLICY_RANGES.federalFundsRate.minLabel,
       maxLabel: FED_POLICY_RANGES.federalFundsRate.maxLabel,
+    },
+    {
+      label: FED_POLICY_LABELS.RateCutProbability,
+      description: FED_POLICY_LABELS.RateCutProbabilityDescription,
+      weight: FED_POLICY_WEIGHTS.rateCutProbability,
+      value: rateCutProbability,
+      score: calculateRateCutProbabilityScore(rateCutProbability),
+      isLoading: isCpiLoading || isCorePceLoading || isUnemploymentLoading || isFedFundsLoading,
+      min: FED_POLICY_RANGES.rateCutProbability.min,
+      max: FED_POLICY_RANGES.rateCutProbability.max,
+      minLabel: FED_POLICY_RANGES.rateCutProbability.minLabel,
+      maxLabel: FED_POLICY_RANGES.rateCutProbability.maxLabel,
+      suffix: '%',
     },
   ];
 

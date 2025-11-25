@@ -172,6 +172,8 @@ export const FED_POLICY_LABELS = {
   AverageHourlyEarningsDescription: 'Average hourly earnings year-over-year growth. Above 4% indicates wage inflation (hawkish). Below 3% suggests cooling labor market (dovish).',
   FederalFundsRate: 'Fed Funds Rate',
   FederalFundsRateDescription: 'Current Federal Funds effective rate. Rising rates = hawkish tightening to fight inflation. Falling rates = dovish easing to support economy.',
+  RateCutProbability: 'Rate Cut Probability',
+  RateCutProbabilityDescription: 'Implied market probability of Fed rate cuts based on inflation, unemployment, and current rate levels. Similar to CME FedWatch Tool. Higher % = cuts more likely.',
   OverallScore: 'Fed Policy Outlook',
   Description: 'Fed monetary policy stance based on inflation (CPI, PCE), employment, wage growth, and current interest rates.',
   PolicyStance: 'Policy Stance',

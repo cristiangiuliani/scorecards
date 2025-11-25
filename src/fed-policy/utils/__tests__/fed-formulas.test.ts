@@ -4,6 +4,8 @@ import {
   calculateUnemploymentScore,
   calculateWageGrowthScore,
   calculateFedFundsScore,
+  calculateRateCutProbability,
+  calculateRateCutProbabilityScore,
 } from '../fed-formulas';
 
 describe('Fed Policy Formulas', () => {
@@ -147,6 +149,96 @@ describe('Fed Policy Formulas', () => {
       expect(Math.abs(cpiScore)).toBeLessThan(2);
       expect(Math.abs(corePceScore)).toBeLessThan(2);
       expect(Math.abs(unemploymentScore)).toBeLessThan(2);
+    });
+  });
+
+  describe('calculateRateCutProbability', () => {
+    it('should return high probability for dovish conditions (low inflation, high unemployment, high rates)', () => {
+      // Scenario: Inflation at 2.2%, unemployment 5.0%, rates at 5.0%
+      const probability = calculateRateCutProbability(5.0, 2.2, 2.3, 5.0);
+      expect(probability).toBeGreaterThan(60);
+      expect(probability).toBeLessThanOrEqual(100);
+    });
+
+    it('should return low probability for hawkish conditions (high inflation, low unemployment)', () => {
+      // Scenario: Inflation at 4.0%, unemployment 3.5%, rates at 3.0%
+      const probability = calculateRateCutProbability(3.0, 4.5, 4.0, 3.5);
+      expect(probability).toBeLessThan(40);
+      expect(probability).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should return moderate probability for balanced conditions', () => {
+      // Scenario: Inflation at 2.8%, unemployment 4.2%, rates at 4.5%
+      const probability = calculateRateCutProbability(4.5, 2.8, 2.7, 4.2);
+      expect(probability).toBeGreaterThan(40);
+      expect(probability).toBeLessThan(70);
+    });
+
+    it('should return very high probability when inflation is low and rates are very high', () => {
+      // Scenario: Inflation at 2.0%, unemployment 4.0%, rates at 5.5%
+      const probability = calculateRateCutProbability(5.5, 2.0, 2.1, 4.0);
+      expect(probability).toBeGreaterThan(70);
+    });
+
+    it('should return very low probability when inflation is high despite high unemployment', () => {
+      // Scenario: High inflation overrides other factors
+      const probability = calculateRateCutProbability(4.0, 4.5, 4.2, 5.0);
+      expect(probability).toBeLessThan(40);
+    });
+
+    it('should increase probability when unemployment rises sharply', () => {
+      // Scenario: Recessionary unemployment
+      const probability = calculateRateCutProbability(4.5, 2.5, 2.4, 5.5);
+      expect(probability).toBeGreaterThan(70);
+    });
+
+    it('should factor in real rates (high real rates = restrictive policy)', () => {
+      // Scenario: Rates at 5%, inflation at 2.5% = real rate 2.5%
+      const highRealRate = calculateRateCutProbability(5.0, 2.5, 2.5, 4.0);
+
+      // Scenario: Rates at 3%, inflation at 2.5% = real rate 0.5%
+      const lowRealRate = calculateRateCutProbability(3.0, 2.5, 2.5, 4.0);
+
+      expect(highRealRate).toBeGreaterThan(lowRealRate);
+    });
+
+    it('should return valid percentage (0-100)', () => {
+      // Test extreme scenarios
+      const prob1 = calculateRateCutProbability(0, 10, 10, 10);
+      const prob2 = calculateRateCutProbability(10, 0, 0, 2);
+
+      expect(prob1).toBeGreaterThanOrEqual(0);
+      expect(prob1).toBeLessThanOrEqual(100);
+      expect(prob2).toBeGreaterThanOrEqual(0);
+      expect(prob2).toBeLessThanOrEqual(100);
+    });
+  });
+
+  describe('calculateRateCutProbabilityScore', () => {
+    it('should return dovish score for high cut probability (>75%)', () => {
+      const score = calculateRateCutProbabilityScore(80);
+      expect(score).toBeLessThan(-2);
+    });
+
+    it('should return hawkish score for low cut probability (<25%)', () => {
+      const score = calculateRateCutProbabilityScore(20);
+      expect(score).toBeGreaterThan(2);
+    });
+
+    it('should return neutral score for moderate probability (~50%)', () => {
+      const score = calculateRateCutProbabilityScore(50);
+      expect(score).toBeGreaterThan(-1);
+      expect(score).toBeLessThan(1);
+    });
+
+    it('should return very dovish for 100% probability', () => {
+      const score = calculateRateCutProbabilityScore(100);
+      expect(score).toBeLessThan(-3);
+    });
+
+    it('should return very hawkish for 0% probability', () => {
+      const score = calculateRateCutProbabilityScore(0);
+      expect(score).toBeGreaterThan(3);
     });
   });
 });

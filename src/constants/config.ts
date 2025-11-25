@@ -283,7 +283,8 @@ export const FED_POLICY_WEIGHTS = {
   unemploymentRate: 1.5,
   averageHourlyEarnings: 1.3,
   federalFundsRate: 1.0,
-  score: 0.35,
+  rateCutProbability: 1.8,
+  score: 0.32,
 };
 
 export const FED_POLICY_RANGES = {
@@ -316,5 +317,11 @@ export const FED_POLICY_RANGES = {
     max: 5.5,
     minLabel: 'Dovish',
     maxLabel: 'Hawkish',
+  },
+  rateCutProbability: {
+    min: 0,
+    max: 100,
+    minLabel: 'Hike Likely',
+    maxLabel: 'Cut Likely',
   },
 };
