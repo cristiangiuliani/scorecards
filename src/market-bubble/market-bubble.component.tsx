@@ -224,7 +224,7 @@ const MarketBubbleComponent: React.FC = () => {
             interpretation={interpretation}
             cacheCreatedAt={cacheCreatedAt}
             cacheExpiresAt={cacheExpiresAt}
-            isLoading={isNvidiaPELoading && isNasdaqPELoading && isVixHistoryLoading && isFearGreedLoading && isRsiLoading && isRsiLoading}
+            isLoading={isNvidiaPELoading && isNasdaqPELoading && isVixHistoryLoading && isFearGreedLoading && isRsiLoading && isRsiLoading && isRsiLoading}
             refetchAllData={refetchMarketBubbleData}
             minLabel="Safe"
             maxLabel="Bubble"

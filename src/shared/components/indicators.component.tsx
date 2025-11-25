@@ -124,7 +124,7 @@ const IndicatorsComponent: React.FC<TIndicatorsComponentProps> = ({
                       {item.score !== undefined && (
                         <>
                           <br /><br />
-                          <strong>Score: {item.prefix || ''}{item.score.toFixed(2)}{item.suffix || ''}</strong>
+                          <strong>Score: {item.score.toFixed(2)}</strong>
                         </>
                       )}
                     </Typography>
