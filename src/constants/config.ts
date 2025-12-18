@@ -5,8 +5,8 @@ export const GLOBALS = {
 
 // no free api available for nasdaq pe ratio, hardcoding value
 export const NASDAQ_PE_RATIO = {
-  value: 32.58,
-  lastUpdated: '21-11-2025',
+  value: 33.38,
+  lastUpdated: '18-12-2025',
   source: 'GuruFocus',
 };
 

@@ -1,15 +1,12 @@
 import React, {
   useContext, useEffect,
 } from 'react';
+import { RSI } from 'technicalindicators';
 
 import { API } from '../constants/api';
 import { STOCKS_SCOPE } from '../constants/config';
-import type { IErrorContext } from '../error-handler/error';
-import { ALPHA_VANTAGE_RSI_ERROR } from '../error-handler/error-definitions';
-import { ErrorContext } from '../error-handler/error.context';
 import type {
   IAlphaVantageCurrencyResponse,
-  IAlphaVantageRSIResponse,
   IFearGreedResponse,
   IYahooFinanceResponse,
 } from '../interfaces/api-responses';
@@ -23,7 +20,6 @@ const MarketStocksContainer: React.FC = () => {
   const {
     updateMarketStocks = () => {},
   } = useContext<IMarketStocksContext>(MarketStocksContext);
-  const { addError } = useContext<IErrorContext>(ErrorContext);
 
   const sp500Data = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.sp500,
@@ -75,10 +71,13 @@ const MarketStocksContainer: React.FC = () => {
     }
   }, [vixData.data]);
 
-  const rsiData = useNetlifyApi<IAlphaVantageRSIResponse>({
+  const rsiData = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.rsiSP500,
     options: {
       autoFetch: true,
+      params: {
+        days: '30', // Need at least 14 days + buffer for RSI calculation
+      },
     },
   });
 
@@ -86,14 +85,22 @@ const MarketStocksContainer: React.FC = () => {
     const { data, loading } = rsiData;
     updateMarketStocks({ isRsiLoading: loading });
     if (data) {
-      if (data['Information']) {
-        addError(ALPHA_VANTAGE_RSI_ERROR);
+      const result = data?.chart?.result || [];
+      if (result.length > 0) {
+        const closePrices = result[0]?.indicators?.quote[0]?.close || [];
+
+        // Calculate RSI client-side like BTC RSI
+        const rsiValues = RSI.calculate({
+          values: closePrices,
+          period: 14,
+        });
+
+        const lastRsi = rsiValues?.length > 0 ? rsiValues[rsiValues.length - 1] : 0;
+
+        updateMarketStocks({
+          rsiSP500: lastRsi,
+        });
       }
-      const lastUpdate = data['Meta Data']?.['3: Last Refreshed'];
-      const lastRsi = data['Technical Analysis: RSI']?.[lastUpdate]?.['RSI'];
-      updateMarketStocks({
-        rsiSP500: parseFloat(lastRsi),
-      });
     }
   }, [rsiData.data]);
 
@@ -108,9 +115,6 @@ const MarketStocksContainer: React.FC = () => {
     const { data, loading } = eurUsdData;
     updateMarketStocks({ isEurUsdLoading: loading });
     if (data) {
-      if (data['Information']) {
-        addError(ALPHA_VANTAGE_RSI_ERROR);
-      }
       updateMarketStocks({
         eurUsd: parseFloat(data['Realtime Currency Exchange Rate']?.['5. Exchange Rate']),
       });

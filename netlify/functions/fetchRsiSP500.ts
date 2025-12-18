@@ -1,8 +1,11 @@
 import { createCachedProxyHandler } from './utils/cachedProxy';
 
+// Fetch S&P500 price data from Yahoo Finance for RSI calculation
+// RSI will be calculated client-side like BTC RSI
 export const handler = createCachedProxyHandler(
-  () => {
-    const apiKey = process.env.ALPHA_VANTAGE_KEY || '';
-    return `https://www.alphavantage.co/query?function=RSI&symbol=SPY&interval=daily&time_period=14&series_type=close&apikey=${apiKey}`;
+  (event) => {
+    // Need at least 14 days + buffer for RSI calculation
+    const days = event.queryStringParameters?.days || '30';
+    return `https://query1.finance.yahoo.com/v8/finance/chart/^GSPC?interval=1d&range=${days}d`;
   }
 );
