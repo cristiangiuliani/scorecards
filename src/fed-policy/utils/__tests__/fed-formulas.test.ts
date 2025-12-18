@@ -6,6 +6,7 @@ import {
   calculateFedFundsScore,
   calculateRateCutProbability,
   calculateRateCutProbabilityScore,
+  calculateFedPolicyScore,
 } from '../fed-formulas';
 
 describe('Fed Policy Formulas', () => {
@@ -251,7 +252,6 @@ describe('Fed Policy Formulas', () => {
         averageHourlyEarnings: 5.0,
         federalFundsRate: 5.5,
       };
-      const { calculateFedPolicyScore } = require('../fed-formulas');
       const score = calculateFedPolicyScore(data);
       expect(score).toBeGreaterThan(0); // High inflation + low unemployment = hawkish
     });
@@ -264,7 +264,6 @@ describe('Fed Policy Formulas', () => {
         averageHourlyEarnings: 2.0,
         federalFundsRate: 0.5,
       };
-      const { calculateFedPolicyScore } = require('../fed-formulas');
       const score = calculateFedPolicyScore(data);
       expect(score).toBeLessThan(0); // Low inflation + high unemployment = dovish
     });
@@ -277,7 +276,6 @@ describe('Fed Policy Formulas', () => {
         averageHourlyEarnings: 0,
         federalFundsRate: 0,
       };
-      const { calculateFedPolicyScore } = require('../fed-formulas');
       const score = calculateFedPolicyScore(data);
       // With 0 values, each metric returns a specific score based on the formulas
       // The result won't be 0 but should be a valid number
@@ -293,7 +291,6 @@ describe('Fed Policy Formulas', () => {
         averageHourlyEarnings: 3.5,
         federalFundsRate: 2.75,
       };
-      const { calculateFedPolicyScore } = require('../fed-formulas');
       const score = calculateFedPolicyScore(data);
       expect(Math.abs(score)).toBeLessThan(2); // Should be close to neutral
     });
