@@ -1,9 +1,11 @@
 import {
   calculateYield10YScore,
   calculateYield2YScore,
+  calculateYield5YScore,
   calculateYieldCurveSlopeScore,
   calculateCreditSpreadsScore,
   calculateInflationScore,
+  calculateBondsScore,
 } from '../bonds-formulas';
 
 describe('Treasury Bonds Formulas', () => {
@@ -146,6 +148,61 @@ describe('Treasury Bonds Formulas', () => {
 
       expect(calculateYield2YScore(3.61)).toBeGreaterThan(-2);
       expect(calculateYield2YScore(3.61)).toBeLessThan(0);
+    });
+  });
+
+  describe('calculateYield5YScore', () => {
+    it('should return gray for current 5Y yield ~4%', () => {
+      const score = calculateYield5YScore(4.0);
+      expect(score).toBeGreaterThan(-2);
+      expect(score).toBeLessThan(2);
+    });
+
+    it('should return negative for high 5Y yields', () => {
+      const score = calculateYield5YScore(5.0);
+      expect(score).toBeLessThan(-1);
+    });
+
+    it('should return positive for low 5Y yields', () => {
+      const score = calculateYield5YScore(2.0);
+      expect(score).toBeGreaterThan(1);
+    });
+  });
+
+  describe('calculateBondsScore', () => {
+    it('should calculate weighted score for bullish bond scenario', () => {
+      const data = {
+        yield10Y: 3.0,
+        yield5Y: 2.8,
+        yield2Y: 2.5,
+        yieldCurveSlope: 0.5,
+        creditSpreads: 1.5,
+        inflationExpectations: 1.8,
+      };
+      const score = calculateBondsScore(data);
+      expect(score).toBeGreaterThan(0);
+    });
+
+    it('should calculate weighted score for bearish bond scenario', () => {
+      const data = {
+        yield10Y: 5.5,
+        yield5Y: 5.3,
+        yield2Y: 5.0,
+        yieldCurveSlope: -0.5,
+        creditSpreads: 3.5,
+        inflationExpectations: 4.0,
+      };
+      const score = calculateBondsScore(data);
+      expect(score).toBeLessThan(0);
+    });
+
+    it('should handle partial data with undefined values', () => {
+      const data = {
+        yield10Y: 4.0,
+      };
+      const score = calculateBondsScore(data);
+      expect(typeof score).toBe('number');
+      expect(isNaN(score)).toBe(false);
     });
   });
 });

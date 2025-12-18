@@ -241,4 +241,61 @@ describe('Fed Policy Formulas', () => {
       expect(score).toBeGreaterThan(3);
     });
   });
+
+  describe('calculateFedPolicyScore', () => {
+    it('should calculate weighted score correctly for hawkish scenario', () => {
+      const data = {
+        cpiInflation: 4.5,
+        corePce: 3.8,
+        unemploymentRate: 3.5,
+        averageHourlyEarnings: 5.0,
+        federalFundsRate: 5.5,
+      };
+      const { calculateFedPolicyScore } = require('../fed-formulas');
+      const score = calculateFedPolicyScore(data);
+      expect(score).toBeGreaterThan(0); // High inflation + low unemployment = hawkish
+    });
+
+    it('should calculate weighted score correctly for dovish scenario', () => {
+      const data = {
+        cpiInflation: 1.5,
+        corePce: 1.2,
+        unemploymentRate: 5.5,
+        averageHourlyEarnings: 2.0,
+        federalFundsRate: 0.5,
+      };
+      const { calculateFedPolicyScore } = require('../fed-formulas');
+      const score = calculateFedPolicyScore(data);
+      expect(score).toBeLessThan(0); // Low inflation + high unemployment = dovish
+    });
+
+    it('should handle default/undefined data gracefully', () => {
+      const data = {
+        cpiInflation: 0,
+        corePce: 0,
+        unemploymentRate: 0,
+        averageHourlyEarnings: 0,
+        federalFundsRate: 0,
+      };
+      const { calculateFedPolicyScore } = require('../fed-formulas');
+      const score = calculateFedPolicyScore(data);
+      // With 0 values, each metric returns a specific score based on the formulas
+      // The result won't be 0 but should be a valid number
+      expect(typeof score).toBe('number');
+      expect(isNaN(score)).toBe(false);
+    });
+
+    it('should handle neutral data (all metrics at neutral levels)', () => {
+      const data = {
+        cpiInflation: 3.0,
+        corePce: 2.5,
+        unemploymentRate: 4.5,
+        averageHourlyEarnings: 3.5,
+        federalFundsRate: 2.75,
+      };
+      const { calculateFedPolicyScore } = require('../fed-formulas');
+      const score = calculateFedPolicyScore(data);
+      expect(Math.abs(score)).toBeLessThan(2); // Should be close to neutral
+    });
+  });
 });

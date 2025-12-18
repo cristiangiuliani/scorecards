@@ -1,13 +1,98 @@
 {
-    "Realtime Currency Exchange Rate": {
-        "1. From_Currency Code": "EUR",
-        "2. From_Currency Name": "Euro",
-        "3. To_Currency Code": "USD",
-        "4. To_Currency Name": "United States Dollar",
-        "5. Exchange Rate": "1.17730000",
-        "6. Last Refreshed": "2025-10-01 06:47:47",
-        "7. Time Zone": "UTC",
-        "8. Bid Price": "1.17724000",
-        "9. Ask Price": "1.17735000"
+    "chart": {
+        "result": [
+            {
+                "meta": {
+                    "currency": "USD",
+                    "symbol": "EURUSD=X",
+                    "exchangeName": "CCY",
+                    "fullExchangeName": "CCY",
+                    "instrumentType": "CURRENCY",
+                    "firstTradeDate": 1070236800,
+                    "regularMarketTime": 1766064303,
+                    "hasPrePostMarketData": false,
+                    "gmtoffset": 0,
+                    "timezone": "GMT",
+                    "exchangeTimezoneName": "Europe/London",
+                    "regularMarketPrice": 1.1736,
+                    "fiftyTwoWeekHigh": 1.1873,
+                    "fiftyTwoWeekLow": 1.0184,
+                    "regularMarketDayHigh": 1.1752,
+                    "regularMarketDayLow": 1.1716,
+                    "regularMarketVolume": 0,
+                    "longName": "EUR/USD",
+                    "shortName": "EUR/USD",
+                    "chartPreviousClose": 1.1744,
+                    "priceHint": 4,
+                    "currentTradingPeriod": {
+                        "pre": {
+                            "timezone": "GMT",
+                            "end": 1766016000,
+                            "start": 1766016000,
+                            "gmtoffset": 0
+                        },
+                        "regular": {
+                            "timezone": "GMT",
+                            "end": 1766102340,
+                            "start": 1766016000,
+                            "gmtoffset": 0
+                        },
+                        "post": {
+                            "timezone": "GMT",
+                            "end": 1766102340,
+                            "start": 1766102340,
+                            "gmtoffset": 0
+                        }
+                    },
+                    "dataGranularity": "1d",
+                    "range": "1d",
+                    "validRanges": [
+                        "1d",
+                        "5d",
+                        "1mo",
+                        "3mo",
+                        "6mo",
+                        "1y",
+                        "2y",
+                        "5y",
+                        "10y",
+                        "ytd",
+                        "max"
+                    ]
+                },
+                "timestamp": [
+                    1766064303
+                ],
+                "indicators": {
+                    "quote": [
+                        {
+                            "low": [
+                                1.1716461181640625
+                            ],
+                            "open": [
+                                1.1743981838226318
+                            ],
+                            "close": [
+                                1.1735711097717285
+                            ],
+                            "high": [
+                                1.1752262115478516
+                            ],
+                            "volume": [
+                                0
+                            ]
+                        }
+                    ],
+                    "adjclose": [
+                        {
+                            "adjclose": [
+                                1.1735711097717285
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "error": null
     }
 }

@@ -6,7 +6,6 @@ import { RSI } from 'technicalindicators';
 import { API } from '../constants/api';
 import { STOCKS_SCOPE } from '../constants/config';
 import type {
-  IAlphaVantageCurrencyResponse,
   IFearGreedResponse,
   IYahooFinanceResponse,
 } from '../interfaces/api-responses';
@@ -104,7 +103,7 @@ const MarketStocksContainer: React.FC = () => {
     }
   }, [rsiData.data]);
 
-  const eurUsdData = useNetlifyApi<IAlphaVantageCurrencyResponse>({
+  const eurUsdData = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.eurUsd,
     options: {
       autoFetch: true,
@@ -115,9 +114,13 @@ const MarketStocksContainer: React.FC = () => {
     const { data, loading } = eurUsdData;
     updateMarketStocks({ isEurUsdLoading: loading });
     if (data) {
-      updateMarketStocks({
-        eurUsd: parseFloat(data['Realtime Currency Exchange Rate']?.['5. Exchange Rate']),
-      });
+      const result = data?.chart?.result || [];
+      if (result.length > 0) {
+        const rate = parseFloat(result[0]?.meta?.regularMarketPrice?.toString());
+        updateMarketStocks({
+          eurUsd: rate,
+        });
+      }
     }
   }, [eurUsdData.data]);
 

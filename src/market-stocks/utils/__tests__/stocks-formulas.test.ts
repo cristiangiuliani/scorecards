@@ -3,6 +3,13 @@ import {
   calculateRsiScore,
   calculateVixScore,
   calculateFearGreedScore,
+  calculateEurUsdScore,
+  calculateMomentum7dScore,
+  calculateMomentumScore,
+  calculateMaScore,
+  calculatePutCallScore,
+  calculateTreasury10YScore,
+  calculateStocksScore,
 } from '../stocks-formulas';
 
 describe('Stocks Formulas', () => {
@@ -117,6 +124,40 @@ describe('Stocks Formulas', () => {
     });
   });
 
+  describe('calculateEurUsdScore', () => {
+    it('should return positive for strong USD (EUR/USD < 1.05)', () => {
+      const score = calculateEurUsdScore(1.03);
+      expect(score).toBeGreaterThanOrEqual(2);
+    });
+
+    it('should return max positive for very strong USD (< 1.02)', () => {
+      const score = calculateEurUsdScore(1.00);
+      expect(score).toBe(3);
+    });
+
+    it('should return neutral for balanced EUR/USD around 1.10-1.12', () => {
+      const score = calculateEurUsdScore(1.10);
+      expect(score).toBeGreaterThan(-1);
+      expect(score).toBeLessThan(1);
+    });
+
+    it('should return negative for weak USD (EUR/USD > 1.15)', () => {
+      const score = calculateEurUsdScore(1.18);
+      expect(score).toBeLessThanOrEqual(-1);
+    });
+
+    it('should return max negative for very weak USD (> 1.20)', () => {
+      const score = calculateEurUsdScore(1.25);
+      expect(score).toBe(-2);
+    });
+
+    it('should handle typical current rate around 1.05', () => {
+      const score = calculateEurUsdScore(1.05);
+      expect(score).toBeGreaterThanOrEqual(2);
+      expect(score).toBeLessThanOrEqual(3);
+    });
+  });
+
   describe('Formula Balance Validation', () => {
     it('should ensure all formulas use continuous interpolation', () => {
       // Test that there are no sudden jumps in scores
@@ -136,6 +177,144 @@ describe('Stocks Formulas', () => {
       // Just verify both return valid scores
       expect(below).toBeLessThan(2);
       expect(above).toBeGreaterThan(-2);
+    });
+  });
+
+  describe('calculateMomentum7dScore', () => {
+    it('should return positive score for strong positive momentum (>5%)', () => {
+      const score = calculateMomentum7dScore(6);
+      expect(score).toBeGreaterThanOrEqual(1.5);
+    });
+
+    it('should return negative score for strong negative momentum (<-5%)', () => {
+      const score = calculateMomentum7dScore(-6);
+      expect(score).toBeLessThanOrEqual(-1.5);
+    });
+
+    it('should return near-zero for neutral momentum', () => {
+      const score = calculateMomentum7dScore(0);
+      expect(Math.abs(score)).toBeLessThan(0.5);
+    });
+  });
+
+  describe('calculateMomentumScore', () => {
+    it('should return 0 for insufficient data', () => {
+      const score = calculateMomentumScore([100, 101, 102]);
+      expect(score).toBe(0);
+    });
+
+    it('should return positive for upward momentum', () => {
+      const prices = Array.from({ length: 30 }, (_, i) => 5000 + i * 10); // Uptrend
+      const score = calculateMomentumScore(prices);
+      expect(score).toBeGreaterThan(0);
+    });
+
+    it('should return negative for downward momentum', () => {
+      const prices = Array.from({ length: 30 }, (_, i) => 5000 - i * 10); // Downtrend
+      const score = calculateMomentumScore(prices);
+      expect(score).toBeLessThan(0);
+    });
+  });
+
+  describe('calculateMaScore', () => {
+    it('should return 0 for insufficient data', () => {
+      const score = calculateMaScore(Array.from({ length: 100 }, () => 5000));
+      expect(score).toBe(0);
+    });
+
+    it('should return positive when price above MAs', () => {
+      const prices = Array.from({ length: 200 }, (_, i) => 4000 + i * 5); // Uptrend
+      const score = calculateMaScore(prices);
+      expect(score).toBeGreaterThan(0);
+    });
+
+    it('should return negative when price below MAs', () => {
+      const prices = Array.from({ length: 200 }, (_, i) => 5000 - i * 5); // Downtrend
+      const score = calculateMaScore(prices);
+      expect(score).toBeLessThan(0);
+    });
+  });
+
+  describe('calculatePutCallScore', () => {
+    it('should return 0 for invalid ratio', () => {
+      expect(calculatePutCallScore(0)).toBe(0);
+    });
+
+    it('should return positive for high put/call ratio (fear)', () => {
+      const score = calculatePutCallScore(1.2);
+      expect(score).toBeGreaterThan(1);
+    });
+
+    it('should return negative for low put/call ratio (greed)', () => {
+      const score = calculatePutCallScore(0.6);
+      expect(score).toBeLessThan(0);
+    });
+  });
+
+  describe('calculateTreasury10YScore', () => {
+    it('should return 0 for invalid yield', () => {
+      expect(calculateTreasury10YScore(0)).toBe(0);
+    });
+
+    it('should return negative for high yields (>5%)', () => {
+      const score = calculateTreasury10YScore(5.5);
+      expect(score).toBeLessThan(-1);
+    });
+
+    it('should return positive for low yields (<3%)', () => {
+      const score = calculateTreasury10YScore(2.5);
+      expect(score).toBeGreaterThan(0);
+    });
+  });
+
+  describe('calculateStocksScore', () => {
+    it('should return 0 for null data', () => {
+      const score = calculateStocksScore(null as any);
+      expect(score).toBe(0);
+    });
+
+    it('should calculate weighted score for bullish scenario', () => {
+      const data = {
+        vix: 12,
+        rsiSP500: 65,
+        eurUsd: 1.05,
+        fearGreed: 75,
+        sp500Price: 6700,
+        sp500ATH: 6750,
+        sp500Prices: Array.from({ length: 200 }, (_, i) => 6000 + i * 3),
+        putCallRatio: 0.7,
+        treasury10Y: 3.5,
+      };
+      const score = calculateStocksScore(data);
+      expect(score).toBeGreaterThan(0);
+    });
+
+    it('should calculate weighted score for bearish scenario', () => {
+      const data = {
+        vix: 35,
+        rsiSP500: 25,
+        eurUsd: 1.20,
+        fearGreed: 20,
+        sp500Price: 5000,
+        sp500ATH: 6750,
+        sp500Prices: Array.from({ length: 200 }, (_, i) => 6000 - i * 3),
+        putCallRatio: 1.3,
+        treasury10Y: 5.5,
+      };
+      const score = calculateStocksScore(data);
+      expect(score).toBeLessThan(0);
+    });
+
+    it('should handle partial data gracefully', () => {
+      const data = {
+        vix: 15,
+        rsiSP500: 50,
+        eurUsd: 1.10,
+        fearGreed: 50,
+      };
+      const score = calculateStocksScore(data);
+      expect(typeof score).toBe('number');
+      expect(isNaN(score)).toBe(false);
     });
   });
 });

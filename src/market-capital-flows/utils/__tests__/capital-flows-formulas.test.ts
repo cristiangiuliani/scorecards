@@ -6,6 +6,8 @@ import {
   calculateTreasury10YScore,
   calculateStablecoinAccumulationScore,
   calculateCryptoMarketCapScore,
+  calculateCapitalFlowsScore,
+  calculateGrowthRate,
 } from '../capital-flows-formulas';
 
 describe('Capital Flows Formulas', () => {
@@ -193,6 +195,113 @@ describe('Capital Flows Formulas', () => {
       const fedScore = calculateFedBalanceSheetScore(fedValues);
 
       expect(fedScore).toBeLessThan(0);
+    });
+  });
+
+  describe('calculateGrowthRate', () => {
+    it('should return 0 for invalid inputs', () => {
+      expect(calculateGrowthRate(0, 100)).toBe(0);
+      expect(calculateGrowthRate(100, 0)).toBe(0);
+    });
+
+    it('should calculate positive growth rate', () => {
+      const rate = calculateGrowthRate(110, 100);
+      expect(rate).toBeCloseTo(10, 1);
+    });
+
+    it('should calculate negative growth rate', () => {
+      const rate = calculateGrowthRate(90, 100);
+      expect(rate).toBeCloseTo(-10, 1);
+    });
+  });
+
+  describe('calculateCapitalFlowsScore', () => {
+    it('should return 0 for null data', () => {
+      const weights = {
+        fedBalanceSheet: 2.0,
+        m2MoneySupply: 1.8,
+        dollarIndex: 1.5,
+        highYieldSpread: 1.7,
+        treasury10Y: 1.3,
+        stablecoinAccumulation: 1.6,
+        cryptoMarketCap: 1.4,
+        score: 0.4,
+      };
+      const score = calculateCapitalFlowsScore(null as any, [], [], [], [], [], weights);
+      expect(score).toBe(0);
+    });
+
+    it('should calculate weighted score for bullish scenario', () => {
+      const data = {
+        highYieldSpread: 1.5,
+        stablecoinMarketCap: 160,
+        totalCryptoMarketCap: 3000,
+      };
+      const fedHistory = [6700, 6690, 6680, 6670, 6660, 6650, 6640, 6630, 6620, 6610, 6600, 6550];
+      const m2History = [21500, 21450, 21400, 21350, 21300, 21250, 21200, 21150, 21100, 21050, 21000, 20900];
+      const dollarHistory = [100, 99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 89];
+      const treasury10YHistory = [3.0, 3.1, 3.2, 3.1, 3.0, 2.9, 2.8, 2.9, 3.0, 3.1, 3.0, 2.9];
+      const cryptoMcapHistory = [2500, 2550, 2600, 2650, 2700, 2750, 2800, 2850, 2900, 2950, 3000, 3050];
+
+      const weights = {
+        fedBalanceSheet: 2.0,
+        m2MoneySupply: 1.8,
+        dollarIndex: 1.5,
+        highYieldSpread: 1.7,
+        treasury10Y: 1.3,
+        stablecoinAccumulation: 1.6,
+        cryptoMarketCap: 1.4,
+        score: 0.4,
+      };
+
+      const score = calculateCapitalFlowsScore(
+        data,
+        fedHistory,
+        m2History,
+        dollarHistory,
+        treasury10YHistory,
+        cryptoMcapHistory,
+        weights
+      );
+      expect(score).toBeGreaterThan(0);
+    });
+
+    it('should calculate weighted score for bearish scenario with mixed signals', () => {
+      const data = {
+        highYieldSpread: 3.5,
+        stablecoinMarketCap: 140,
+        totalCryptoMarketCap: 2000,
+      };
+      // QT (Fed contracting), M2 contracting, Dollar rising, Yields high, Crypto falling
+      const fedHistory = [6650, 6640, 6630, 6620, 6610, 6600, 6590, 6580, 6570, 6560, 6550, 6500];
+      const m2History = [21500, 21450, 21400, 21350, 21300, 21250, 21200, 21150, 21100, 21050, 21000, 20900];
+      const dollarHistory = [89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
+      const treasury10YHistory = [5.0, 5.1, 5.2, 5.3, 5.2, 5.1, 5.0, 5.1, 5.2, 5.3, 5.2, 5.1];
+      const cryptoMcapHistory = [3000, 2950, 2900, 2850, 2800, 2750, 2700, 2650, 2600, 2550, 2500, 2450];
+
+      const weights = {
+        fedBalanceSheet: 2.0,
+        m2MoneySupply: 1.8,
+        dollarIndex: 1.5,
+        highYieldSpread: 1.7,
+        treasury10Y: 1.3,
+        stablecoinAccumulation: 1.6,
+        cryptoMarketCap: 1.4,
+        score: 0.4,
+      };
+
+      const score = calculateCapitalFlowsScore(
+        data,
+        fedHistory,
+        m2History,
+        dollarHistory,
+        treasury10YHistory,
+        cryptoMcapHistory,
+        weights
+      );
+      // Some positive, some negative signals - result might be close to 0 or slightly positive
+      expect(typeof score).toBe('number');
+      expect(isNaN(score)).toBe(false);
     });
   });
 });

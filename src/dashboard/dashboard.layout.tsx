@@ -179,7 +179,7 @@ const DashboardLayout: React.FC = () => {
                     <img
                       src="assets/logo.png"
                       alt="Scorecards Logo"
-                      style={{ height: 40 }}
+                      style={{ height: '40px' }}
                     />
                   </Box>
                   <Typography
@@ -190,6 +190,10 @@ const DashboardLayout: React.FC = () => {
                     sx={{
                       fontSize: '0.75rem',
                       letterSpacing: '0.5px',
+                      display: {
+                        xs: 'none',
+                        sm: 'block',
+                      },
                     }}
                   >
                     Simplified market analysis

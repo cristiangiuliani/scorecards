@@ -5,6 +5,9 @@ import {
   calculateNvdaNasdaqRatioScore,
   calculateFearGreedScore,
   calculateRsiScore,
+  isVixPersistent,
+  calculateBubbleRisk,
+  displayScoreRisk,
 } from '../bubble-formulas';
 
 describe('AI Bubble Formulas', () => {
@@ -173,6 +176,94 @@ describe('AI Bubble Formulas', () => {
       expect(nvidiaScore).toBeGreaterThan(0);
       expect(fearGreedScore).toBeGreaterThan(0);
       expect(rsiScore).toBeGreaterThan(0);
+    });
+  });
+
+  describe('isVixPersistent', () => {
+    it('should return false for insufficient data', () => {
+      expect(isVixPersistent([15, 16])).toBe(false);
+    });
+
+    it('should return true when VIX consistently high', () => {
+      const vixHistory = [32, 33, 31, 34, 32, 33, 31, 32, 33, 31];
+      expect(isVixPersistent(vixHistory)).toBe(true);
+    });
+
+    it('should return false when VIX is low', () => {
+      const vixHistory = [12, 13, 14, 13, 12, 13, 14, 13, 12, 13];
+      expect(isVixPersistent(vixHistory)).toBe(false);
+    });
+  });
+
+  describe('calculateBubbleRisk', () => {
+    it('should calculate negative score for high bubble risk scenario', () => {
+      const data = {
+        nvidiaPE: 80,
+        nasdaqPE: 45,
+        vixHistory: [12, 13, 14, 13, 12, 13, 14, 13, 12, 13],
+        fearGreed: 85,
+        rsiSP500: 80,
+      };
+      const result = calculateBubbleRisk(data);
+      // High valuations + high greed + high RSI = high bubble risk (negative score)
+      expect(result.score).toBeLessThan(0);
+      expect(result.factors.nvidiaOvervalued).toBe(true);
+      expect(result.factors.nasdaqOvervalued).toBe(true);
+      expect(result.factors.vixPersistent).toBe(false);
+    });
+
+    it('should calculate positive score for low bubble risk scenario', () => {
+      const data = {
+        nvidiaPE: 35,
+        nasdaqPE: 15,
+        vixHistory: [12, 13, 14, 13, 12, 13, 14, 13, 12, 13],
+        fearGreed: 20,
+        rsiSP500: 25,
+      };
+      const result = calculateBubbleRisk(data);
+      // Low valuations + low fear/greed + low RSI = low bubble risk (positive score)
+      expect(result.score).toBeGreaterThan(0);
+      expect(result.factors.nvidiaOvervalued).toBe(false);
+      expect(result.factors.nasdaqOvervalued).toBe(false);
+    });
+  });
+
+  describe('displayScoreRisk', () => {
+    it('should normalize score from [-16,+16] to [-10,+10]', () => {
+      const indicator1 = {
+        score: 16,
+        factors: {
+          nvidiaOvervalued: true,
+          nasdaqOvervalued: true,
+          vixPersistent: true,
+        },
+      };
+      const display1 = displayScoreRisk(indicator1);
+      expect(display1).toBeCloseTo(-10, 0);
+
+      const indicator2 = {
+        score: -16,
+        factors: {
+          nvidiaOvervalued: false,
+          nasdaqOvervalued: false,
+          vixPersistent: false,
+        },
+      };
+      const display2 = displayScoreRisk(indicator2);
+      expect(display2).toBeCloseTo(10, 0);
+    });
+
+    it('should invert score (positive risk = negative display)', () => {
+      const indicator = {
+        score: 8,
+        factors: {
+          nvidiaOvervalued: true,
+          nasdaqOvervalued: false,
+          vixPersistent: false,
+        },
+      };
+      const display = displayScoreRisk(indicator);
+      expect(display).toBeLessThan(0);
     });
   });
 });

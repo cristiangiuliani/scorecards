@@ -1,8 +1,9 @@
 import { createCachedProxyHandler } from './utils/cachedProxy';
 
+// Fetch EUR/USD exchange rate from Yahoo Finance
+// Symbol: EURUSD=X
 export const handler = createCachedProxyHandler(
   () => {
-    const apiKey = process.env.ALPHA_VANTAGE_KEY || '';
-    return `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=${apiKey}`;
+    return 'https://query1.finance.yahoo.com/v8/finance/chart/EURUSD=X?interval=1d&range=1d';
   }
 );
