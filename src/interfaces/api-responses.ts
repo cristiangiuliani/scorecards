@@ -15,19 +15,6 @@ export interface IYahooFinanceResponse {
   };
 }
 
-// Alpha Vantage RSI Response
-export interface IAlphaVantageRSIResponse {
-  'Information': string;
-  'Meta Data': {
-    '3: Last Refreshed': string;
-  };
-  'Technical Analysis: RSI': {
-    [date: string]: {
-      RSI: string;
-    };
-  };
-}
-
 // Alpha Vantage Currency Exchange Response
 export interface IAlphaVantageCurrencyResponse {
   'Information': string;

@@ -1,11 +1,11 @@
 import React, {
   useContext, useEffect,
 } from 'react';
+import { RSI } from 'technicalindicators';
 
 import { API } from '../constants/api';
 import { NASDAQ_PE_RATIO } from '../constants/config';
 import type {
-  IAlphaVantageRSIResponse,
   IFearGreedResponse,
   IFinancialModelingPrepResponse,
   IYahooFinanceResponse,
@@ -91,24 +91,38 @@ const MarketBubbleContainer: React.FC = () => {
     }
   }, [fearGreedData.data]);
 
-  const rsiData = useNetlifyApi<IAlphaVantageRSIResponse>({
-    apiFunction: API.rsiSP500,
+  const sp500Data = useNetlifyApi<IYahooFinanceResponse>({
+    apiFunction: API.sp500,
     options: {
       autoFetch: true,
+      params: {
+        days: '30', // Need at least 14 days + buffer for RSI calculation
+      },
     },
   });
 
   useEffect(() => {
-    const { data, loading } = rsiData;
+    const { data, loading } = sp500Data;
     updateMarketBubble({ isRsiLoading: loading });
     if (data) {
-      const lastUpdate = data['Meta Data']?.['3: Last Refreshed'];
-      const lastRsi = data['Technical Analysis: RSI']?.[lastUpdate]?.['RSI'];
-      updateMarketBubble({
-        rsiSP500: parseFloat(lastRsi),
-      });
+      const result = data?.chart?.result || [];
+      if (result.length > 0) {
+        const closePrices = result[0]?.indicators?.quote[0]?.close || [];
+
+        // Calculate RSI client-side from SP500 data
+        const rsiValues = RSI.calculate({
+          values: closePrices,
+          period: 14,
+        });
+
+        const lastRsi = rsiValues?.length > 0 ? rsiValues[rsiValues.length - 1] : 0;
+
+        updateMarketBubble({
+          rsiSP500: lastRsi,
+        });
+      }
     }
-  }, [rsiData.data]);
+  }, [sp500Data.data]);
 
   useEffect(() => {
     updateMarketBubble({
@@ -117,7 +131,7 @@ const MarketBubbleContainer: React.FC = () => {
         vixHistoryData.forceRefresh();
         nvidiaPEData.forceRefresh();
         fearGreedData.forceRefresh();
-        rsiData.forceRefresh();
+        sp500Data.forceRefresh();
       },
     });
   }, []);

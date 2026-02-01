@@ -37,18 +37,30 @@ const MarketStocksContainer: React.FC = () => {
     const result = data?.chart?.result || [];
     updateMarketStocks({
       isSp500Loading: loading,
+      isRsiLoading: loading,
       cacheExpiresAt,
       cacheCreatedAt,
     });
 
     if (result.length > 0) {
       const sp500Quotes = result[0]?.indicators?.quote || [];
+      const closePrices = result[0]?.indicators?.quote[0]?.close || [];
+
+      // Calculate RSI client-side from SP500 data (using last 30 days)
+      const last30Days = closePrices.slice(-30);
+      const rsiValues = RSI.calculate({
+        values: last30Days,
+        period: 14,
+      });
+      const lastRsi = rsiValues?.length > 0 ? rsiValues[rsiValues.length - 1] : 0;
+
       updateMarketStocks({
         sp500Price: parseFloat(result[0]?.meta?.regularMarketPrice?.toString()),
-        sp500Prices: result[0]?.indicators?.quote[0]?.close,
+        sp500Prices: closePrices,
         sp500Volumes: result[0]?.indicators?.quote[0]?.volume,
         sp500ATH: sp500Quotes.length > 0 ? Math.max(...sp500Quotes[0].close) : undefined,
         treasury10Y: result[0]?.meta?.regularMarketPrice,
+        rsiSP500: lastRsi,
       });
     }
   }, [sp500Data.data, sp500Data.cacheExpiresAt, sp500Data.cacheCreatedAt]);
@@ -69,39 +81,6 @@ const MarketStocksContainer: React.FC = () => {
       });
     }
   }, [vixData.data]);
-
-  const rsiData = useNetlifyApi<IYahooFinanceResponse>({
-    apiFunction: API.rsiSP500,
-    options: {
-      autoFetch: true,
-      params: {
-        days: '30', // Need at least 14 days + buffer for RSI calculation
-      },
-    },
-  });
-
-  useEffect(() => {
-    const { data, loading } = rsiData;
-    updateMarketStocks({ isRsiLoading: loading });
-    if (data) {
-      const result = data?.chart?.result || [];
-      if (result.length > 0) {
-        const closePrices = result[0]?.indicators?.quote[0]?.close || [];
-
-        // Calculate RSI client-side like BTC RSI
-        const rsiValues = RSI.calculate({
-          values: closePrices,
-          period: 14,
-        });
-
-        const lastRsi = rsiValues?.length > 0 ? rsiValues[rsiValues.length - 1] : 0;
-
-        updateMarketStocks({
-          rsiSP500: lastRsi,
-        });
-      }
-    }
-  }, [rsiData.data]);
 
   const eurUsdData = useNetlifyApi<IYahooFinanceResponse>({
     apiFunction: API.eurUsd,
@@ -145,7 +124,6 @@ const MarketStocksContainer: React.FC = () => {
     updateMarketStocks({
       refetchMarketStocksData: () => {
         vixData.forceRefresh();
-        rsiData.forceRefresh();
         eurUsdData.forceRefresh();
         fearGreedData.forceRefresh();
         sp500Data.forceRefresh();

@@ -19,7 +19,6 @@ import fredUnemploymentMockData from '../_mocks/fredUnemployment.json';
 import fredWagesMockData from '../_mocks/fredWages.json';
 import fredWALCLMockData from '../_mocks/fredWALCL.json';
 import globalCryptoDataMockData from '../_mocks/globalCryptoData.json';
-import rsiSP500MockData from '../_mocks/rsiSp500.json';
 import sp500MockData from '../_mocks/sp500.json';
 import stablecoinsMockData from '../_mocks/stablecoins.json';
 import vixMockData from '../_mocks/vix.json';
@@ -53,10 +52,6 @@ export const API: Record<string, IApiEndpoint> = {
   fearGreed: {
     functionName: 'fetchFearGreed',
     mockData: fearGreedMockData,
-  },
-  rsiSP500: {
-    functionName: 'fetchRsiSP500',
-    mockData: rsiSP500MockData,
   },
   sp500: {
     functionName: 'fetchSP500',

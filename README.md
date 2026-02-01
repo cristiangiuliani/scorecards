@@ -251,10 +251,9 @@ yarn dev:netlify
 The application uses Netlify Functions as serverless API endpoints:
 
 ### Stock Market Endpoints
-- `/api/fetchSP500` - S&P 500 data (Yahoo Finance)
+- `/api/fetchSP500` - S&P 500 data (Yahoo Finance) - includes RSI calculation client-side
 - `/api/fetchVix` - VIX volatility index (Yahoo Finance)
 - `/api/fetchFearGreed` - Traditional markets Fear & Greed
-- `/api/fetchRsiSP500` - S&P 500 RSI (Alpha Vantage)
 - `/api/fetchEurUsd` - EUR/USD exchange rate (Alpha Vantage)
 - `/api/fetchPeRatioNvda` - NVIDIA P/E ratio (Financial Modeling Prep)
 
