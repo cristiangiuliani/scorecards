@@ -65,6 +65,7 @@ jobs:
         run: yarn build
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
     environment: Production
@@ -90,7 +91,7 @@ jobs:
       - name: Build React app
         run: yarn build
         env:
-          VITE_MIXPANEL_TOKEN: ${{ secrets.VITE_MIXPANEL_TOKEN }}
+          VITE_MIXPANEL_TOKEN: ${{ secrets.MIXPANEL_TOKEN }}
 
       - name: Deploy to Netlify
         id: netlify-deploy
