@@ -4,7 +4,11 @@ const TOKEN = import.meta.env.VITE_MIXPANEL_TOKEN as string | undefined;
 
 export const initMixpanel = () => {
   if (!TOKEN) return;
-  mixpanel.init(TOKEN, { track_pageview: false });
+  mixpanel.init(TOKEN, {
+    track_pageview: false,
+    record_sessions_percent: 100,
+    api_host: 'https://api-eu.mixpanel.com',
+  });
 };
 
 export const trackPageView = (path: string) => {
