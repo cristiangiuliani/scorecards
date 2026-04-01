@@ -40,6 +40,7 @@ import {
   Outlet,
 } from 'react-router-dom';
 
+import { trackPageView, trackTabClick } from '../analytics/mixpanel';
 import { DisclaimerComponent } from '../shared/components/disclaimer.component';
 import { ErrorDisplay } from '../shared/components/error-display';
 
@@ -97,12 +98,17 @@ const DashboardLayout: React.FC = () => {
     setAnchorEl(null);
   };
   const handleSelectMenuItem = (index: number) => {
+    trackTabClick(menuList[index].label, menuList[index].path);
     navigate(menuList[index].path);
     handleCloseMenu();
   };
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  React.useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
 
   const menuList = [
     {
