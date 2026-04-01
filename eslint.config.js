@@ -11,7 +11,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist', 'node_modules', 'build', '.yarn'],
+    ignores: ['dist', 'node_modules', 'build', '.yarn', '.netlify', '.pnp.cjs', '.pnp.loader.mjs'],
   },
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -323,6 +323,13 @@ export default [
       'consistent-return': 'off',
       'no-underscore-dangle': 'off',
       'class-methods-use-this': 'off',
+    },
+  },
+  // Netlify functions (Node.js environment)
+  {
+    files: ['netlify/**/*.{js,ts}'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
   // Test files configuration
