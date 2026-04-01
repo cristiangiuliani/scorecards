@@ -81,6 +81,7 @@ const RAW_RUNTIME_STATE =
           ["jest-environment-node", "npm:30.2.0"],\
           ["jest-junit", "npm:16.0.0"],\
           ["jest-util", "npm:30.2.0"],\
+          ["mixpanel-browser", "npm:2.77.0"],\
           ["mongodb", "virtual:1f77bf1f59e77139c8c9d38a9f78561b1799233567165eb9c7e8007dcb1d726091a09d82628581556417d3ddd899a52abab3d80637b9cca60e6725e938437a6f#npm:6.20.0"],\
           ["netlify-cli", "npm:23.8.1"],\
           ["react", "npm:19.1.1"],\
@@ -2688,6 +2689,87 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@mixpanel/rrdom", [\
+      ["npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/cache/@mixpanel-rrdom-npm-2.0.0-alpha.18.4-bdbb21f06a-1202c76a7b.zip/node_modules/@mixpanel/rrdom/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrdom", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-snapshot", "npm:2.0.0-alpha.18.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@mixpanel/rrweb", [\
+      ["npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/cache/@mixpanel-rrweb-npm-2.0.0-alpha.18.4-62a44100c3-91c0e14420.zip/node_modules/@mixpanel/rrweb/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrdom", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-snapshot", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-types", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-utils", "npm:2.0.0-alpha.18.4"],\
+          ["@types/css-font-loading-module", "npm:0.0.7"],\
+          ["@xstate/fsm", "npm:1.6.5"],\
+          ["base64-arraybuffer", "npm:1.0.2"],\
+          ["mitt", "npm:3.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@mixpanel/rrweb-plugin-console-record", [\
+      ["npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/cache/@mixpanel-rrweb-plugin-console-record-npm-2.0.0-alpha.18.4-4487b78648-719f38b217.zip/node_modules/@mixpanel/rrweb-plugin-console-record/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrweb-plugin-console-record", "npm:2.0.0-alpha.18.4"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:a7956b4c6fabb8ea5bdd82d6e25ccc928dc61769a6899b78eba7bcdd70ab50f9a58c721ffbe5913df51f1ba8b72369f82880bc9e4baf6f328c255316765c958e#npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/__virtual__/@mixpanel-rrweb-plugin-console-record-virtual-fa618062a6/0/cache/@mixpanel-rrweb-plugin-console-record-npm-2.0.0-alpha.18.4-4487b78648-719f38b217.zip/node_modules/@mixpanel/rrweb-plugin-console-record/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrweb", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-plugin-console-record", "virtual:a7956b4c6fabb8ea5bdd82d6e25ccc928dc61769a6899b78eba7bcdd70ab50f9a58c721ffbe5913df51f1ba8b72369f82880bc9e4baf6f328c255316765c958e#npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-utils", "npm:2.0.0-alpha.18.4"],\
+          ["@types/mixpanel__rrweb", null],\
+          ["@types/mixpanel__rrweb-utils", null]\
+        ],\
+        "packagePeers": [\
+          "@mixpanel/rrweb-utils",\
+          "@mixpanel/rrweb",\
+          "@types/mixpanel__rrweb-utils",\
+          "@types/mixpanel__rrweb"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@mixpanel/rrweb-snapshot", [\
+      ["npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/cache/@mixpanel-rrweb-snapshot-npm-2.0.0-alpha.18.4-c257758e60-c3cf6ccb6e.zip/node_modules/@mixpanel/rrweb-snapshot/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrweb-snapshot", "npm:2.0.0-alpha.18.4"],\
+          ["postcss", "npm:8.5.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@mixpanel/rrweb-types", [\
+      ["npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/cache/@mixpanel-rrweb-types-npm-2.0.0-alpha.18.4-6efd9526c0-9e1ebc7be3.zip/node_modules/@mixpanel/rrweb-types/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrweb-types", "npm:2.0.0-alpha.18.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@mixpanel/rrweb-utils", [\
+      ["npm:2.0.0-alpha.18.4", {\
+        "packageLocation": "./.yarn/cache/@mixpanel-rrweb-utils-npm-2.0.0-alpha.18.4-345b0e23ed-6fd698d089.zip/node_modules/@mixpanel/rrweb-utils/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrweb-utils", "npm:2.0.0-alpha.18.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@mongodb-js/saslprep", [\
       ["npm:1.3.1", {\
         "packageLocation": "./.yarn/cache/@mongodb-js-saslprep-npm-1.3.1-75a8c2322d-d66a447a29.zip/node_modules/@mongodb-js/saslprep/",\
@@ -4773,6 +4855,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/css-font-loading-module", [\
+      ["npm:0.0.7", {\
+        "packageLocation": "./.yarn/cache/@types-css-font-loading-module-npm-0.0.7-e5453ffa7c-f70b9098ee.zip/node_modules/@types/css-font-loading-module/",\
+        "packageDependencies": [\
+          ["@types/css-font-loading-module", "npm:0.0.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/d3-array", [\
       ["npm:3.2.2", {\
         "packageLocation": "./.yarn/cache/@types-d3-array-npm-3.2.2-67f9457e88-1afebd05b6.zip/node_modules/@types/d3-array/",\
@@ -5003,6 +5094,15 @@ const RAW_RUNTIME_STATE =
           ["@types/jest", "npm:30.0.0"],\
           ["expect", "npm:30.2.0"],\
           ["pretty-format", "npm:30.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/json-logic-js", [\
+      ["npm:2.0.5", {\
+        "packageLocation": "./.yarn/cache/@types-json-logic-js-npm-2.0.5-5d97543175-60f1b3f5f8.zip/node_modules/@types/json-logic-js/",\
+        "packageDependencies": [\
+          ["@types/json-logic-js", "npm:2.0.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5957,6 +6057,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@xstate/fsm", [\
+      ["npm:1.6.5", {\
+        "packageLocation": "./.yarn/cache/@xstate-fsm-npm-1.6.5-ce4efd1c39-deae150116.zip/node_modules/@xstate/fsm/",\
+        "packageDependencies": [\
+          ["@xstate/fsm", "npm:1.6.5"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["Scorecards", [\
       ["workspace:.", {\
         "packageLocation": "./",\
@@ -6014,6 +6123,7 @@ const RAW_RUNTIME_STATE =
           ["jest-environment-node", "npm:30.2.0"],\
           ["jest-junit", "npm:16.0.0"],\
           ["jest-util", "npm:30.2.0"],\
+          ["mixpanel-browser", "npm:2.77.0"],\
           ["mongodb", "virtual:1f77bf1f59e77139c8c9d38a9f78561b1799233567165eb9c7e8007dcb1d726091a09d82628581556417d3ddd899a52abab3d80637b9cca60e6725e938437a6f#npm:6.20.0"],\
           ["netlify-cli", "npm:23.8.1"],\
           ["react", "npm:19.1.1"],\
@@ -6856,6 +6966,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/bare-events-npm-2.7.0-d2a5a0cb6a-5287b470f8.zip/node_modules/bare-events/",\
         "packageDependencies": [\
           ["bare-events", "npm:2.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["base64-arraybuffer", [\
+      ["npm:1.0.2", {\
+        "packageLocation": "./.yarn/cache/base64-arraybuffer-npm-1.0.2-18f4899892-15e6400d2d.zip/node_modules/base64-arraybuffer/",\
+        "packageDependencies": [\
+          ["base64-arraybuffer", "npm:1.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -12726,6 +12845,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["json-logic-js", [\
+      ["npm:2.0.5", {\
+        "packageLocation": "./.yarn/cache/json-logic-js-npm-2.0.5-a59305be8b-5d3c49e331.zip/node_modules/json-logic-js/",\
+        "packageDependencies": [\
+          ["json-logic-js", "npm:2.0.5"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["json-parse-even-better-errors", [\
       ["npm:2.3.1", {\
         "packageLocation": "./.yarn/cache/json-parse-even-better-errors-npm-2.3.1-144d62256e-5f3a99009e.zip/node_modules/json-parse-even-better-errors/",\
@@ -13687,6 +13815,29 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["minipass", "npm:7.1.2"],\
           ["minizlib", "npm:3.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mitt", [\
+      ["npm:3.0.1", {\
+        "packageLocation": "./.yarn/cache/mitt-npm-3.0.1-ce290ffa77-287c70d8e7.zip/node_modules/mitt/",\
+        "packageDependencies": [\
+          ["mitt", "npm:3.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["mixpanel-browser", [\
+      ["npm:2.77.0", {\
+        "packageLocation": "./.yarn/cache/mixpanel-browser-npm-2.77.0-a7956b4c6f-d5be8e06d1.zip/node_modules/mixpanel-browser/",\
+        "packageDependencies": [\
+          ["@mixpanel/rrweb", "npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-plugin-console-record", "virtual:a7956b4c6fabb8ea5bdd82d6e25ccc928dc61769a6899b78eba7bcdd70ab50f9a58c721ffbe5913df51f1ba8b72369f82880bc9e4baf6f328c255316765c958e#npm:2.0.0-alpha.18.4"],\
+          ["@mixpanel/rrweb-utils", "npm:2.0.0-alpha.18.4"],\
+          ["@types/json-logic-js", "npm:2.0.5"],\
+          ["json-logic-js", "npm:2.0.5"],\
+          ["mixpanel-browser", "npm:2.77.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -15053,6 +15204,16 @@ const RAW_RUNTIME_STATE =
           ["nanoid", "npm:3.3.11"],\
           ["picocolors", "npm:1.1.1"],\
           ["postcss", "npm:8.5.6"],\
+          ["source-map-js", "npm:1.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:8.5.8", {\
+        "packageLocation": "./.yarn/cache/postcss-npm-8.5.8-b010bee8df-cbacbfd7f7.zip/node_modules/postcss/",\
+        "packageDependencies": [\
+          ["nanoid", "npm:3.3.11"],\
+          ["picocolors", "npm:1.1.1"],\
+          ["postcss", "npm:8.5.8"],\
           ["source-map-js", "npm:1.2.1"]\
         ],\
         "linkType": "HARD"\
