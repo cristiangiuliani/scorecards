@@ -18,7 +18,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "deploy:netlify": "netlify deploy --prod",
-    "setup:tssdk": "yarn dlx @yarnpkg/sdks vscode"
+    "setup:tssdk": "yarn dlx @yarnpkg/sdks vscode",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

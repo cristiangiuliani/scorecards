@@ -80,3 +80,75 @@ Local development uses `.env.local`; production uses `.env.production`.
 ### Testing
 
 Tests live in `__tests__/` subdirectories alongside the code they test. Coverage is collected only from `*-formulas.ts` and `*-interpretation.ts` utility files. CI enforces minimum thresholds (30% branches, 45% functions/lines). Mock API response data is in `src/_mocks/`.
+
+## Patterns & Conventions
+
+### Adding a new market module
+
+Follow the existing 5-file pattern. Each file has a single responsibility:
+
+| File | Responsibility |
+|------|---------------|
+| `market-<name>.tsx` | Entry point — composes `<Provider><Container /></Provider>` |
+| `market-<name>.context.ts` | Defines context + exports `INITIAL_STATE` constant |
+| `market-<name>.provider.tsx` | Holds state via `useState`, exposes `updateX` via context |
+| `market-<name>.container.tsx` | Fetches data via `useNetlifyApi`, calls `updateX` |
+| `market-<name>.component.tsx` | Reads context, computes derived values, renders UI |
+
+### INITIAL_STATE convention
+
+Default values are defined **once** in `context.ts` as an exported constant typed with the Provider interface, then imported by the provider. Never duplicate them.
+
+```ts
+// market-<name>.context.ts
+export const MARKET_NAME_INITIAL_STATE: IMarketNameProvider = {
+  isLoading: false,
+  someValue: undefined,
+  refetchData: () => {},
+};
+
+const MarketNameContext = createContext<IMarketNameContext>({
+  ...MARKET_NAME_INITIAL_STATE,
+  updateMarketName: () => {},
+});
+```
+
+```ts
+// market-<name>.provider.tsx
+import MarketNameContext, { MARKET_NAME_INITIAL_STATE } from './market-name.context';
+
+const [state, setState] = useState<IMarketNameProvider>(MARKET_NAME_INITIAL_STATE);
+const updateMarketName = (newState: IMarketNameProvider = MARKET_NAME_INITIAL_STATE) => { ... };
+```
+
+### Interface hierarchy
+
+Each module has three interfaces, all in `src/interfaces/<name>.ts`:
+
+```ts
+IMarketNameData           // raw data fields
+IMarketNameProvider       // extends data + loading flags + refetch
+IMarketNameContext        // extends Provider + updateX function
+```
+
+`IMarketNameContext extends IMarketNameProvider` — always maintain this chain.
+
+### Scoring conventions
+
+- Individual indicator scores: **-4 to +4**
+- Composite score: weighted average via `Σ(score × weight) / Σ(weights)`
+- Weights defined in `src/constants/config.ts` as `MARKET_NAME_WEIGHTS`
+- Ranges for UI display defined in `src/constants/config.ts` as `MARKET_NAME_RANGES`
+- All formula functions must have unit tests in `__tests__/<name>-formulas.test.ts`
+
+### Adding a new Netlify function
+
+All functions use `createCachedProxyHandler` from `netlify/functions/utils/cachedProxy.ts`. The function only needs to return the external API URL:
+
+```ts
+export const handler = createCachedProxyHandler(() => {
+  return `https://external-api.com/endpoint?key=${process.env.API_KEY}`;
+});
+```
+
+Register the function in `src/constants/api.ts` with its mock data file.
