@@ -4,28 +4,14 @@ import {
 
 import type { IMarketBubbleProvider } from '../interfaces/market-bubble';
 
-import MarketBubbleContext from './market-bubble.context';
+import MarketBubbleContext, { MARKET_BUBBLE_INITIAL_STATE } from './market-bubble.context';
 
 export const MarketBubbleProvider = ({
   children,
 }: { children: ReactNode }) => {
-  const marketBubbleProviderValue = {
-    vixHistory: undefined,
-    nvidiaPE: undefined,
-    nasdaqPE: undefined,
-    fearGreed: undefined,
-    rsiSP500: undefined,
-    isNvidiaPELoading: false,
-    isNasdaqPELoading: false,
-    isLoadingBubble: false,
-    isVixHistoryLoading: false,
-    isFearGreedLoading: false,
-    isRsiLoading: false,
-    refetchMarketBubbleData: () => {},
-  };
-  const [marketBubble, setMarketBubble] = useState<IMarketBubbleProvider>(marketBubbleProviderValue);
+  const [marketBubble, setMarketBubble] = useState<IMarketBubbleProvider>(MARKET_BUBBLE_INITIAL_STATE);
 
-  const updateMarketBubble = (newState: IMarketBubbleProvider = marketBubbleProviderValue) => {
+  const updateMarketBubble = (newState: IMarketBubbleProvider = MARKET_BUBBLE_INITIAL_STATE) => {
     setMarketBubble((prevState: IMarketBubbleProvider) => ({
       ...prevState,
       ...newState,

@@ -2,28 +2,17 @@ import { useState, type ReactNode } from 'react';
 
 import type { IMarketCapitalFlowsProvider } from '../interfaces/market-capital-flows';
 
-import MarketCapitalFlowsContext from './market-capital-flows.context';
+import MarketCapitalFlowsContext, {
+  MARKET_CAPITAL_FLOWS_INITIAL_STATE,
+} from './market-capital-flows.context';
 
 export const MarketCapitalFlowsProvider = ({ children }: { children: ReactNode }) => {
-  const marketCapitalFlowsProviderValue: IMarketCapitalFlowsProvider = {
-    isLoadingCapitalFlows: false,
-    fedBalanceSheet: undefined,
-    m2MoneySupply: undefined,
-    dollarIndex: undefined,
-    highYieldSpread: undefined,
-    goldPrice: undefined,
-    stablecoinMarketCap: undefined,
-    totalCryptoMarketCap: undefined,
-    stablecoinDominance: undefined,
-    refetchMarketCapitalFlowsData: () => {},
-  };
-
   const [marketCapitalFlows, setMarketCapitalFlows] = useState<IMarketCapitalFlowsProvider>(
-    marketCapitalFlowsProviderValue
+    MARKET_CAPITAL_FLOWS_INITIAL_STATE
   );
 
   const updateMarketCapitalFlows = (
-    newState: IMarketCapitalFlowsProvider = marketCapitalFlowsProviderValue
+    newState: IMarketCapitalFlowsProvider = MARKET_CAPITAL_FLOWS_INITIAL_STATE
   ) => {
     setMarketCapitalFlows((prevState: IMarketCapitalFlowsProvider) => ({
       ...prevState,

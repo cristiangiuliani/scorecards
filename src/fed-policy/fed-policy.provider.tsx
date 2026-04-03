@@ -4,25 +4,14 @@ import {
 
 import type { IFedPolicyProvider } from '../interfaces/fed-policy';
 
-import FedPolicyContext from './fed-policy.context';
+import FedPolicyContext, { FED_POLICY_INITIAL_STATE } from './fed-policy.context';
 
 export const FedPolicyProvider = ({
   children,
 }: { children: ReactNode }) => {
-  const fedPolicyProviderValue = {
-    isLoadingFedPolicy: false,
-    cpiInflation: undefined,
-    corePce: undefined,
-    unemploymentRate: undefined,
-    averageHourlyEarnings: undefined,
-    federalFundsRate: undefined,
-    cacheCreatedAt: undefined,
-    cacheExpiresAt: undefined,
-    refetchFedPolicyData: () => {},
-  };
-  const [fedPolicy, setFedPolicy] = useState<IFedPolicyProvider>(fedPolicyProviderValue);
+  const [fedPolicy, setFedPolicy] = useState<IFedPolicyProvider>(FED_POLICY_INITIAL_STATE);
 
-  const updateFedPolicy = (newState: IFedPolicyProvider = fedPolicyProviderValue) => {
+  const updateFedPolicy = (newState: IFedPolicyProvider = FED_POLICY_INITIAL_STATE) => {
     setFedPolicy((prevState: IFedPolicyProvider) => ({
       ...prevState,
       ...newState,

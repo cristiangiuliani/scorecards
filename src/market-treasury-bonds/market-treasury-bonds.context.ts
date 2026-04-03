@@ -1,8 +1,12 @@
 import { createContext } from 'react';
 
-import type { IMarketTreasuryBondsContext } from '../interfaces/market-treasury-bonds';
+import type {
+  IMarketTreasuryBondsContext,
+  IMarketTreasuryBondsProvider,
+} from '../interfaces/market-treasury-bonds';
 
-const MarketTreasuryBondsContext = createContext<IMarketTreasuryBondsContext>({
+export const MARKET_TREASURY_BONDS_INITIAL_STATE: IMarketTreasuryBondsProvider = {
+  isLoadingBonds: false,
   yield10Y: undefined,
   yield5Y: undefined,
   yield2Y: undefined,
@@ -14,10 +18,13 @@ const MarketTreasuryBondsContext = createContext<IMarketTreasuryBondsContext>({
   isYield2YLoading: false,
   isSpreadsLoading: false,
   isInflationLoading: false,
-  isLoadingBonds: false,
   cacheCreatedAt: null,
   cacheExpiresAt: null,
   refetchMarketBondsData: () => {},
+};
+
+const MarketTreasuryBondsContext = createContext<IMarketTreasuryBondsContext>({
+  ...MARKET_TREASURY_BONDS_INITIAL_STATE,
   updateMarketTreasuryBonds: () => {},
 });
 

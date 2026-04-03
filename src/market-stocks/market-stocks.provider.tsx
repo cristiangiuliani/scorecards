@@ -4,35 +4,14 @@ import {
 
 import type { IMarketStocksProvider } from '../interfaces/market-stocks';
 
-import MarketStocksContext from './market-stocks.context';
+import MarketStocksContext, { MARKET_STOCKS_INITIAL_STATE } from './market-stocks.context';
 
 export const MarketStocksProvider = ({
   children,
 }: { children: ReactNode }) => {
-  const marketStocksProviderValue = {
-    isLoadingStocks: false,
-    vix: undefined,
-    rsiSP500: undefined,
-    eurUsd: undefined,
-    fearGreed: undefined,
-    sp500Price: undefined,
-    sp500ATH: undefined,
-    sp500Prices: undefined,
-    sp500Volumes: undefined,
-    putCallRatio: undefined,
-    treasury10Y: undefined,
-    lastUpdated: undefined,
-    isSp500Loading: false,
-    isRsiLoading: false,
-    isVixLoading: false,
-    isEurUsdLoading: false,
-    isFearGreedLoading: false,
-    isPutCallRatioLoading: false,
-    refetchMarketStocksData: () => {},
-  };
-  const [marketStocks, setMarketStocks] = useState<IMarketStocksProvider>(marketStocksProviderValue);
+  const [marketStocks, setMarketStocks] = useState<IMarketStocksProvider>(MARKET_STOCKS_INITIAL_STATE);
 
-  const updateMarketStocks = (newState: IMarketStocksProvider = marketStocksProviderValue) => {
+  const updateMarketStocks = (newState: IMarketStocksProvider = MARKET_STOCKS_INITIAL_STATE) => {
     setMarketStocks((prevState: IMarketStocksProvider) => ({
       ...prevState,
       ...newState,

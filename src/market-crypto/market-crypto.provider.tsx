@@ -4,25 +4,14 @@ import {
 
 import type { IMarketCryptoProvider } from '../interfaces/market-crypto';
 
-import MarketCryptoContext from './market-crypto.context';
+import MarketCryptoContext, { MARKET_CRYPTO_INITIAL_STATE } from './market-crypto.context';
 
 export const MarketCryptoProvider = ({
   children,
 }: { children: ReactNode }) => {
-  const marketCryptoProviderValue = {
-    isLoadingCrypto: false,
-    btcFearGreed: undefined,
-    btcDominance: undefined,
-    currentPrice: undefined,
-    ath: undefined,
-    prices: undefined,
-    volumes: undefined,
-    lastUpdated: undefined,
-    refetchMarketCryptoData: () => {},
-  };
-  const [marketCrypto, setMarketCrypto] = useState<IMarketCryptoProvider>(marketCryptoProviderValue);
+  const [marketCrypto, setMarketCrypto] = useState<IMarketCryptoProvider>(MARKET_CRYPTO_INITIAL_STATE);
 
-  const updateMarketCrypto = (newState: IMarketCryptoProvider = marketCryptoProviderValue) => {
+  const updateMarketCrypto = (newState: IMarketCryptoProvider = MARKET_CRYPTO_INITIAL_STATE) => {
     setMarketCrypto((prevState: IMarketCryptoProvider) => ({
       ...prevState,
       ...newState,

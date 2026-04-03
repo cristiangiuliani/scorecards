@@ -2,9 +2,12 @@ import {
   createContext,
 } from 'react';
 
-import type { IMarketStocksContext } from '../interfaces/market-stocks';
+import type {
+  IMarketStocksContext,
+  IMarketStocksProvider,
+} from '../interfaces/market-stocks';
 
-const MarketStocksContext = createContext<IMarketStocksContext>({
+export const MARKET_STOCKS_INITIAL_STATE: IMarketStocksProvider = {
   isLoadingStocks: false,
   vix: undefined,
   rsiSP500: undefined,
@@ -23,6 +26,10 @@ const MarketStocksContext = createContext<IMarketStocksContext>({
   isFearGreedLoading: false,
   isPutCallRatioLoading: false,
   refetchMarketStocksData: () => {},
+};
+
+const MarketStocksContext = createContext<IMarketStocksContext>({
+  ...MARKET_STOCKS_INITIAL_STATE,
   updateMarketStocks: () => {},
 });
 
